@@ -28,6 +28,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     createMeta();
     debugMatrix = camera.combined.cpy().scale(PIXEL_TO_METERS, PIXEL_TO_METERS, 0f);
     testBody = BodyFactory.createRectangleBody(1f, 0.5f, new Vector2(1.5f, 0.5f), world, BodyDef.BodyType.DynamicBody);
+    testBody.setTransform(Helper.getMappedScene2DToBox2DPosition(new Vector2(0f,0f)), testBody.getAngle());
   }
 
   @Override

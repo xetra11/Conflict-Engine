@@ -26,10 +26,7 @@ public abstract class BodyFactory {
     float boxHalfWidth = width / 2;
     float boxHalfHeight = height / 2;
 
-    float screenPositionX = position.x - Helper.getPixelToMeter(Gdx.graphics.getWidth() / 2);
-    float screenPositionY = position.y - Helper.getPixelToMeter(Gdx.graphics.getHeight() / 2);
-
-    bodyDef.position.set(screenPositionX, screenPositionY);
+    bodyDef.position.set(Helper.getMappedScene2DToBox2DPosition(position));
     bodyDef.type = type;
 
     shape.setAsBox(boxHalfWidth, boxHalfHeight);
