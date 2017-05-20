@@ -6,12 +6,18 @@ import com.badlogic.gdx.ai.steer.SteeringBehavior;
 import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.condorgames.prototype.Helper;
 import com.condorgames.prototype.entities.PlatoonPhysicEntity;
 
 public class AutonomousPlatoonEntity extends PlatoonPhysicEntity implements Steerable<Vector2> {
 
   private SteeringBehavior steeringBehavior;
   private SteeringAcceleration<Vector2> steeringAcceleration;
+
+  private float maxLinearSpeed = 10f;
+  private float maxLinearAcceleration = 10f;
+  private float maxAngularSpeed = 10f;
+  private float maxAngularAcceleration = 10f;
 
   public AutonomousPlatoonEntity(Body body) {
     super(body);
@@ -21,17 +27,17 @@ public class AutonomousPlatoonEntity extends PlatoonPhysicEntity implements Stee
   //region Steerable Interface Implementation
   @Override
   public Vector2 getLinearVelocity() {
-    return null;
+    return getBody().getLinearVelocity();
   }
 
   @Override
   public float getAngularVelocity() {
-    return 0;
+    return getBody().getAngularVelocity();
   }
 
   @Override
   public float getBoundingRadius() {
-    return 0;
+    return getBody().getFixtureList().first().getShape().getRadius();
   }
 
   @Override
@@ -56,72 +62,102 @@ public class AutonomousPlatoonEntity extends PlatoonPhysicEntity implements Stee
 
   @Override
   public float getMaxLinearSpeed() {
-    return 0;
+    return maxLinearSpeed;
   }
 
   @Override
   public void setMaxLinearSpeed(float maxLinearSpeed) {
-
+    this.maxLinearSpeed = maxLinearSpeed;
   }
 
   @Override
   public float getMaxLinearAcceleration() {
-    return 0;
+    return maxLinearAcceleration;
   }
 
   @Override
   public void setMaxLinearAcceleration(float maxLinearAcceleration) {
-
+    this.maxLinearAcceleration = maxLinearAcceleration;
   }
 
   @Override
   public float getMaxAngularSpeed() {
-    return 0;
+    return maxAngularSpeed;
   }
 
   @Override
   public void setMaxAngularSpeed(float maxAngularSpeed) {
-
+    this.maxAngularSpeed = maxAngularSpeed;
   }
 
   @Override
   public float getMaxAngularAcceleration() {
-    return 0;
+    return maxAngularAcceleration;
   }
 
   @Override
   public void setMaxAngularAcceleration(float maxAngularAcceleration) {
-
+    this.maxAngularAcceleration = maxAngularAcceleration;
   }
 
   @Override
   public Vector2 getPosition() {
-    return null;
+    return getBody().getPosition();
   }
 
   @Override
   public float getOrientation() {
-    return 0;
+    return getBody().getAngle();
   }
 
   @Override
   public void setOrientation(float orientation) {
-
+    getBody().setTransform(getPosition(), orientation);
   }
 
   @Override
   public float vectorToAngle(Vector2 vector) {
-    return 0;
+    return Helper.vectorToAngle(vector);
   }
 
   @Override
   public Vector2 angleToVector(Vector2 outVector, float angle) {
-    return null;
+    return Helper.angleToVector(outVector, angle);
   }
 
   @Override
   public Location<Vector2> newLocation() {
-    return null;
+    return new Location<Vector2>() {
+      @Override
+      public Vector2 getPosition() {
+        return AutonomousPlatoonEntity.this.getPosition();
+      }
+
+      @Override
+      public float getOrientation() {
+        return AutonomousPlatoonEntity.this.getOrientation();
+      }
+
+      @Override
+      public void setOrientation(float orientation) {
+        AutonomousPlatoonEntity.this.setOrientation(orientation);
+      }
+
+      @Override
+      public float vectorToAngle(Vector2 vector) {
+        return AutonomousPlatoonEntity.this.vectorToAngle(vector);
+      }
+
+      @Override
+      public Vector2 angleToVector(Vector2 outVector, float angle) {
+        return AutonomousPlatoonEntity.this.angleToVector(outVector, angle);
+      }
+
+      @Override
+      public Location<Vector2> newLocation() {
+        return AutonomousPlatoonEntity.this.newLocation();
+      }
+    };
   }
   //endregion
 }
