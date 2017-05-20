@@ -16,10 +16,9 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class CondorAiPrototype extends ApplicationAdapter implements InputProcessor{
   public static final float PIXEL_TO_METERS = 100f;
-  private SpriteBatch batch;
   private Box2DDebugRenderer debugRenderer;
   private Matrix4 debugMatrix;
-  private Body testBody;
+  private Body testBody, movementTarget;
   private World world;
   private OrthographicCamera camera;
 
@@ -28,7 +27,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     createMeta();
     debugMatrix = camera.combined.cpy().scale(PIXEL_TO_METERS, PIXEL_TO_METERS, 0f);
     testBody = BodyFactory.createRectangleBody(1f, 0.5f, new Vector2(1.5f, 0.5f), world, BodyDef.BodyType.DynamicBody);
-    testBody.setTransform(Helper.getMappedScene2DToBox2DPosition(new Vector2(0f,0f)), testBody.getAngle());
+    movementTarget = BodyFactory.createCircleBody(0.2f, new Vector2(1.5f, 3f), world, BodyDef.BodyType.StaticBody);
   }
 
   @Override
@@ -46,7 +45,6 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void createMeta() {
-    batch = new SpriteBatch();
     debugRenderer = new Box2DDebugRenderer();
     world = new World(new Vector2(0f,0f), false);
     camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -72,7 +70,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
 
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    Gdx.app.log("ClickedCoords: ", String.valueOf(new Vector2(screenX, screenY)));
+    Helper.setClickedPositionForBox2D(screenX, screenY, movementTarget);
     return true;
   }
 

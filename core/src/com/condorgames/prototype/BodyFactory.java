@@ -19,17 +19,25 @@ public abstract class BodyFactory {
   }
 
   public static Body createRectangleBody(float width, float height, Vector2 position, World world, BodyDef.BodyType type) {
-    BodyDef bodyDef = new BodyDef();
-    FixtureDef fixtureDef = new FixtureDef();
     PolygonShape shape = new PolygonShape();
-
     float boxHalfWidth = width / 2;
     float boxHalfHeight = height / 2;
+    shape.setAsBox(boxHalfWidth, boxHalfHeight);
+    return createBody(shape, position, world, type);
+  }
+
+  public static Body createCircleBody(float radius, Vector2 position, World world, BodyDef.BodyType type){
+    CircleShape shape = new CircleShape();
+    shape.setRadius(radius);
+    return createBody(shape, position, world, type);
+  }
+
+  private static Body createBody(Shape shape, Vector2 position, World world, BodyDef.BodyType type){
+    BodyDef bodyDef = new BodyDef();
+    FixtureDef fixtureDef = new FixtureDef();
 
     bodyDef.position.set(Helper.getMappedScene2DToBox2DPosition(position));
     bodyDef.type = type;
-
-    shape.setAsBox(boxHalfWidth, boxHalfHeight);
 
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 1.0f;

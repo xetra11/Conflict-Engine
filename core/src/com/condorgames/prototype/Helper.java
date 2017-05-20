@@ -3,6 +3,7 @@ package com.condorgames.prototype;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 
 import javax.xml.bind.ValidationEvent;
 
@@ -38,6 +39,12 @@ public abstract class Helper {
     scene2DPosition.x = position.x - Helper.getPixelToMeter(Gdx.graphics.getWidth() / 2);
     scene2DPosition.y = position.y - Helper.getPixelToMeter(Gdx.graphics.getHeight() / 2);
     return scene2DPosition;
+  }
+
+  public static void setClickedPositionForBox2D(float screenX, float screenY, Body body){
+    Vector2 vector2 = new Vector2(screenX, Gdx.graphics.getHeight() - screenY);
+    Vector2 meterVector = Helper.getPixelToMeter(vector2);
+    body.setTransform(Helper.getMappedScene2DToBox2DPosition(meterVector), body.getAngle());
   }
 
 }
