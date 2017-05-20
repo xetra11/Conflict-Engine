@@ -4,6 +4,7 @@ package com.condorgames.prototype;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
@@ -23,24 +24,34 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private World world;
   private OrthographicCamera camera;
 
+  private AutonomousPlatoonEntity friendly;
+  private AutonomousPlatoonEntity moveTarget;
+
   @Override
   public void create() {
     createMeta();
     platoon = BodyFactory.createRectangleBody(1f, 0.5f, new Vector2(1.5f, 0.5f), world, BodyDef.BodyType.DynamicBody);
     enemy = BodyFactory.createRectangleBody(0.5f, 0.5f, new Vector2(3f, 4f), world, BodyDef.BodyType.DynamicBody);
-
-    AutonomousPlatoonEntity friendly = new AutonomousPlatoonEntity(platoon);
-
-    friendly.getBoundingRadius();
-
     movementTarget = BodyFactory.createCircleBody(0.2f, new Vector2(1.5f, 3f), world, BodyDef.BodyType.StaticBody);
     movementTarget.getFixtureList().first().setSensor(true);
+
+    friendly = new AutonomousPlatoonEntity(platoon);
+    moveTarget = new AutonomousPlatoonEntity(movementTarget);
+    Arrive<Vector2> arrive = new Arrive<Vector2>(friendly, moveTarget);
+    arrive.setArrivalTolerance(0.01f);
+    arrive.setDecelerationRadius(0.5f);
+    arrive.setTimeToTarget(0.1f);
+
+    friendly.setSteeringBehavior(arrive);
+
+
   }
 
   @Override
   public void render() {
     camera.update();
     world.step(1f/60f, 6, 2);
+    friendly.update();
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

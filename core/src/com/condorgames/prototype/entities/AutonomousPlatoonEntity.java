@@ -7,21 +7,37 @@ import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.Helper;
-import com.condorgames.prototype.entities.PlatoonPhysicEntity;
 
 public class AutonomousPlatoonEntity extends PlatoonPhysicEntity implements Steerable<Vector2> {
 
   private SteeringBehavior steeringBehavior;
-  private SteeringAcceleration<Vector2> steeringAcceleration;
+  private SteeringAcceleration<Vector2> steeringOutput;
 
-  private float maxLinearSpeed = 10f;
-  private float maxLinearAcceleration = 10f;
-  private float maxAngularSpeed = 10f;
-  private float maxAngularAcceleration = 10f;
+  private float maxLinearSpeed = 0.3f;
+  private float maxLinearAcceleration = 0.3f;
+  private float maxAngularSpeed = 0.5f;
+  private float maxAngularAcceleration = 0.5f;
 
   public AutonomousPlatoonEntity(Body body) {
     super(body);
-    steeringAcceleration = new SteeringAcceleration<Vector2>(new Vector2());
+    steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
+  }
+
+  public void setSteeringBehavior(SteeringBehavior steeringBehavior) {
+    this.steeringBehavior = steeringBehavior;
+  }
+
+  public void applySteering(){
+    steeringBehavior.calculateSteering(steeringOutput);
+    if (steeringOutput.isZero() == false) {
+      if (!steeringOutput.linear.isZero()) {
+        getBody().setLinearVelocity(steeringOutput.linear);
+      }
+    }
+  }
+
+  public void update(){
+    applySteering();
   }
 
   //region Steerable Interface Implementation
