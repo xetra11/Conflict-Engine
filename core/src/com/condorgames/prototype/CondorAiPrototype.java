@@ -10,8 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.condorgames.prototype.entities.*;
 
 public class CondorAiPrototype extends ApplicationAdapter implements InputProcessor{
@@ -39,6 +38,32 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     arrive.setTimeToTarget(0.1f);
 
     friendly.setSteeringBehavior(arrive);
+
+    world.setContactListener(new ContactListener() {
+      @Override
+      public void beginContact(Contact contact) {
+
+        if(contact.getFixtureA().getBody().getUserData() == friendly){
+          friendly.setTagged(true);
+          friendly.getBody().setLinearVelocity(0f,0f);
+        }
+      }
+
+      @Override
+      public void endContact(Contact contact) {
+
+      }
+
+      @Override
+      public void preSolve(Contact contact, Manifold oldManifold) {
+
+      }
+
+      @Override
+      public void postSolve(Contact contact, ContactImpulse impulse) {
+
+      }
+    });
   }
 
   @Override
@@ -48,6 +73,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     friendly.update();
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
     debugRenderer.render(world, debugMatrix);
   }
@@ -61,6 +87,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     world = new World(new Vector2(0f,0f), false);
     camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     debugMatrix = camera.combined.cpy().scale(PIXEL_TO_METERS, PIXEL_TO_METERS, 0f);
+
 
     Gdx.input.setInputProcessor(this);
   }

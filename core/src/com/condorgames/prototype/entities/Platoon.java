@@ -1,6 +1,10 @@
 package com.condorgames.prototype.entities;
 
+import com.badlogic.gdx.Gdx;
+
 public abstract class Platoon {
+
+  private static short platoonCount = 0;
 
   public enum Morale {
     FANATIC,
@@ -22,6 +26,7 @@ public abstract class Platoon {
   private static final byte ANTI_TANK = (byte) 10000000;
   private static final byte FRESH_GROUP = (byte) 11111111;
 
+  private short platoonID;
   private float health;
   private Morale morale;
   private byte strength;
@@ -30,6 +35,8 @@ public abstract class Platoon {
     this.morale = morale;
     health = 100;
     strength = FRESH_GROUP;
+    platoonID = ++platoonCount;
+    Gdx.app.log("Platoon", "created new Platoon with ID: " + platoonID);
   }
 
   public float getHealth() {

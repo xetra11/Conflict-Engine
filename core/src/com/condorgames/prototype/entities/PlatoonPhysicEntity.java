@@ -11,6 +11,7 @@ public abstract class PlatoonPhysicEntity extends Platoon{
 
   public PlatoonPhysicEntity(Morale morale, Body body) {
     super(morale);
+    body.setUserData(this);
     this.body = body;
   }
 

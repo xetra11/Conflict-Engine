@@ -17,6 +17,7 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
   private float maxLinearAcceleration = 0.3f;
   private float maxAngularSpeed = 0.5f;
   private float maxAngularAcceleration = 0.5f;
+  private boolean tagged;
 
   public SteerablePlatoonEntity(Body body) {
     super(body);
@@ -27,16 +28,18 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
     this.steeringBehavior = steeringBehavior;
   }
 
-  public void applySteering(){
-    steeringBehavior.calculateSteering(steeringOutput);
-    if (steeringOutput.isZero() == false) {
-      if (!steeringOutput.linear.isZero()) {
-        getBody().setLinearVelocity(steeringOutput.linear);
+  public void applySteering() {
+    if (isTagged() == false) {
+      steeringBehavior.calculateSteering(steeringOutput);
+      if (steeringOutput.isZero() == false) {
+        if (!steeringOutput.linear.isZero()) {
+          getBody().setLinearVelocity(steeringOutput.linear);
+        }
       }
     }
   }
 
-  public void update(){
+  public void update() {
     applySteering();
   }
 
@@ -58,12 +61,12 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
 
   @Override
   public boolean isTagged() {
-    return false;
+    return this.tagged;
   }
 
   @Override
   public void setTagged(boolean tagged) {
-
+    this.tagged = tagged;
   }
 
   @Override
