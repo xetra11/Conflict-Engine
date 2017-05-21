@@ -75,29 +75,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
 
   //<editor-fold desc="InputProcessing">
   @Override
-  public boolean keyDown(int keycode) {
-
-    switch(keycode){
-      case Input.Keys.UP:{
-        camera.translate(0f, 1f);
-        break;
-      }
-      case Input.Keys.DOWN:{
-        camera.translate(0f, -1f);
-        break;
-      }
-      case Input.Keys.RIGHT:{
-        camera.translate(1f, 0f);
-        break;
-      }
-      case Input.Keys.LEFT:{
-        camera.translate(-1f, 0f);
-        break;
-      }
-    }
-
-    return true;
-  }
+  public boolean keyDown(int keycode) {return false;}
 
   @Override
   public boolean keyUp(int keycode) {
