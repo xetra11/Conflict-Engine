@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.Helper;
 
-public class TargetEntity implements Location<Vector2> {
+public class SensorEntity implements Location<Vector2> {
   private Body body;
 
   private float maxLinearSpeed = 0.3f;
@@ -14,8 +14,9 @@ public class TargetEntity implements Location<Vector2> {
   private float maxAngularAcceleration = 0.5f;
 
 
-  public TargetEntity(Body body) {
+  public SensorEntity(Body body) {
     this.body = body;
+    body.getFixtureList().first().setSensor(true);
   }
 
   public Body getBody() {
@@ -23,6 +24,7 @@ public class TargetEntity implements Location<Vector2> {
   }
 
   public void setBody(Body body) {
+    body.getFixtureList().first().setSensor(true);
     this.body = body;
   }
 
@@ -57,32 +59,32 @@ public class TargetEntity implements Location<Vector2> {
     return new Location<Vector2>() {
       @Override
       public Vector2 getPosition() {
-        return TargetEntity.this.getPosition();
+        return SensorEntity.this.getPosition();
       }
 
       @Override
       public float getOrientation() {
-        return TargetEntity.this.getOrientation();
+        return SensorEntity.this.getOrientation();
       }
 
       @Override
       public void setOrientation(float orientation) {
-        TargetEntity.this.setOrientation(orientation);
+        SensorEntity.this.setOrientation(orientation);
       }
 
       @Override
       public float vectorToAngle(Vector2 vector) {
-        return TargetEntity.this.vectorToAngle(vector);
+        return SensorEntity.this.vectorToAngle(vector);
       }
 
       @Override
       public Vector2 angleToVector(Vector2 outVector, float angle) {
-        return TargetEntity.this.angleToVector(outVector, angle);
+        return SensorEntity.this.angleToVector(outVector, angle);
       }
 
       @Override
       public Location<Vector2> newLocation() {
-        return TargetEntity.this.newLocation();
+        return SensorEntity.this.newLocation();
       }
     };
   }

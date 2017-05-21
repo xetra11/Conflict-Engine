@@ -14,8 +14,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.condorgames.prototype.entities.AutonomousPlatoonEntity;
-import com.condorgames.prototype.entities.StandardPlatoonEntity;
-import com.condorgames.prototype.entities.TargetEntity;
+import com.condorgames.prototype.entities.SensorEntity;
 
 public class CondorAiPrototype extends ApplicationAdapter implements InputProcessor{
   public static final float PIXEL_TO_METERS = 100f;
@@ -26,7 +25,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private OrthographicCamera camera;
 
   private AutonomousPlatoonEntity friendly;
-  private TargetEntity moveTarget;
+  private SensorEntity moveTarget;
 
   @Override
   public void create() {
@@ -34,10 +33,9 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     platoon = BodyFactory.createRectangleBody(1f, 0.5f, new Vector2(1.5f, 0.5f), world, BodyDef.BodyType.DynamicBody);
     enemy = BodyFactory.createRectangleBody(0.5f, 0.5f, new Vector2(3f, 4f), world, BodyDef.BodyType.DynamicBody);
     movementTarget = BodyFactory.createCircleBody(0.2f, new Vector2(1.5f, 3f), world, BodyDef.BodyType.StaticBody);
-    movementTarget.getFixtureList().first().setSensor(true);
 
     friendly = new AutonomousPlatoonEntity(platoon);
-    moveTarget = new TargetEntity(movementTarget);
+    moveTarget = new SensorEntity(movementTarget);
     Arrive<Vector2> arrive = new Arrive<Vector2>(friendly, moveTarget);
     arrive.setArrivalTolerance(0.01f);
     arrive.setDecelerationRadius(0.5f);
