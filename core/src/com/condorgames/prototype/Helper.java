@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public abstract class Helper {
-  private static float FACTOR = 100f;
+  public static float FACTOR = 100f;
 
   public static Vector2 getPixelToMeter(float x, float y) {
     return new Vector2(x / FACTOR, y / FACTOR);

@@ -14,7 +14,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.condorgames.prototype.entities.*;
 
 public class CondorAiPrototype extends ApplicationAdapter implements InputProcessor{
-  public static final float PIXEL_TO_METERS = 100f;
   private Box2DDebugRenderer debugRenderer;
   private Matrix4 debugMatrix;
   private SensorEntity targetCrosshair;
@@ -38,32 +37,6 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     arrive.setTimeToTarget(0.1f);
 
     friendly.setSteeringBehavior(arrive);
-
-    world.setContactListener(new ContactListener() {
-      @Override
-      public void beginContact(Contact contact) {
-
-        if(contact.getFixtureA().getBody().getUserData() == friendly){
-          friendly.setTagged(true);
-          friendly.getBody().setLinearVelocity(0f,0f);
-        }
-      }
-
-      @Override
-      public void endContact(Contact contact) {
-
-      }
-
-      @Override
-      public void preSolve(Contact contact, Manifold oldManifold) {
-
-      }
-
-      @Override
-      public void postSolve(Contact contact, ContactImpulse impulse) {
-
-      }
-    });
   }
 
   @Override
@@ -73,7 +46,6 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     friendly.update();
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
     debugRenderer.render(world, debugMatrix);
   }
@@ -86,8 +58,8 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     debugRenderer = new Box2DDebugRenderer();
     world = new World(new Vector2(0f,0f), false);
     camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    debugMatrix = camera.combined.cpy().scale(PIXEL_TO_METERS, PIXEL_TO_METERS, 0f);
-
+    world.setContactListener(new PlatoonContactListener());
+    debugMatrix = camera.combined.cpy().scale(Helper.FACTOR, Helper.FACTOR, 0f);
 
     Gdx.input.setInputProcessor(this);
   }

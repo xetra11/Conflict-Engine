@@ -12,6 +12,4 @@ public abstract class SensorCreator {
     return new SensorEntity(circleBody);
   }
 
-
-
 }

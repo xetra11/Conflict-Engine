@@ -62,4 +62,8 @@ public abstract class Platoon {
   public void setStrength(byte strength) {
     this.strength = strength;
   }
+
+  public short getPlatoonID() {
+    return platoonID;
+  }
 }
