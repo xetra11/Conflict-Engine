@@ -1,11 +1,8 @@
 package com.condorgames.prototype;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-
-import javax.xml.bind.ValidationEvent;
 
 public abstract class Helper {
   private static float FACTOR = 100f;
@@ -34,7 +31,7 @@ public abstract class Helper {
     return pixelValue / FACTOR;
   }
 
-  public static Vector2 getMappedScene2DToBox2DPosition(Vector2 position) {
+  public static Vector2 getConvertedScene2DToBox2DPosition(Vector2 position) {
     Vector2 scene2DPosition = new Vector2();
     scene2DPosition.x = position.x - Helper.getPixelToMeter(Gdx.graphics.getWidth() / 2);
     scene2DPosition.y = position.y - Helper.getPixelToMeter(Gdx.graphics.getHeight() / 2);
@@ -44,7 +41,7 @@ public abstract class Helper {
   public static void setClickedPositionForBox2D(float screenX, float screenY, Body body){
     Vector2 vector2 = new Vector2(screenX, Gdx.graphics.getHeight() - screenY);
     Vector2 meterVector = Helper.getPixelToMeter(vector2);
-    body.setTransform(Helper.getMappedScene2DToBox2DPosition(meterVector), body.getAngle());
+    body.setTransform(Helper.getConvertedScene2DToBox2DPosition(meterVector), body.getAngle());
   }
 
   public static float vectorToAngle (Vector2 vector) {

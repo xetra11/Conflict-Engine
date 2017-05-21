@@ -1,44 +1,48 @@
-//package com.condorgames.prototype;
-//
-//import org.jboss.arquillian.container.test.api.Deployment;
-//import org.jboss.arquillian.junit.Arquillian;
-//import org.jboss.shrinkwrap.api.ShrinkWrap;
-//import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-//import org.jboss.shrinkwrap.api.spec.JavaArchive;
-//import org.junit.runner.RunWith;
-//
-//import static org.junit.Assert.*;
+package com.condorgames.prototype;
 
-///***************************************
-// * Author: p.hoefer
-// * Datum: 20.05.2017
-// * Funktion/Komponente: -
-// * Beschreibung: -
-// * API: -
-// **************************************/
-//@RunWith(Arquillian.class)
-//public class HelperTest {
-//  @org.junit.Test
-//  public void getPixelToMeter() throws Exception {
-//  }
-//
-//  @org.junit.Test
-//  public void getPixelToMeter1() throws Exception {
-//  }
-//
-//  @org.junit.Test
-//  public void getMeterToPixel() throws Exception {
-//  }
-//
-//  @org.junit.Test
-//  public void getMeterToPixel1() throws Exception {
-//  }
-//
-//  @Deployment
-//  public static JavaArchive createDeployment() {
-//    return ShrinkWrap.create(JavaArchive.class)
-//            .addClass(Helper.class)
-//            .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-//  }
-//
-//}
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.internal.runners.JUnit38ClassRunner;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+import org.mockito.stubbing.Answer;
+
+import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
+
+public class HelperTest {
+
+  @Test
+  public void getPixelToMeterVector() throws Exception {
+    Vector2 expected = new Vector2(0.01f, 0.01f);
+    Vector2 actual = Helper.getPixelToMeter(new Vector2(1f, 1f));
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void getPixelToMeterFloats() throws Exception {
+    Vector2 expected = new Vector2(0.01f, 0.01f);
+    Vector2 actual = Helper.getPixelToMeter(1f, 1f);
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void getMeterToPixelVector() throws Exception {
+    Vector2 expected = new Vector2(1f, 1f);
+    Vector2 actual = Helper.getMeterToPixel(new Vector2(0.01f, 0.01f));
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void getMeterToPixelFloats() throws Exception {
+    Vector2 expected = new Vector2(1f, 1f);
+    Vector2 actual = Helper.getMeterToPixel(0.01f, 0.01f);
+    assertEquals(expected, actual);
+  }
+
+}

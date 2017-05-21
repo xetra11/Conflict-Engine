@@ -1,6 +1,5 @@
 package com.condorgames.prototype;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -48,7 +47,7 @@ public abstract class BodyFactory {
     BodyDef bodyDef = new BodyDef();
     FixtureDef fixtureDef = new FixtureDef();
 
-    bodyDef.position.set(Helper.getMappedScene2DToBox2DPosition(position));
+    bodyDef.position.set(Helper.getConvertedScene2DToBox2DPosition(position));
     bodyDef.type = type;
 
     fixtureDef.density = 1.0f;
