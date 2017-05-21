@@ -3,6 +3,7 @@ package com.condorgames.prototype;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.condorgames.prototype.entities.*;
+import sun.awt.geom.AreaOp;
 
 public class CondorAiPrototype extends ApplicationAdapter implements InputProcessor{
   private Box2DDebugRenderer debugRenderer;
@@ -27,16 +29,8 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   @Override
   public void create() {
     createMeta();
-    friendly = PlatoonCreator.createSteerablePlatoonEntity(world, new Vector2(2f, 1f));
-    enemy = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(2.5f, 4f));
-    targetCrosshair = SensorCreator.createTargetCircleEntity(world, 0.05f);
-
-    Arrive<Vector2> arrive = new Arrive<Vector2>(friendly, targetCrosshair);
-    arrive.setArrivalTolerance(0.01f);
-    arrive.setDecelerationRadius(0.5f);
-    arrive.setTimeToTarget(0.1f);
-
-    friendly.setSteeringBehavior(arrive);
+    createEntities();
+    setupAI();
   }
 
   @Override
@@ -54,6 +48,21 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   public void dispose() {
   }
 
+  private void setupAI() {
+    Arrive<Vector2> arrive = new Arrive<Vector2>(friendly, targetCrosshair);
+    arrive.setArrivalTolerance(0.01f);
+    arrive.setDecelerationRadius(0.5f);
+    arrive.setTimeToTarget(0.1f);
+
+    friendly.setSteeringBehavior(arrive);
+  }
+
+  private void createEntities() {
+    friendly = PlatoonCreator.createSteerablePlatoonEntity(world, new Vector2(2f, 1f));
+    enemy = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(2.5f, 4f));
+    targetCrosshair = SensorCreator.createTargetCircleEntity(world, 0.05f);
+  }
+
   private void createMeta() {
     debugRenderer = new Box2DDebugRenderer();
     world = new World(new Vector2(0f,0f), false);
@@ -67,7 +76,27 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   //<editor-fold desc="InputProcessing">
   @Override
   public boolean keyDown(int keycode) {
-    return false;
+
+    switch(keycode){
+      case Input.Keys.UP:{
+        camera.translate(0f, 1f);
+        break;
+      }
+      case Input.Keys.DOWN:{
+        camera.translate(0f, -1f);
+        break;
+      }
+      case Input.Keys.RIGHT:{
+        camera.translate(1f, 0f);
+        break;
+      }
+      case Input.Keys.LEFT:{
+        camera.translate(-1f, 0f);
+        break;
+      }
+    }
+
+    return true;
   }
 
   @Override
