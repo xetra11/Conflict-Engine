@@ -9,34 +9,31 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.condorgames.prototype.entities.PlatoonCreator;
-import com.condorgames.prototype.entities.SteerablePlatoonEntity;
-import com.condorgames.prototype.entities.SensorEntity;
+import com.condorgames.prototype.entities.*;
 
 public class CondorAiPrototype extends ApplicationAdapter implements InputProcessor{
   public static final float PIXEL_TO_METERS = 100f;
   private Box2DDebugRenderer debugRenderer;
   private Matrix4 debugMatrix;
-  private Body enemy, movementTarget;
+  private SensorEntity targetCrosshair;
   private World world;
   private OrthographicCamera camera;
 
   private SteerablePlatoonEntity friendly;
+  private SensorEntity enemy;
   private SensorEntity moveTarget;
 
   @Override
   public void create() {
     createMeta();
     friendly = PlatoonCreator.createSteerablePlatoonEntity(world, new Vector2(2f, 1f));
-    enemy = BodyCreator.createRectangleBody(0.5f, 0.5f, new Vector2(3f, 4f), world, BodyDef.BodyType.DynamicBody);
-    movementTarget = BodyCreator.createCircleBody(0.2f, new Vector2(1.5f, 3f), world, BodyDef.BodyType.StaticBody);
+    enemy = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(2.5f, 4f));
+    targetCrosshair = SensorCreator.createTargetCircleEntity(world, 0.05f);
 
-    moveTarget = new SensorEntity(movementTarget);
-    Arrive<Vector2> arrive = new Arrive<Vector2>(friendly, moveTarget);
+    Arrive<Vector2> arrive = new Arrive<Vector2>(friendly, targetCrosshair);
     arrive.setArrivalTolerance(0.01f);
     arrive.setDecelerationRadius(0.5f);
     arrive.setTimeToTarget(0.1f);
@@ -86,7 +83,9 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
 
   @Override
   public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    Helper.setClickedPositionForBox2D(screenX, screenY, movementTarget);
+    Vector3 vector3 = new Vector3(screenX, screenY, 0);
+    camera.unproject(vector3);
+    Helper.setClickedPositionForBox2D(vector3.x, vector3.y, targetCrosshair.getBody());
     return true;
   }
 
