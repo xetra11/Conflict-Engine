@@ -13,28 +13,28 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.condorgames.prototype.entities.AutonomousPlatoonEntity;
+import com.condorgames.prototype.entities.PlatoonCreator;
+import com.condorgames.prototype.entities.SteerablePlatoonEntity;
 import com.condorgames.prototype.entities.SensorEntity;
 
 public class CondorAiPrototype extends ApplicationAdapter implements InputProcessor{
   public static final float PIXEL_TO_METERS = 100f;
   private Box2DDebugRenderer debugRenderer;
   private Matrix4 debugMatrix;
-  private Body platoon, enemy, movementTarget;
+  private Body enemy, movementTarget;
   private World world;
   private OrthographicCamera camera;
 
-  private AutonomousPlatoonEntity friendly;
+  private SteerablePlatoonEntity friendly;
   private SensorEntity moveTarget;
 
   @Override
   public void create() {
     createMeta();
-    platoon = BodyFactory.createRectangleBody(1f, 0.5f, new Vector2(1.5f, 0.5f), world, BodyDef.BodyType.DynamicBody);
-    enemy = BodyFactory.createRectangleBody(0.5f, 0.5f, new Vector2(3f, 4f), world, BodyDef.BodyType.DynamicBody);
-    movementTarget = BodyFactory.createCircleBody(0.2f, new Vector2(1.5f, 3f), world, BodyDef.BodyType.StaticBody);
+    friendly = PlatoonCreator.createSteerablePlatoonEntity(world, new Vector2(2f, 1f));
+    enemy = BodyCreator.createRectangleBody(0.5f, 0.5f, new Vector2(3f, 4f), world, BodyDef.BodyType.DynamicBody);
+    movementTarget = BodyCreator.createCircleBody(0.2f, new Vector2(1.5f, 3f), world, BodyDef.BodyType.StaticBody);
 
-    friendly = new AutonomousPlatoonEntity(platoon);
     moveTarget = new SensorEntity(movementTarget);
     Arrive<Vector2> arrive = new Arrive<Vector2>(friendly, moveTarget);
     arrive.setArrivalTolerance(0.01f);
@@ -42,8 +42,6 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     arrive.setTimeToTarget(0.1f);
 
     friendly.setSteeringBehavior(arrive);
-
-
   }
 
   @Override

@@ -3,30 +3,30 @@ package com.condorgames.prototype;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
-public abstract class BodyFactory {
+public abstract class BodyCreator {
 
   public static Body createRectangleBody(World world, BodyDef.BodyType type) {
-    return BodyFactory.createRectangleBody(2f, 2f, new Vector2(0f, 0f), world, type);
+    return BodyCreator.createRectangleBody(2f, 2f, new Vector2(0f, 0f), world, type);
   }
 
   public static Body createRectangleBody(Vector2 position, World world, BodyDef.BodyType type) {
-    return BodyFactory.createRectangleBody(2f, 2f, position, world, type);
+    return BodyCreator.createRectangleBody(2f, 2f, position, world, type);
   }
 
   public static Body createRectangleBody(float width, float height, World world, BodyDef.BodyType type) {
-    return BodyFactory.createRectangleBody(width, height, new Vector2(0f, 0f), world, type);
+    return BodyCreator.createRectangleBody(width, height, new Vector2(0f, 0f), world, type);
   }
 
   public static Body createCircleBody(World world, BodyDef.BodyType type){
-    return BodyFactory.createCircleBody(0.5f, new Vector2(0f, 0f), world, type);
+    return BodyCreator.createCircleBody(0.5f, new Vector2(0f, 0f), world, type);
   }
 
   public static Body createCircleBody(Vector2 position, World world, BodyDef.BodyType type){
-    return BodyFactory.createCircleBody(0.5f, position, world, type);
+    return BodyCreator.createCircleBody(0.5f, position, world, type);
   }
 
   public static Body createCircleBody(float radius, World world, BodyDef.BodyType type){
-    return BodyFactory.createCircleBody(radius, new Vector2(0f, 0f), world, type);
+    return BodyCreator.createCircleBody(radius, new Vector2(0f, 0f), world, type);
   }
 
   public static Body createRectangleBody(float width, float height, Vector2 position, World world, BodyDef.BodyType type) {

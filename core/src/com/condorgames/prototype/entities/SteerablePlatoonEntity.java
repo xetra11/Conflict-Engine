@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.Helper;
 
-public class AutonomousPlatoonEntity extends PlatoonPhysicEntity implements Steerable<Vector2> {
+public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steerable<Vector2> {
 
   private SteeringBehavior steeringBehavior;
   private SteeringAcceleration<Vector2> steeringOutput;
@@ -18,7 +18,7 @@ public class AutonomousPlatoonEntity extends PlatoonPhysicEntity implements Stee
   private float maxAngularSpeed = 0.5f;
   private float maxAngularAcceleration = 0.5f;
 
-  public AutonomousPlatoonEntity(Body body) {
+  public SteerablePlatoonEntity(Body body) {
     super(body);
     steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
   }
@@ -146,32 +146,32 @@ public class AutonomousPlatoonEntity extends PlatoonPhysicEntity implements Stee
     return new Location<Vector2>() {
       @Override
       public Vector2 getPosition() {
-        return AutonomousPlatoonEntity.this.getPosition();
+        return SteerablePlatoonEntity.this.getPosition();
       }
 
       @Override
       public float getOrientation() {
-        return AutonomousPlatoonEntity.this.getOrientation();
+        return SteerablePlatoonEntity.this.getOrientation();
       }
 
       @Override
       public void setOrientation(float orientation) {
-        AutonomousPlatoonEntity.this.setOrientation(orientation);
+        SteerablePlatoonEntity.this.setOrientation(orientation);
       }
 
       @Override
       public float vectorToAngle(Vector2 vector) {
-        return AutonomousPlatoonEntity.this.vectorToAngle(vector);
+        return SteerablePlatoonEntity.this.vectorToAngle(vector);
       }
 
       @Override
       public Vector2 angleToVector(Vector2 outVector, float angle) {
-        return AutonomousPlatoonEntity.this.angleToVector(outVector, angle);
+        return SteerablePlatoonEntity.this.angleToVector(outVector, angle);
       }
 
       @Override
       public Location<Vector2> newLocation() {
-        return AutonomousPlatoonEntity.this.newLocation();
+        return SteerablePlatoonEntity.this.newLocation();
       }
     };
   }
