@@ -56,14 +56,20 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void createUI() {
+    BitmapFont bitmapFont = skin.get(BitmapFont.class);
+    bitmapFont.getData().setScale(0.5f);
     createHealthUI();
     createFPSUI();
   }
 
   private void createUILoggerTextArea() {
-    textAreaLogger = new TextArea("Test1\nTest2\nTest3\n", skin, "default");
-    textAreaLogger.setPosition(10f, Gdx.graphics.getHeight() - 100f);
-    textAreaLogger.setBounds(10f, Gdx.graphics.getHeight() - 100f, 500f, 150f);
+    textAreaLogger = new TextArea("", skin, "default");
+
+    textAreaLogger.setX(Gdx.graphics.getWidth() - 200);
+    textAreaLogger.setY(Gdx.graphics.getHeight() - 225);
+    textAreaLogger.setWidth(200);
+    textAreaLogger.setHeight(200);
+
     stage.addActor(textAreaLogger);
   }
 

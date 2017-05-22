@@ -1,6 +1,6 @@
 {
   com.badlogic.gdx.graphics.g2d.BitmapFont: {
-    default-font: {
+    default: {
       file: default.fnt
     }
   },
@@ -71,14 +71,14 @@
     default: {
       down: default-round-down,
       up: default-round,
-      font: default-font,
+      font: default,
       fontColor: white
     },
     toggle: {
       down: default-round-down,
       up: default-round,
       checked: default-round-down,
-      font: default-font,
+      font: default,
       fontColor: white,
       downFontColor: red
     }
@@ -94,12 +94,12 @@
   },
   com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
     default: {
-      font: default-font,
+      font: default,
       fontColor: white,
       background: default-select,
       scrollStyle: default,
       listStyle: {
-        font: default-font,
+        font: default,
         selection: default-select-selection
       }
     }
@@ -114,12 +114,12 @@
   },
   com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
     default: {
-      titleFont: default-font,
+      titleFont: default,
       background: default-window,
       titleFontColor: white
     },
     dialog: {
-      titleFont: default-font,
+      titleFont: default,
       background: default-window,
       titleFontColor: white,
       stageBackground: dialogDim
@@ -147,13 +147,13 @@
   },
   com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
     default: {
-      font: default-font,
+      font: default,
       fontColor: white
     }
   },
   com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
     default: {
-      font: default-font,
+      font: default,
       fontColor: white,
     }
   },
@@ -161,7 +161,7 @@
     default: {
       checkboxOn: check-on,
       checkboxOff: check-off,
-      font: default-font,
+      font: default,
       fontColor: white
     }
   },
@@ -170,7 +170,7 @@
       fontColorUnselected: white,
       selection: selection,
       fontColorSelected: white,
-      font: default-font
+      font: default
     }
   },
   com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
@@ -189,7 +189,7 @@
   com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
     default: {
       label: {
-        font: default-font,
+        font: default,
         fontColor: white
       },
       background: default-pane
