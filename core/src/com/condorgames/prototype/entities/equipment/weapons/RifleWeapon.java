@@ -4,7 +4,7 @@ public class RifleWeapon extends WeaponBase {
   private float reloadTime;
   private float cadence;
 
-  protected RifleWeapon() {
+  public RifleWeapon() {
     super(12);
     this.reloadTime = 6f;
     this.cadence = 1f;

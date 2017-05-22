@@ -1,6 +1,7 @@
 package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 
 public abstract class PlatoonPhysicEntity extends Platoon{
   private Body body;

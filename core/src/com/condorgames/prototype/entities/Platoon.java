@@ -2,6 +2,7 @@ package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.condorgames.prototype.battleresolver.AbstractBattleParticipant;
+import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 
 public abstract class Platoon extends AbstractBattleParticipant {
 

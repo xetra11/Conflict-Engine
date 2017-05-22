@@ -15,14 +15,7 @@ public class BattleSituation {
   }
 
   public void resolve() {
-    while (participantA.getMorale().getValue() >= BattleParticipant.Morale.LOW.getValue()) {
-      try {
-        Thread.sleep(2000);
-        participantA.decreaseMorale();
-        System.out.println(participantA.getMorale());
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
+    participantA.fire();
+
   }
 }

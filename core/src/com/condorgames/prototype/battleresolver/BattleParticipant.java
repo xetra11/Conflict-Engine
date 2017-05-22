@@ -1,5 +1,7 @@
 package com.condorgames.prototype.battleresolver;
 
+import com.condorgames.prototype.entities.equipment.weapons.Weapon;
+
 public interface BattleParticipant {
   public enum Morale {
     FANATIC(5) {
@@ -33,17 +35,14 @@ public interface BattleParticipant {
       return values()[ordinal() - 1];
     }
 
-
     Morale(int morale) {
       this.moraleIndex = morale;
     }
   }
 
   void setMorale(Morale morale);
-
   void decreaseMorale();
-
   void raiseMorale();
-
+  void fire();
   Morale getMorale();
 }

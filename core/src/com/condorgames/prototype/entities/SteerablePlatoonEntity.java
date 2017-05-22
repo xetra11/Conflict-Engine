@@ -7,6 +7,8 @@ import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.Helper;
+import com.condorgames.prototype.entities.equipment.weapons.RifleWeapon;
+import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 
 public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steerable<Vector2> {
 
@@ -18,12 +20,11 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
   private float maxAngularSpeed = 0.5f;
   private float maxAngularAcceleration = 0.5f;
   private boolean tagged;
-  private int rifleAmmo = 10;
-  private float rifleLoadTime = 8f;
-  private float rifleCadence = 0.5f;
+  private Weapon weapon;
 
   public SteerablePlatoonEntity(Body body, Faction faction) {
     super(body, faction);
+    weapon = new RifleWeapon();
     steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
   }
 
@@ -40,6 +41,15 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
         }
       }
     }
+  }
+
+  @Override
+  public void fire() {
+    weapon.fireWeapon(weapon -> {
+      System.out.println("I shot");
+      System.out.println("Ammo left: " + weapon.getAmmoCount());
+    });
+
   }
 
   public void update() {

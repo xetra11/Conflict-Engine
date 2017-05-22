@@ -1,5 +1,7 @@
 package com.condorgames.prototype.battleresolver;
 
+import com.condorgames.prototype.entities.equipment.weapons.Weapon;
+
 public abstract class AbstractBattleParticipant implements BattleParticipant {
   protected Morale morale;
 
@@ -26,5 +28,4 @@ public abstract class AbstractBattleParticipant implements BattleParticipant {
   public void raiseMorale() {
     morale = morale.raise();
   }
-
 }
