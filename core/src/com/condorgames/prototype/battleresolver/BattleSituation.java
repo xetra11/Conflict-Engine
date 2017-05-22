@@ -15,8 +15,10 @@ public class BattleSituation {
   }
 
   public void resolve(){
-    Gdx.app.log("BattleSituation", "resolve called");
-    Gdx.app.log("BattleSituation.Participants", participantA.toString());
-    Gdx.app.log("BattleSituation.Participants", participantB.toString());
+    while(participantA.getMorale().getValue() >= BattleParticipant.Morale.LOW.getValue()){
+
+    }
+
+
   }
 }

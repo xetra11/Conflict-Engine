@@ -83,8 +83,8 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void createHealthUI() {
-    labelHealth = new Label("Health:", skin, "default");
-    textFieldHealth = new TextField(String.valueOf(friendly.getHealth()), skin, "default");
+    labelHealth = new Label("Strength:", skin, "default");
+    textFieldHealth = new TextField(String.valueOf(friendly.getStrength()), skin, "default");
     textFieldHealth.setPosition(Helper.getMeterToPixel(1.1f), Helper.getMeterToPixel(0f));
     labelHealth.setPosition(Helper.getMeterToPixel(0f), Helper.getMeterToPixel(0f));
     stage.addActor(labelHealth);

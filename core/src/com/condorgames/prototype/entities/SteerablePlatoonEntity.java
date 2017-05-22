@@ -13,11 +13,14 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
   private SteeringBehavior steeringBehavior;
   private SteeringAcceleration<Vector2> steeringOutput;
 
-  private float maxLinearSpeed = 0.3f;
-  private float maxLinearAcceleration = 0.3f;
+  private float maxLinearSpeed = 1f;
+  private float maxLinearAcceleration = 1f;
   private float maxAngularSpeed = 0.5f;
   private float maxAngularAcceleration = 0.5f;
   private boolean tagged;
+  private int rifleAmmo = 10;
+  private float rifleLoadTime = 8f;
+  private float rifleCadence = 0.5f;
 
   public SteerablePlatoonEntity(Body body, Faction faction) {
     super(body, faction);
@@ -178,5 +181,4 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
       }
     };
   }
-  //endregion
 }

@@ -8,14 +8,23 @@ public abstract class AbstractBattleParticipant implements BattleParticipant {
   }
 
   @Override
-  public abstract void setMorale(Morale morale);
+  public void setMorale(Morale morale) {
+    this.morale = morale;
+  }
 
   @Override
-  public abstract Morale getMorale();
+  public Morale getMorale() {
+    return morale;
+  }
 
   @Override
-  public abstract void setHealth(float health);
+  public void decreaseMorale() {
+    morale.decrease();
+  }
 
   @Override
-  public abstract float getHealth();
+  public void raiseMorale() {
+    morale.raise();
+  }
+
 }

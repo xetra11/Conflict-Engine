@@ -31,8 +31,7 @@ public class PlatoonContactListener implements ContactListener {
     platoon.setTagged(true);
     platoon.getBody().setLinearVelocity(0f, 0f);
     // Mock Health loss
-    platoon.setHealth(90);
-    context.getTextFieldHealth().setText(String.valueOf(platoon.getHealth()));
+    context.getTextFieldHealth().setText(String.valueOf(platoon.getStrength()));
     // Play Radio Report
     Music background = Gdx.audio.newMusic(Gdx.files.internal("combat.wav"));
     Music ammoReport = Gdx.audio.newMusic(Gdx.files.internal("chatter_wounded.wav"));
@@ -46,7 +45,7 @@ public class PlatoonContactListener implements ContactListener {
     );
     //Create BattleSituation
     BattleSituation battleSituation = BattleSituation.createBattleSituation(platoon, enemy);
-    context.getBattleResolver().addBattleSituations(battleSituation);
+//    context.getBattleResolver().addBattleSituations(battleSituation);
   }
 
   @Override
