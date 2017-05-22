@@ -7,8 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.condorgames.prototype.entities.SteerablePlatoonEntity;
-import com.condorgames.prototype.entities.battleresolver.BattleResolver;
-import com.condorgames.prototype.entities.battleresolver.BattleSituation;
+import com.condorgames.prototype.battleresolver.BattleSituation;
 
 public class PlatoonContactListener implements ContactListener {
   private CondorAiPrototype context;

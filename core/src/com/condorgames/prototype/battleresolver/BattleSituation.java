@@ -1,4 +1,4 @@
-package com.condorgames.prototype.entities.battleresolver;
+package com.condorgames.prototype.battleresolver;
 
 import com.badlogic.gdx.Gdx;
 

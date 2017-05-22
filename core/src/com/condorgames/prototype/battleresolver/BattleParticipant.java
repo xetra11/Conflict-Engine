@@ -1,4 +1,4 @@
-package com.condorgames.prototype.entities.battleresolver;
+package com.condorgames.prototype.battleresolver;
 
 public interface BattleParticipant {
   public enum Morale {
