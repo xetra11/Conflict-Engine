@@ -3,7 +3,6 @@ package com.condorgames.prototype;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,11 +15,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.condorgames.prototype.entities.*;
-import org.junit.Test;
-import sun.awt.geom.AreaOp;
 
 public class CondorAiPrototype extends ApplicationAdapter implements InputProcessor {
   // AI & Physics
@@ -31,7 +27,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private OrthographicCamera camera;
 
   private SteerablePlatoonEntity friendly;
-  private SensorEntity enemy;
+  private SensorEntity enemyOne, enemyTwo, enemyThree;
   private SensorEntity moveTarget;
 
   //UI
@@ -39,22 +35,40 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private SpriteBatch spriteBatch;
   private Skin skin;
 
-  private Label label;
-  private TextField textField;
+  private Label labelHealth, labelFPS;
+  private TextField textFieldHealth, textFieldFPS;
 
 
   @Override
   public void create() {
     createMeta();
     createEntities();
+    createUI();
     setupAI();
+  }
 
-    label = new Label("Health:", skin, "default");
-    textField = new TextField(String.valueOf(friendly.getHealth()), skin, "default");
-    textField.setPosition(Helper.getMeterToPixel(1f), Helper.getMeterToPixel(0f));
-    label.setPosition(Helper.getMeterToPixel(0f), Helper.getMeterToPixel(0f));
-    stage.addActor(label);
-    stage.addActor(textField);
+  private void createUI() {
+    createHealthUI();
+    createFPSUI();
+
+  }
+
+  private void createFPSUI() {
+    labelFPS = new Label("FPS:", skin, "default");
+    textFieldFPS = new TextField("", skin, "default");
+    textFieldFPS.setPosition(Gdx.graphics.getWidth() -50f, Gdx.graphics.getHeight() -25f);
+    labelFPS.setPosition(Gdx.graphics.getWidth() -100f, Gdx.graphics.getHeight() -25f);
+    stage.addActor(labelFPS);
+    stage.addActor(textFieldFPS);
+  }
+
+  private void createHealthUI() {
+    labelHealth = new Label("Health:", skin, "default");
+    textFieldHealth = new TextField(String.valueOf(friendly.getHealth()), skin, "default");
+    textFieldHealth.setPosition(Helper.getMeterToPixel(1.1f), Helper.getMeterToPixel(0f));
+    labelHealth.setPosition(Helper.getMeterToPixel(0f), Helper.getMeterToPixel(0f));
+    stage.addActor(labelHealth);
+    stage.addActor(textFieldHealth);
   }
 
   @Override
@@ -68,6 +82,9 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     spriteBatch.begin();
     stage.draw();
     spriteBatch.end();
+
+    //render FPS
+    textFieldFPS.setText(String.valueOf(1 / Gdx.graphics.getDeltaTime()));
 
     debugRenderer.render(world, debugMatrix);
   }
@@ -86,8 +103,10 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void createEntities() {
-    friendly = PlatoonCreator.createSteerablePlatoonEntity(world, new Vector2(2f, 1f));
-    enemy = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(2.5f, 4f));
+    friendly = PlatoonCreator.createSteerablePlatoonEntity(world, new Vector2(3f, 2f));
+    enemyOne = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(4f, 7f));
+    enemyTwo = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(6f, 5f));
+    enemyThree = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(9f, 9f));
     targetCrosshair = SensorCreator.createTargetCircleEntity(world, 0.05f);
   }
 
@@ -150,19 +169,19 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   //</editor-fold>
 
 
-  public Label getLabel() {
-    return label;
+  public Label getLabelHealth() {
+    return labelHealth;
   }
 
-  public void setLabel(Label label) {
-    this.label = label;
+  public void setLabelHealth(Label labelHealth) {
+    this.labelHealth = labelHealth;
   }
 
-  public TextField getTextField() {
-    return textField;
+  public TextField getTextFieldHealth() {
+    return textFieldHealth;
   }
 
-  public void setTextField(TextField textField) {
-    this.textField = textField;
+  public void setTextFieldHealth(TextField textFieldHealth) {
+    this.textFieldHealth = textFieldHealth;
   }
 }

@@ -28,7 +28,7 @@ public class PlatoonContactListener implements ContactListener {
     platoon.setTagged(true);
     platoon.getBody().setLinearVelocity(0f, 0f);
     platoon.setHealth(90);
-    context.getTextField().setText(String.valueOf(platoon.getHealth()));
+    context.getTextFieldHealth().setText(String.valueOf(platoon.getHealth()));
     Music background = Gdx.audio.newMusic(Gdx.files.internal("combat.wav"));
     Music ammoReport = Gdx.audio.newMusic(Gdx.files.internal("chatter_wounded.wav"));
     background.play();
