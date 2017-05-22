@@ -1,19 +1,11 @@
 package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.condorgames.prototype.entities.battleresolver.BattleParticipantImpl;
 
-public abstract class Platoon {
+public abstract class Platoon extends BattleParticipantImpl{
 
   private static short platoonCount = 0;
-
-  public enum Morale {
-    FANATIC,
-    HIGH,
-    NORMAL,
-    LOW,
-    FLEEING,
-    PINNED_DOWN
-  }
 
   // TODO: assigning Fresh_Group does not work as intedend
   private static final byte RADIOMAN  = (byte) 00000001;
@@ -28,29 +20,32 @@ public abstract class Platoon {
 
   private short platoonID;
   private float health;
-  private Morale morale;
   private byte strength;
 
   public Platoon(Morale morale) {
-    this.morale = morale;
+    super(morale);
     health = 100;
     strength = FRESH_GROUP;
     platoonID = ++platoonCount;
     Gdx.app.log("Platoon", "created new Platoon with ID: " + platoonID);
   }
 
+  @Override
   public float getHealth() {
     return health;
   }
 
+  @Override
   public void setHealth(float health) {
     this.health = health;
   }
 
+  @Override
   public Morale getMorale() {
-    return morale;
+    return this.morale;
   }
 
+  @Override
   public void setMorale(Morale morale) {
     this.morale = morale;
   }
