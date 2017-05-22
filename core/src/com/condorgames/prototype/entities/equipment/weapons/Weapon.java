@@ -5,6 +5,7 @@ public interface Weapon {
   public enum WeaponState{
     RELOADING,
     READY,
+    NO_AMMO,
     JAMMED
   }
 

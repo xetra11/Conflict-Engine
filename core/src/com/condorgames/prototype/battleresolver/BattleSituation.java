@@ -16,6 +16,5 @@ public class BattleSituation {
 
   public void resolve() {
     participantA.fire();
-
   }
 }

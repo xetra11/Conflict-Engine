@@ -34,7 +34,14 @@ public abstract class WeaponBase implements Weapon {
 
   @Override
   public void fireWeapon(WeaponFiredListener weaponFiredListener) {
-    ammoCount--;
-    weaponFiredListener.onFire(this);
+    if(ammoCount < 0){
+      weaponState = WeaponState.NO_AMMO;
+      System.out.println("No Ammo!");
+    }else{
+      ammoCount--;
+    }
+    if(weaponState.equals(WeaponState.READY)){
+      weaponFiredListener.onFire(this);
+    }
   }
 }
