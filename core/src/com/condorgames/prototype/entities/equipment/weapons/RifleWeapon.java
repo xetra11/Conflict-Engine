@@ -12,11 +12,11 @@ public class RifleWeapon extends WeaponBase {
 
   @Override
   public float getReloadTime() {
-    return 0;
+    return reloadTime;
   }
 
   @Override
   public float getCadence() {
-    return 0;
+    return cadence;
   }
 }

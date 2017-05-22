@@ -13,7 +13,7 @@ public interface Weapon {
   void setState(WeaponState state);
   int getAmmoCount();
   void reloadWeapon();
-  void fireWeapon(WeaponFiredListener weaponFiredListener);
+  void fireWeapon(float deltaTime, WeaponFiredListener weaponFiredListener);
   float getReloadTime();
   float getCadence();
 }

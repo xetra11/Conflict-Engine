@@ -44,11 +44,11 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
   }
 
   @Override
-  public void fire() {
-    weapon.fireWeapon(weapon -> {
-      System.out.println("I shot");
-      System.out.println("Ammo left: " + weapon.getAmmoCount());
-    });
+  public void fire(float deltaTime) {
+    weapon.fireWeapon(deltaTime, weapon -> {
+      System.out.println("Fired!");
+      System.out.println("Ammo Count: " + weapon.getAmmoCount());
+    } );
 
   }
 

@@ -14,7 +14,7 @@ public class BattleSituation {
     return new BattleSituation(participantA, participantB);
   }
 
-  public void resolve() {
-    participantA.fire();
+  public void resolve(float deltaTime) {
+    participantA.fire(deltaTime);
   }
 }

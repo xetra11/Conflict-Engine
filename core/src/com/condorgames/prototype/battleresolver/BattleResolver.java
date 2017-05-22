@@ -16,12 +16,12 @@ public class BattleResolver {
     this.battleSituations.addAll(Arrays.asList(battleSituations));
   }
 
-  public void resolve(boolean parallel) {
+  public void resolve(boolean parallel, float deltaTime) {
     if (battleSituations.isEmpty() == false) {
       if (parallel) {
-        battleSituations.parallelStream().forEach(BattleSituation::resolve);
+        battleSituations.parallelStream().forEach(battleSituation -> battleSituation.resolve(deltaTime));
       } else {
-        battleSituations.forEach(BattleSituation::resolve);
+        battleSituations.forEach(battleSituation -> battleSituation.resolve(deltaTime));
       }
 
     }

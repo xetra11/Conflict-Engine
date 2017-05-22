@@ -5,6 +5,7 @@ public abstract class WeaponBase implements Weapon {
   private WeaponState weaponState;
   private int ammoCount;
   private final int maxAmmo;
+  private static float remainingReloadTime;
 
   protected WeaponBase(int maxAmmo) {
     this.maxAmmo = maxAmmo;
@@ -33,15 +34,30 @@ public abstract class WeaponBase implements Weapon {
   }
 
   @Override
-  public void fireWeapon(WeaponFiredListener weaponFiredListener) {
-    if(ammoCount < 0){
+  public void fireWeapon(float deltaTime, WeaponFiredListener weaponFiredListener) {
+
+
+    if (ammoCount <= 0 && weaponState.equals(WeaponState.READY)) {
       weaponState = WeaponState.NO_AMMO;
       System.out.println("No Ammo!");
-    }else{
-      ammoCount--;
     }
-    if(weaponState.equals(WeaponState.READY)){
+
+    if (weaponState.equals(WeaponState.READY)) {
+      ammoCount--;
       weaponFiredListener.onFire(this);
+    }
+
+    if (weaponState.equals(WeaponState.NO_AMMO)) {
+      weaponState = WeaponState.RELOADING;
+      remainingReloadTime = getReloadTime();
+    }
+    if (remainingReloadTime > 0 && weaponState.equals(WeaponState.RELOADING)) {
+      remainingReloadTime -= deltaTime;
+    }
+    if (remainingReloadTime < 0 && weaponState.equals(WeaponState.RELOADING)) {
+      reloadWeapon();
+      weaponState = WeaponState.READY;
+      System.out.println("Weapon reloaded!");
     }
   }
 }
