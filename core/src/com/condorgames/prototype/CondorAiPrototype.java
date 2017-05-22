@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.entities.*;
 import com.condorgames.prototype.battleresolver.BattleResolver;
 
@@ -133,6 +134,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void createMeta() {
+    AudioManager.loadAudio();
     spriteBatch = new SpriteBatch();
     stage = new Stage();
     skin = new Skin(Gdx.files.internal("uiskin.json"));

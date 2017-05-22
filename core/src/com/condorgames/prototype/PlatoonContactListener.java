@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.entities.SteerablePlatoonEntity;
 import com.condorgames.prototype.battleresolver.BattleSituation;
 
@@ -35,14 +36,8 @@ public class PlatoonContactListener implements ContactListener {
     // Play Radio Report
     Music background = Gdx.audio.newMusic(Gdx.files.internal("combat.wav"));
     Music ammoReport = Gdx.audio.newMusic(Gdx.files.internal("chatter_wounded.wav"));
-    background.play();
-    ammoReport.play();
-    ammoReport.setOnCompletionListener(Music -> {
-              background.stop();
-              ammoReport.dispose();
-              background.dispose();
-            }
-    );
+    AudioManager.playWoundedWithBackground();
+
     //Create BattleSituation
     BattleSituation battleSituation = BattleSituation.createBattleSituation(platoon, enemy);
     context.getBattleResolver().addBattleSituations(battleSituation);

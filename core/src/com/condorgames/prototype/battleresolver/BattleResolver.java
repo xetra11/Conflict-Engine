@@ -23,7 +23,6 @@ public class BattleResolver {
       } else {
         battleSituations.forEach(battleSituation -> battleSituation.resolve(deltaTime));
       }
-
     }
   }
 }
