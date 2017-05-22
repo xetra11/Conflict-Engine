@@ -45,7 +45,7 @@ public class PlatoonContactListener implements ContactListener {
     );
     //Create BattleSituation
     BattleSituation battleSituation = BattleSituation.createBattleSituation(platoon, enemy);
-//    context.getBattleResolver().addBattleSituations(battleSituation);
+    context.getBattleResolver().addBattleSituations(battleSituation);
   }
 
   @Override

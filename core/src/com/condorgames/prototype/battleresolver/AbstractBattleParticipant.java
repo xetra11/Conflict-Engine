@@ -19,12 +19,12 @@ public abstract class AbstractBattleParticipant implements BattleParticipant {
 
   @Override
   public void decreaseMorale() {
-    morale.decrease();
+    morale = morale.decrease();
   }
 
   @Override
   public void raiseMorale() {
-    morale.raise();
+    morale = morale.raise();
   }
 
 }
