@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
@@ -15,9 +16,10 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.condorgames.prototype.entities.*;
-import com.condorgames.prototype.entities.battleresolver.BattleResolver;
+import com.condorgames.prototype.battleresolver.BattleResolver;
 
 public class CondorAiPrototype extends ApplicationAdapter implements InputProcessor {
   // AI & Physics
@@ -26,6 +28,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private SensorEntity targetCrosshair;
   private World world;
   private OrthographicCamera camera;
+  private UILogger uiLogger;
 
   private SteerablePlatoonEntity friendly;
   private SteerablePlatoonEntity enemyOne, enemyTwo, enemyThree;
@@ -38,6 +41,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
 
   private Label labelHealth, labelFPS;
   private TextField textFieldHealth, textFieldFPS;
+  private TextArea textAreaLogger;
 
   //Battle
   private BattleResolver battleResolver;
@@ -54,14 +58,20 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private void createUI() {
     createHealthUI();
     createFPSUI();
+  }
 
+  private void createUILoggerTextArea() {
+    textAreaLogger = new TextArea("Test1\nTest2\nTest3\n", skin, "default");
+    textAreaLogger.setPosition(10f, Gdx.graphics.getHeight() - 100f);
+    textAreaLogger.setBounds(10f, Gdx.graphics.getHeight() - 100f, 500f, 150f);
+    stage.addActor(textAreaLogger);
   }
 
   private void createFPSUI() {
     labelFPS = new Label("FPS:", skin, "default");
     textFieldFPS = new TextField("", skin, "default");
-    textFieldFPS.setPosition(Gdx.graphics.getWidth() -50f, Gdx.graphics.getHeight() -25f);
-    labelFPS.setPosition(Gdx.graphics.getWidth() -100f, Gdx.graphics.getHeight() -25f);
+    textFieldFPS.setPosition(Gdx.graphics.getWidth() - 50f, Gdx.graphics.getHeight() - 25f);
+    labelFPS.setPosition(Gdx.graphics.getWidth() - 100f, Gdx.graphics.getHeight() - 25f);
     stage.addActor(labelFPS);
     stage.addActor(textFieldFPS);
   }
@@ -81,6 +91,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     world.step(1f / 60f, 6, 2);
     battleResolver.resolve(false);
     friendly.update();
+
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -125,7 +136,10 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     world.setContactListener(new PlatoonContactListener(this));
     debugMatrix = camera.combined.cpy().scale(Helper.FACTOR, Helper.FACTOR, 0f);
     battleResolver = new BattleResolver();
+    createUILoggerTextArea();
+    uiLogger = new UILogger(textAreaLogger);
 
+    Gdx.app.setApplicationLogger(uiLogger);
     Gdx.input.setInputProcessor(this);
   }
 

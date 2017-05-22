@@ -1,7 +1,7 @@
 package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.condorgames.prototype.entities.battleresolver.AbstractBattleParticipant;
+import com.condorgames.prototype.battleresolver.AbstractBattleParticipant;
 
 public abstract class Platoon extends AbstractBattleParticipant {
 
