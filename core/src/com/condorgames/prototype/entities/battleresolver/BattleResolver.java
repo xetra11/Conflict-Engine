@@ -1,11 +1,12 @@
 package com.condorgames.prototype.entities.battleresolver;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class BattleResolver {
 
-  private List<BattleSituation> battleSituations;
+  private List<BattleSituation> battleSituations = new ArrayList<>();
 
   public void addBattleSituations(List<BattleSituation> battleSituations) {
     battleSituations.addAll(battleSituations);
@@ -16,10 +17,13 @@ public class BattleResolver {
   }
 
   public void resolve(boolean parallel) {
-    if (parallel) {
-      battleSituations.parallelStream().forEach(BattleSituation::resolve);
-    } else {
-      battleSituations.forEach(BattleSituation::resolve);
+    if (battleSituations.isEmpty() == false) {
+      if (parallel) {
+        battleSituations.parallelStream().forEach(BattleSituation::resolve);
+      } else {
+        battleSituations.forEach(BattleSituation::resolve);
+      }
+
     }
   }
 }

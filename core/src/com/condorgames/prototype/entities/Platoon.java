@@ -1,9 +1,14 @@
 package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.condorgames.prototype.entities.battleresolver.BattleParticipantImpl;
+import com.condorgames.prototype.entities.battleresolver.AbstractBattleParticipant;
 
-public abstract class Platoon extends BattleParticipantImpl{
+public abstract class Platoon extends AbstractBattleParticipant {
+
+  public enum Faction {
+    AXIS,
+    ALLY
+  }
 
   private static short platoonCount = 0;
 
@@ -21,13 +26,15 @@ public abstract class Platoon extends BattleParticipantImpl{
   private short platoonID;
   private float health;
   private byte strength;
+  private Faction faction;
 
-  public Platoon(Morale morale) {
+  public Platoon(Morale morale, Faction faction) {
     super(morale);
+    this.faction = faction;
     health = 100;
     strength = FRESH_GROUP;
     platoonID = ++platoonCount;
-    Gdx.app.log("Platoon", "created new Platoon with ID: " + platoonID);
+    Gdx.app.log("Platoon", "created new Platoon with ID: " + platoonID + ", Faction: " + faction.name());
   }
 
   @Override
@@ -60,5 +67,9 @@ public abstract class Platoon extends BattleParticipantImpl{
 
   public short getPlatoonID() {
     return platoonID;
+  }
+
+  public Faction getFaction() {
+    return faction;
   }
 }

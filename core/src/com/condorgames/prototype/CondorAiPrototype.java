@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.condorgames.prototype.entities.*;
+import com.condorgames.prototype.entities.battleresolver.BattleResolver;
 
 public class CondorAiPrototype extends ApplicationAdapter implements InputProcessor {
   // AI & Physics
@@ -27,7 +28,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private OrthographicCamera camera;
 
   private SteerablePlatoonEntity friendly;
-  private SensorEntity enemyOne, enemyTwo, enemyThree;
+  private SteerablePlatoonEntity enemyOne, enemyTwo, enemyThree;
   private SensorEntity moveTarget;
 
   //UI
@@ -37,6 +38,9 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
 
   private Label labelHealth, labelFPS;
   private TextField textFieldHealth, textFieldFPS;
+
+  //Battle
+  private BattleResolver battleResolver;
 
 
   @Override
@@ -75,6 +79,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   public void render() {
     camera.update();
     world.step(1f / 60f, 6, 2);
+    battleResolver.resolve(false);
     friendly.update();
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -119,6 +124,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     world.setContactListener(new PlatoonContactListener(this));
     debugMatrix = camera.combined.cpy().scale(Helper.FACTOR, Helper.FACTOR, 0f);
+    battleResolver = new BattleResolver();
 
     Gdx.input.setInputProcessor(this);
   }
@@ -183,5 +189,9 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
 
   public void setTextFieldHealth(TextField textFieldHealth) {
     this.textFieldHealth = textFieldHealth;
+  }
+
+  public BattleResolver getBattleResolver() {
+    return battleResolver;
   }
 }

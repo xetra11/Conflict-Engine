@@ -11,12 +11,12 @@ import com.condorgames.prototype.entities.SensorEntity;
 
 public abstract class EnemyCreator {
 
-  public static SensorEntity createSteerableEnemyEntity(World world, Vector2 position) {
+  public static SteerablePlatoonEntity createSteerableEnemyEntity(World world, Vector2 position) {
     final Body rectangleBody = BodyCreator.createRectangleBody(0.25f, 0.25f, position, world,
             BodyDef.BodyType.StaticBody,
             FilterCategories.ENEMY,
             FilterCategories.LOS);
     PolygonShape shape = new PolygonShape();
-    return new SensorEntity(rectangleBody);
+    return new SteerablePlatoonEntity(rectangleBody, Platoon.Faction.ALLY);
   }
 }

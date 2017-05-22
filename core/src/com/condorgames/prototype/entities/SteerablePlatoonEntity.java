@@ -19,8 +19,8 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
   private float maxAngularAcceleration = 0.5f;
   private boolean tagged;
 
-  public SteerablePlatoonEntity(Body body) {
-    super(body);
+  public SteerablePlatoonEntity(Body body, Faction faction) {
+    super(body, faction);
     steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
   }
 

@@ -12,7 +12,7 @@ public abstract class PlatoonCreator {
             FilterCategories.ALLY,
             FilterCategories.COMMON_BODIES);
     addLOS(rectangleBody);
-    return new SteerablePlatoonEntity(rectangleBody);
+    return new SteerablePlatoonEntity(rectangleBody, Platoon.Faction.AXIS);
   }
 
   private static void addLOS(Body body) {

@@ -1,9 +1,9 @@
 package com.condorgames.prototype.entities.battleresolver;
 
-public abstract class BattleParticipantImpl implements BattleParticipant {
+public abstract class AbstractBattleParticipant implements BattleParticipant {
   protected Morale morale;
 
-  public BattleParticipantImpl(Morale morale) {
+  public AbstractBattleParticipant(Morale morale) {
     this.morale = morale;
   }
 
