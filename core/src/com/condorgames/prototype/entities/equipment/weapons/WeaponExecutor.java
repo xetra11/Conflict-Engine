@@ -4,7 +4,7 @@ import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.entities.equipment.weapons.Weapon.WeaponState;
 import com.condorgames.prototype.entities.equipment.weapons.eventlistener.*;
 
-public class WeaponExecutor implements WeaponEvent{
+public class WeaponExecutor implements WeaponEvent {
 
   private Weapon weapon;
   private int ammoCount;
@@ -22,50 +22,106 @@ public class WeaponExecutor implements WeaponEvent{
     this.ammoCount = weapon.getAmmoCount();
   }
 
-  public void execute(float deltaTime){
+  public void execute(float deltaTime) {
 
-    if (ammoCount <= 0 && (weapon.getState().equals(Weapon.WeaponState.READY) || weapon.getState().equals(Weapon.WeaponState.CADENCE))) {
-      weapon.setState(WeaponState.NO_AMMO);
-      if (weaponEmptyListener != null) {
-        weaponEmptyListener.onEmpty();
-      }
+    if (isAmmoEmpty()) {
+      handleAmmoEmpty();
     }
 
-    if (remainingCadenceTime > 0 && weapon.getState().equals(Weapon.WeaponState.CADENCE)) {
-      remainingCadenceTime -= deltaTime;
+    if (isInCadenceState()) {
+      handleInCadence(deltaTime);
     }
 
-    if (remainingCadenceTime < 0 && weapon.getState().equals(Weapon.WeaponState.CADENCE)) {
-      weapon.setState(WeaponState.READY);
+    if (hasLeftCadenceState()) {
+      handleHasLeftCadenceState();
     }
 
     // TODO Jammed weapon state and event
 
-    if (weapon.getState().equals(Weapon.WeaponState.READY)) {
-      ammoCount--;
-      if (weaponFiredListener != null) {
-        weaponFiredListener.onFired();
-      }
-      weapon.setState(WeaponState.CADENCE);
-      remainingCadenceTime = weapon.getCadence();
+    if (isReadyState()) {
+      handleReady();
     }
 
-    if (weapon.getState().equals(Weapon.WeaponState.NO_AMMO)) {
-      weapon.setState(WeaponState.RELOADING);
-      AudioManager.playReloading2WithBackground();
-      remainingReloadTime = weapon.getReloadTime();
-      if (weaponReloadListener != null) {
-        weaponReloadListener.onReload();
-      }
+    if (isInAmmoEmptyState()) {
+      handleReload();
     }
-    if (remainingReloadTime > 0 && weapon.getState().equals(Weapon.WeaponState.RELOADING)) {
-      remainingReloadTime -= deltaTime;
+    if (isInReloadState()) {
+      handleReload(deltaTime);
     }
-    if (remainingReloadTime < 0 && weapon.getState().equals(Weapon.WeaponState.RELOADING)) {
-      weapon.reloadWeapon();
-      weapon.setState(WeaponState.READY);
-      System.out.println("Weapon reloaded!");
+    if (hasFinishedReloading()) {
+      handleFinishedReloading();
     }
+  }
+
+  private void handleFinishedReloading() {
+    weapon.reloadWeapon();
+    weapon.setState(WeaponState.READY);
+    System.out.println("Weapon reloaded!");
+  }
+
+  private void handleReload(float deltaTime) {
+    remainingReloadTime -= deltaTime;
+  }
+
+  private boolean hasFinishedReloading() {
+    return remainingReloadTime < 0 && weapon.getState().equals(WeaponState.RELOADING);
+  }
+
+  private boolean isInReloadState() {
+    return remainingReloadTime > 0 && weapon.getState().equals(WeaponState.RELOADING);
+  }
+
+  private void handleReload() {
+    weapon.setState(WeaponState.RELOADING);
+    AudioManager.playReloading2WithBackground();
+    remainingReloadTime = weapon.getReloadTime();
+    if (weaponReloadListener != null) {
+      weaponReloadListener.onReload();
+    }
+  }
+
+  private boolean isInAmmoEmptyState() {
+    return weapon.getState().equals(WeaponState.NO_AMMO);
+  }
+
+  private void handleReady() {
+    ammoCount--;
+    if (weaponFiredListener != null) {
+      weaponFiredListener.onFired();
+    }
+    weapon.setState(WeaponState.CADENCE);
+    remainingCadenceTime = weapon.getCadence();
+  }
+
+  private boolean isReadyState() {
+    return weapon.getState().equals(WeaponState.READY);
+  }
+
+  private void handleHasLeftCadenceState() {
+    weapon.setState(WeaponState.READY);
+  }
+
+  private void handleInCadence(float deltaTime) {
+    remainingCadenceTime -= deltaTime;
+  }
+
+  private boolean hasLeftCadenceState() {
+    return remainingCadenceTime < 0 && weapon.getState().equals(WeaponState.CADENCE);
+  }
+
+  private boolean isInCadenceState() {
+    return remainingCadenceTime > 0 && weapon.getState().equals(WeaponState.CADENCE);
+  }
+
+  private void handleAmmoEmpty() {
+    weapon.setState(WeaponState.NO_AMMO);
+    if (weaponEmptyListener != null) {
+      weaponEmptyListener.onEmpty();
+    }
+  }
+
+  private boolean isAmmoEmpty() {
+    return ammoCount <= 0 && (weapon.getState().equals(WeaponState.READY) || weapon.getState().equals(WeaponState.CADENCE));
   }
 
   public void setWeaponFiredListener(WeaponFiredListener weaponFiredListener) {

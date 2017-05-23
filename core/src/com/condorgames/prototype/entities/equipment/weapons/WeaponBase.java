@@ -56,11 +56,6 @@ public abstract class WeaponBase implements Weapon {
 
   //</editor-fold>
 
-  public void setWeaponExecutor(WeaponExecutor weaponExecutor) {
-    this.weaponExecutor = weaponExecutor;
-    weaponExecutor.setWeapon(this);
-  }
-
   public WeaponExecutor getWeaponExecutor() {
     return weaponExecutor;
   }
