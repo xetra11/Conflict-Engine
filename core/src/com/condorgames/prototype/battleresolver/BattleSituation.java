@@ -17,10 +17,14 @@ public class BattleSituation {
 
   public void resolve(float deltaTime) {
     activeContact.fire(deltaTime);
-    if (wakeupTimer <= 0) {
+    if (wokenUp()) {
       passiveContact.fire(deltaTime);
     } else {
       wakeupTimer -= deltaTime;
     }
+  }
+
+  private boolean wokenUp() {
+    return wakeupTimer <= 0;
   }
 }

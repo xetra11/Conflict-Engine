@@ -56,6 +56,7 @@ public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
   private void handleFinishedReloading() {
     weaponProperties.setAmmoCount(weaponProperties.getMaxAmmo());
     weaponProperties.setState(Status.READY);
+    ammoCount = weaponProperties.getMaxAmmo();
     System.out.println("Weapon reloaded!");
   }
 
@@ -86,12 +87,24 @@ public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
 
   private void handleReady() {
     ammoCount--;
-    System.out.println("Fired");
+    System.out.print("Fired: ");
+    hitResolveMock();
     if (weaponFiredListener != null) {
       weaponFiredListener.onFired();
     }
     weaponProperties.setState(Status.CADENCE);
     remainingCadenceTime = weaponProperties.getCadence();
+  }
+
+  private void hitResolveMock() {
+    double random = Math.random();
+    if (random > 0.95f) {
+      System.out.println("hit! " + random);
+    } else if (random > 0.5f) {
+      System.out.println("surpressing hit! " + random);
+    } else{
+      System.out.println("no effect - bullet to the sky!");
+    }
   }
 
   private boolean isReadyState() {
