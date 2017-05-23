@@ -1,11 +1,21 @@
 package com.condorgames.prototype.entities.equipment.weapons;
 
+import com.condorgames.prototype.audio.AudioManager;
+import com.condorgames.prototype.entities.equipment.weapons.eventlistener.*;
+
 public abstract class WeaponBase implements Weapon {
 
   private WeaponState weaponState;
   private int ammoCount;
   private final int maxAmmo;
   private static float remainingReloadTime;
+  private static float remainingCadenceTime;
+
+  private WeaponFiredListener weaponFiredListener;
+  private WeaponReloadListener weaponReloadListener;
+  private WeaponReloadedListener weaponReloadedListener;
+  private WeaponEmptyListener weaponEmptyListener;
+  private WeaponJammedListener weaponJammedListener;
 
   protected WeaponBase(int maxAmmo) {
     this.maxAmmo = maxAmmo;
@@ -13,6 +23,48 @@ public abstract class WeaponBase implements Weapon {
     weaponState = WeaponState.READY;
   }
 
+  @Override
+  public void fireWeapon(float deltaTime) {
+
+    if (ammoCount <= 0 && weaponState.equals(WeaponState.READY)) {
+      weaponState = WeaponState.NO_AMMO;
+      weaponEmptyListener.onEmpty();
+    }
+
+    if (remainingCadenceTime > 0 && weaponState.equals(WeaponState.CADENCE)) {
+      remainingCadenceTime -= deltaTime;
+    }
+
+    if (remainingCadenceTime < 0 && weaponState.equals(WeaponState.CADENCE)) {
+      weaponState = WeaponState.READY;
+    }
+
+    // TODO Jammed weapon state and event
+
+    if (weaponState.equals(WeaponState.READY)) {
+      ammoCount--;
+      weaponFiredListener.onFired();
+      weaponState = WeaponState.CADENCE;
+      remainingCadenceTime = getCadence();
+    }
+
+    if (weaponState.equals(WeaponState.NO_AMMO)) {
+      weaponState = WeaponState.RELOADING;
+      AudioManager.playReloading2WithBackground();
+      remainingReloadTime = getReloadTime();
+      weaponReloadListener.onReload();
+    }
+    if (remainingReloadTime > 0 && weaponState.equals(WeaponState.RELOADING)) {
+      remainingReloadTime -= deltaTime;
+    }
+    if (remainingReloadTime < 0 && weaponState.equals(WeaponState.RELOADING)) {
+      reloadWeapon();
+      weaponState = WeaponState.READY;
+      System.out.println("Weapon reloaded!");
+    }
+  }
+
+  //<editor-fold desc="Interface Implementation">
   @Override
   public WeaponState getState() {
     return weaponState;
@@ -31,33 +83,27 @@ public abstract class WeaponBase implements Weapon {
   @Override
   public void reloadWeapon() {
     ammoCount = maxAmmo;
+    weaponReloadedListener.onReloadFinished();
+  }
+  //</editor-fold>
+
+  public void setWeaponFiredListener(WeaponFiredListener weaponFiredListener) {
+    this.weaponFiredListener = weaponFiredListener;
   }
 
-  @Override
-  public void fireWeapon(float deltaTime, WeaponFiredListener weaponFiredListener) {
+  public void setWeaponReloadListener(WeaponReloadListener weaponReloadListener) {
+    this.weaponReloadListener = weaponReloadListener;
+  }
 
+  public void setWeaponReloadedListener(WeaponReloadedListener weaponReloadedListener) {
+    this.weaponReloadedListener = weaponReloadedListener;
+  }
 
-    if (ammoCount <= 0 && weaponState.equals(WeaponState.READY)) {
-      weaponState = WeaponState.NO_AMMO;
-      System.out.println("No Ammo!");
-    }
+  public void setWeaponEmptyListener(WeaponEmptyListener weaponEmptyListener) {
+    this.weaponEmptyListener = weaponEmptyListener;
+  }
 
-    if (weaponState.equals(WeaponState.READY)) {
-      ammoCount--;
-      weaponFiredListener.onFire(this);
-    }
-
-    if (weaponState.equals(WeaponState.NO_AMMO)) {
-      weaponState = WeaponState.RELOADING;
-      remainingReloadTime = getReloadTime();
-    }
-    if (remainingReloadTime > 0 && weaponState.equals(WeaponState.RELOADING)) {
-      remainingReloadTime -= deltaTime;
-    }
-    if (remainingReloadTime < 0 && weaponState.equals(WeaponState.RELOADING)) {
-      reloadWeapon();
-      weaponState = WeaponState.READY;
-      System.out.println("Weapon reloaded!");
-    }
+  public void setWeaponJammedListener(WeaponJammedListener weaponJammedListener) {
+    this.weaponJammedListener = weaponJammedListener;
   }
 }

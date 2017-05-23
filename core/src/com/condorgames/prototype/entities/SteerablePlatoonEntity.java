@@ -22,6 +22,8 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
   private boolean tagged;
   private Weapon weapon;
 
+  //TODO add speech library?
+
   public SteerablePlatoonEntity(Body body, Faction faction) {
     super(body, faction);
     weapon = new RifleWeapon();
@@ -43,24 +45,24 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
     }
   }
 
-  @Override
-  public void fire(float deltaTime) {
-    weapon.fireWeapon(deltaTime, weapon -> {
-      System.out.println("Fired!");
-      System.out.println("Ammo Count: " + weapon.getAmmoCount());
-    } );
-  }
-
   public void update() {
     applySteering();
   }
 
-  //region Steerable Interface Implementation
+  @Override
+  public void fire(float deltaTime) {
+    weapon.setWeaponFiredListener(() -> {
+      System.out.println("Fired!");
+      System.out.println("Ammo Count: " + weapon.getAmmoCount());
+    });
+  }
+
   @Override
   public Vector2 getLinearVelocity() {
     return getBody().getLinearVelocity();
   }
 
+  //<editor-fold desc="Interface Implementations">
   @Override
   public float getAngularVelocity() {
     return getBody().getAngularVelocity();
@@ -190,4 +192,5 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
       }
     };
   }
+  //</editor-fold>
 }
