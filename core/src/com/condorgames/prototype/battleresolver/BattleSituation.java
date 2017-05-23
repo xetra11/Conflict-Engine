@@ -1,20 +1,26 @@
 package com.condorgames.prototype.battleresolver;
 
-import com.badlogic.gdx.Gdx;
-
 public class BattleSituation {
-  private BattleParticipant participantA, participantB;
+  private BattleParticipant activeContact, passiveContact;
+  private float wakeupTimer;
 
-  private BattleSituation(BattleParticipant participantA, BattleParticipant participantB) {
-    this.participantA = participantA;
-    this.participantB = participantB;
+  private BattleSituation(BattleParticipant activeContact, BattleParticipant passiveContact) {
+    this.activeContact = activeContact;
+    this.passiveContact = passiveContact;
+    wakeupTimer = 10f;
   }
 
-  public static BattleSituation createBattleSituation(BattleParticipant participantA, BattleParticipant participantB) {
-    return new BattleSituation(participantA, participantB);
+  public static BattleSituation createBattleSituation(BattleParticipant activeContact,
+                                                      BattleParticipant passiveContact) {
+    return new BattleSituation(activeContact, passiveContact);
   }
 
   public void resolve(float deltaTime) {
-    participantA.fire(deltaTime);
+    activeContact.fire(deltaTime);
+    if (wakeupTimer <= 0) {
+      passiveContact.fire(deltaTime);
+    } else {
+      wakeupTimer -= deltaTime;
+    }
   }
 }

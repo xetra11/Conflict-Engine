@@ -33,6 +33,6 @@ public abstract class PlatoonCreator {
     losFixtureDef.shape = shape;
     losFixtureDef.isSensor = true;
     losFixtureDef.filter.categoryBits = FilterCategories.LOS;
-    body.createFixture(losFixtureDef);
+    body.createFixture(losFixtureDef).setUserData("LOS");
   }
 }

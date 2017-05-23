@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.Helper;
 
-public class SensorEntity implements Location<Vector2> {
+public class Sensor implements Location<Vector2> {
   private Body body;
 
   private float maxLinearSpeed = 0.3f;
@@ -14,7 +14,7 @@ public class SensorEntity implements Location<Vector2> {
   private float maxAngularAcceleration = 0.5f;
 
 
-  public SensorEntity(Body body) {
+  public Sensor(Body body) {
     this.body = body;
     body.getFixtureList().first().setSensor(true);
   }
@@ -59,32 +59,32 @@ public class SensorEntity implements Location<Vector2> {
     return new Location<Vector2>() {
       @Override
       public Vector2 getPosition() {
-        return SensorEntity.this.getPosition();
+        return Sensor.this.getPosition();
       }
 
       @Override
       public float getOrientation() {
-        return SensorEntity.this.getOrientation();
+        return Sensor.this.getOrientation();
       }
 
       @Override
       public void setOrientation(float orientation) {
-        SensorEntity.this.setOrientation(orientation);
+        Sensor.this.setOrientation(orientation);
       }
 
       @Override
       public float vectorToAngle(Vector2 vector) {
-        return SensorEntity.this.vectorToAngle(vector);
+        return Sensor.this.vectorToAngle(vector);
       }
 
       @Override
       public Vector2 angleToVector(Vector2 outVector, float angle) {
-        return SensorEntity.this.angleToVector(outVector, angle);
+        return Sensor.this.angleToVector(outVector, angle);
       }
 
       @Override
       public Location<Vector2> newLocation() {
-        return SensorEntity.this.newLocation();
+        return Sensor.this.newLocation();
       }
     };
   }

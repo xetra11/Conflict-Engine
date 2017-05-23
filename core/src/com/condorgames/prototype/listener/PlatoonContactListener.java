@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.condorgames.prototype.CondorAiPrototype;
 import com.condorgames.prototype.audio.AudioManager;
+import com.condorgames.prototype.entities.PhysicPlatoonEntity;
+import com.condorgames.prototype.entities.Platoon;
 import com.condorgames.prototype.entities.SteerablePlatoonEntity;
 import com.condorgames.prototype.battleresolver.BattleSituation;
 
@@ -21,26 +23,31 @@ public class PlatoonContactListener implements ContactListener {
 
   @Override
   public void beginContact(Contact contact) {
-    SteerablePlatoonEntity platoon = (SteerablePlatoonEntity) contact.getFixtureA().getBody().getUserData();
-    SteerablePlatoonEntity enemy = (SteerablePlatoonEntity) contact.getFixtureB().getBody().getUserData();
-    if (platoon.getPlatoonID() == 1) {
-      triggerEnemyContact(platoon, enemy);
+    Platoon activeContact = null;
+    Platoon passiveContact = null;
+    if (contact.getFixtureA().getUserData().equals("LOS")) {
+      activeContact = (Platoon) contact.getFixtureA().getBody().getUserData();
+      passiveContact = (Platoon) contact.getFixtureB().getBody().getUserData();
+    } else {
+      activeContact = (Platoon) contact.getFixtureB().getBody().getUserData();
+      passiveContact = (Platoon) contact.getFixtureA().getBody().getUserData();
     }
+    triggerEnemyContact(activeContact, passiveContact);
   }
 
-  private void triggerEnemyContact(SteerablePlatoonEntity platoon, SteerablePlatoonEntity enemy) {
+  private void triggerEnemyContact(SteerablePlatoonEntity activeContact, SteerablePlatoonEntity passiveContact) {
     // Stop Entity
-    platoon.setTagged(true);
-    platoon.getBody().setLinearVelocity(0f, 0f);
+    activeContact.setTagged(true);
+    activeContact.getBody().setLinearVelocity(0f, 0f);
     // Mock Health loss
-    context.getTextFieldHealth().setText(String.valueOf(platoon.getStrength()));
+    context.getTextFieldHealth().setText(String.valueOf(activeContact.getStrength()));
     // Play Radio Report
     Music background = Gdx.audio.newMusic(Gdx.files.internal("combat.wav"));
     Music ammoReport = Gdx.audio.newMusic(Gdx.files.internal("chatter_wounded.wav"));
     AudioManager.playWoundedWithBackground();
 
     //Create BattleSituation
-    BattleSituation battleSituation = BattleSituation.createBattleSituation(platoon, enemy);
+    BattleSituation battleSituation = BattleSituation.createBattleSituation(activeContact, passiveContact);
     context.getBattleResolver().addBattleSituations(battleSituation);
   }
 

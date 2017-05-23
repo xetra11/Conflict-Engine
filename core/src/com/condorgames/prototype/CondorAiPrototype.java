@@ -30,14 +30,14 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   // AI & Physics
   private Box2DDebugRenderer debugRenderer;
   private Matrix4 debugMatrix;
-  private SensorEntity targetCrosshair;
+  private Sensor targetCrosshair;
   private World world;
   private OrthographicCamera camera;
   private UILogger uiLogger;
 
   private SteerablePlatoonEntity friendly;
   private SteerablePlatoonEntity enemyOne, enemyTwo, enemyThree;
-  private SensorEntity moveTarget;
+  private Sensor moveTarget;
 
   //UI
   private Stage stage;
