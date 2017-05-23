@@ -1,27 +1,16 @@
 package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.condorgames.prototype.battleresolver.AbstractBattleParticipant;
+import com.condorgames.prototype.battleresolver.BattleParticipantBase;
 import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 
-public abstract class PlatoonEntityBase extends AbstractBattleParticipant {
+public abstract class PlatoonEntityBase extends BattleParticipantBase {
   public enum Faction {
     AXIS,
     ALLY
   }
 
   private static short platoonCount = 0;
-
-//  // TODO: assigning Fresh_Group does not work as intedend
-//  private static final byte RADIOMAN  = (byte) 00000001;
-//  private static final byte RIFLE_1   = (byte) 00000010;
-//  private static final byte RIFLE_2   = (byte) 00000100;
-//  private static final byte RIFLE_3   = (byte) 00001000;
-//  private static final byte RIFLE_4   = (byte) 00010000;
-//  private static final byte MG_1      = (byte) 00100000;
-//  private static final byte MG_2      = (byte) 01000000;
-//  private static final byte ANTI_TANK = (byte) 10000000;
-//  private static final byte FRESH_GROUP = (byte) 11111111;
 
   private short platoonID;
   private float health;
