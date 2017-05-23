@@ -9,8 +9,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.Helper;
 import com.condorgames.prototype.entities.equipment.weapons.RifleWeapon;
 import com.condorgames.prototype.entities.equipment.weapons.Weapon;
-import com.condorgames.prototype.entities.equipment.weapons.WeaponExecutor;
-import com.condorgames.prototype.entities.equipment.weapons.eventlistener.WeaponEvent;
+import com.condorgames.prototype.entities.equipment.weapons.WeaponCreator;
+import com.condorgames.prototype.entities.equipment.weapons.WeaponExecutorBase;
 
 public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steerable<Vector2> {
 
@@ -23,15 +23,15 @@ public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steer
   private float maxAngularAcceleration = 0.5f;
   private boolean tagged;
   private Weapon weapon;
-  private WeaponExecutor weaponExecutor;
+  private WeaponExecutorBase weaponExecutor;
 
   //TODO add speech library?
 
   public SteerablePlatoonEntity(Body body, Faction faction) {
     super(body, faction);
-    weapon = new RifleWeapon();
+    weapon = WeaponCreator.createRifle();
     steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
-    weapon.setWeaponFiredListener(() -> System.out.println("fired"));
+//    weapon.setWeaponFiredListener(() -> System.out.println("fired"));
   }
 
   public void setSteeringBehavior(SteeringBehavior steeringBehavior) {

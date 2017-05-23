@@ -1,25 +1,20 @@
 package com.condorgames.prototype.entities.equipment.weapons;
 
-import com.condorgames.prototype.audio.AudioManager;
-import com.condorgames.prototype.entities.equipment.weapons.eventlistener.*;
-
 import java.util.Objects;
 
-public abstract class WeaponBase implements Weapon {
-
-  private WeaponState weaponState;
-  private int ammoCount;
-  private final int maxAmmo;
-  private static float remainingReloadTime;
-  private static float remainingCadenceTime;
+public class WeaponBase implements Weapon {
 
   private WeaponExecutor weaponExecutor;
+  private WeaponProperties weaponProperties;
 
-  protected WeaponBase(int maxAmmo) {
-    this.maxAmmo = maxAmmo;
-    ammoCount = maxAmmo;
-    weaponState = WeaponState.READY;
-    this.weaponExecutor = new WeaponExecutor(this);
+  protected WeaponBase(int maxAmmo, WeaponProperties.Type type) {
+    this.weaponProperties = new WeaponPropertiesBase(maxAmmo, type);
+    this.weaponExecutor = new WeaponExecutorBase(weaponProperties);
+  }
+
+  protected WeaponBase(WeaponProperties weaponProperties){
+    this.weaponProperties = weaponProperties;
+    this.weaponExecutor = new WeaponExecutorBase(weaponProperties);
   }
 
   @Override
@@ -27,34 +22,6 @@ public abstract class WeaponBase implements Weapon {
     Objects.requireNonNull(weaponExecutor, "No WeaponExecuter set in " + this);
     weaponExecutor.execute(deltaTime);
   }
-
-  //<editor-fold desc="Interface Implementation">
-  @Override
-  public WeaponState getState() {
-    return weaponState;
-  }
-
-  @Override
-  public void setState(WeaponState state) {
-    this.weaponState = state;
-  }
-
-  @Override
-  public int getAmmoCount() {
-    return ammoCount;
-  }
-
-  @Override
-  public void reloadWeapon() {
-    ammoCount = maxAmmo;
-  }
-
-  @Override
-  public int getMaxAmmo() {
-    return maxAmmo;
-  }
-
-  //</editor-fold>
 
   public WeaponExecutor getWeaponExecutor() {
     return weaponExecutor;
