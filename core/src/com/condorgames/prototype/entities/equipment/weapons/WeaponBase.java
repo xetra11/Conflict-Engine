@@ -26,9 +26,11 @@ public abstract class WeaponBase implements Weapon {
   @Override
   public void fireWeapon(float deltaTime) {
 
-    if (ammoCount <= 0 && weaponState.equals(WeaponState.READY)) {
+    if (ammoCount <= 0 && (weaponState.equals(WeaponState.READY) || weaponState.equals(WeaponState.CADENCE))) {
       weaponState = WeaponState.NO_AMMO;
-      weaponEmptyListener.onEmpty();
+      if (weaponEmptyListener != null) {
+        weaponEmptyListener.onEmpty();
+      }
     }
 
     if (remainingCadenceTime > 0 && weaponState.equals(WeaponState.CADENCE)) {
@@ -43,7 +45,9 @@ public abstract class WeaponBase implements Weapon {
 
     if (weaponState.equals(WeaponState.READY)) {
       ammoCount--;
-      weaponFiredListener.onFired();
+      if (weaponFiredListener != null) {
+        weaponFiredListener.onFired();
+      }
       weaponState = WeaponState.CADENCE;
       remainingCadenceTime = getCadence();
     }
@@ -52,7 +56,9 @@ public abstract class WeaponBase implements Weapon {
       weaponState = WeaponState.RELOADING;
       AudioManager.playReloading2WithBackground();
       remainingReloadTime = getReloadTime();
-      weaponReloadListener.onReload();
+      if (weaponReloadListener != null) {
+        weaponReloadListener.onReload();
+      }
     }
     if (remainingReloadTime > 0 && weaponState.equals(WeaponState.RELOADING)) {
       remainingReloadTime -= deltaTime;
@@ -83,7 +89,9 @@ public abstract class WeaponBase implements Weapon {
   @Override
   public void reloadWeapon() {
     ammoCount = maxAmmo;
-    weaponReloadedListener.onReloadFinished();
+    if (weaponReloadedListener != null) {
+      weaponReloadedListener.onReloadFinished();
+    }
   }
   //</editor-fold>
 
