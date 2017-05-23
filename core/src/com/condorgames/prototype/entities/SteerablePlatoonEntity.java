@@ -11,8 +11,7 @@ import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 import com.condorgames.prototype.creator.WeaponCreator;
 import com.condorgames.prototype.entities.equipment.weapons.WeaponExecutorBase;
 
-public class SteerablePlatoonEntity extends PhysicPlatoonEntity implements Steerable<Vector2> {
-
+public abstract class SteerablePlatoonEntity extends PhysicPlatoonEntity implements Steerable<Vector2> {
   private SteeringBehavior steeringBehavior;
   private SteeringAcceleration<Vector2> steeringOutput;
 
@@ -21,14 +20,12 @@ public class SteerablePlatoonEntity extends PhysicPlatoonEntity implements Steer
   private float maxAngularSpeed = 0.5f;
   private float maxAngularAcceleration = 0.5f;
   private boolean tagged;
-  private Weapon weapon;
-  private WeaponExecutorBase weaponExecutor;
+
 
   //TODO add speech library?
 
   public SteerablePlatoonEntity(Body body, Faction faction) {
     super(body, faction);
-    weapon = WeaponCreator.createRifle();
     steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
 //    weapon.setWeaponFiredListener(() -> System.out.println("fired"));
   }
@@ -52,10 +49,6 @@ public class SteerablePlatoonEntity extends PhysicPlatoonEntity implements Steer
     applySteering();
   }
 
-  @Override
-  public void fire(float deltaTime) {
-    weapon.fireWeapon(deltaTime);
-  }
 
   @Override
   public Vector2 getLinearVelocity() {

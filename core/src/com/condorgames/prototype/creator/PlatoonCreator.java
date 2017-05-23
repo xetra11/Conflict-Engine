@@ -3,6 +3,7 @@ package com.condorgames.prototype.creator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.condorgames.prototype.FilterCategories;
+import com.condorgames.prototype.entities.Platoon;
 import com.condorgames.prototype.entities.PlatoonEntityBase;
 import com.condorgames.prototype.entities.SteerablePlatoonEntity;
 
@@ -14,7 +15,7 @@ public abstract class PlatoonCreator {
             FilterCategories.ALLY,
             FilterCategories.COMMON_BODIES);
     addLOS(rectangleBody);
-    return new SteerablePlatoonEntity(rectangleBody, PlatoonEntityBase.Faction.AXIS);
+    return new Platoon(rectangleBody, PlatoonEntityBase.Faction.AXIS);
   }
 
   private static void addLOS(Body body) {

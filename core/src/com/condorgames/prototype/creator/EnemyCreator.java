@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.condorgames.prototype.FilterCategories;
+import com.condorgames.prototype.entities.Platoon;
 import com.condorgames.prototype.entities.PlatoonEntityBase;
 import com.condorgames.prototype.entities.SteerablePlatoonEntity;
 
@@ -17,6 +18,6 @@ public abstract class EnemyCreator {
             FilterCategories.ENEMY,
             FilterCategories.LOS);
     PolygonShape shape = new PolygonShape();
-    return new SteerablePlatoonEntity(rectangleBody, PlatoonEntityBase.Faction.ALLY);
+    return new Platoon(rectangleBody, PlatoonEntityBase.Faction.ALLY);
   }
 }

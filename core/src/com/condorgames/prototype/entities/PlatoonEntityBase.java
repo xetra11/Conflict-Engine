@@ -5,7 +5,6 @@ import com.condorgames.prototype.battleresolver.AbstractBattleParticipant;
 import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 
 public abstract class PlatoonEntityBase extends AbstractBattleParticipant {
-
   public enum Faction {
     AXIS,
     ALLY
