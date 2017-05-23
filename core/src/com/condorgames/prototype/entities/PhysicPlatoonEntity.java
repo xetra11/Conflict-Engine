@@ -1,20 +1,19 @@
 package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 
-public abstract class PlatoonPhysicEntity extends Platoon{
+public abstract class PhysicPlatoonEntity extends PlatoonEntityBase {
   private Body body;
 
-  public PlatoonPhysicEntity(Body body) {
+  public PhysicPlatoonEntity(Body body) {
     this(Morale.NORMAL, Faction.ALLY, body);
   }
 
-  public PlatoonPhysicEntity(Body body, Faction faction) {
+  public PhysicPlatoonEntity(Body body, Faction faction) {
     this(Morale.NORMAL, faction, body);
   }
 
-  public PlatoonPhysicEntity(Morale morale, Faction faction, Body body) {
+  public PhysicPlatoonEntity(Morale morale, Faction faction, Body body) {
     super(morale, faction);
     body.setUserData(this);
     this.body = body;

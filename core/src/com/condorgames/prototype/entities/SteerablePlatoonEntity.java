@@ -11,7 +11,7 @@ import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 import com.condorgames.prototype.creator.WeaponCreator;
 import com.condorgames.prototype.entities.equipment.weapons.WeaponExecutorBase;
 
-public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steerable<Vector2> {
+public class SteerablePlatoonEntity extends PhysicPlatoonEntity implements Steerable<Vector2> {
 
   private SteeringBehavior steeringBehavior;
   private SteeringAcceleration<Vector2> steeringOutput;

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.condorgames.prototype.battleresolver.AbstractBattleParticipant;
 import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 
-public abstract class Platoon extends AbstractBattleParticipant {
+public abstract class PlatoonEntityBase extends AbstractBattleParticipant {
 
   public enum Faction {
     AXIS,
@@ -30,13 +30,13 @@ public abstract class Platoon extends AbstractBattleParticipant {
   private short strength;
   private Faction faction;
 
-  public Platoon(Morale morale, Faction faction) {
+  public PlatoonEntityBase(Morale morale, Faction faction) {
     super(morale);
     this.faction = faction;
     health = 100;
     strength = 9;
     platoonID = ++platoonCount;
-    Gdx.app.log("Platoon", "created new Platoon with ID: " + platoonID + ", Faction: " + faction.name());
+    Gdx.app.log("PlatoonEntityBase", "created new PlatoonEntityBase with ID: " + platoonID + ", Faction: " + faction.name());
   }
 
   public short getStrength() {
