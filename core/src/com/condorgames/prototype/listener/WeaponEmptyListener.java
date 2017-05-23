@@ -1,4 +1,4 @@
-package com.condorgames.prototype.entities.equipment.weapons.eventlistener;
+package com.condorgames.prototype.listener;
 
 @FunctionalInterface
 public interface WeaponEmptyListener {

@@ -12,7 +12,7 @@ public class WeaponBase implements Weapon {
     this.weaponExecutor = new WeaponExecutorBase(weaponProperties);
   }
 
-  protected WeaponBase(WeaponProperties weaponProperties){
+  public WeaponBase(WeaponProperties weaponProperties){
     this.weaponProperties = weaponProperties;
     this.weaponExecutor = new WeaponExecutorBase(weaponProperties);
   }

@@ -19,8 +19,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.condorgames.prototype.audio.AudioManager;
+import com.condorgames.prototype.creator.EnemyCreator;
+import com.condorgames.prototype.creator.PlatoonCreator;
+import com.condorgames.prototype.creator.SensorCreator;
 import com.condorgames.prototype.entities.*;
 import com.condorgames.prototype.battleresolver.BattleResolver;
+import com.condorgames.prototype.listener.PlatoonContactListener;
 
 public class CondorAiPrototype extends ApplicationAdapter implements InputProcessor {
   // AI & Physics

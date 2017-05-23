@@ -1,8 +1,7 @@
-package com.condorgames.prototype.entities;
+package com.condorgames.prototype.creator;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.condorgames.prototype.FilterCategories;
 import com.condorgames.prototype.Helper;
 
 import static com.condorgames.prototype.FilterCategories.*;

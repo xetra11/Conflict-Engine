@@ -1,4 +1,9 @@
-package com.condorgames.prototype.entities.equipment.weapons;
+package com.condorgames.prototype.creator;
+
+import com.condorgames.prototype.entities.equipment.weapons.Weapon;
+import com.condorgames.prototype.entities.equipment.weapons.WeaponBase;
+import com.condorgames.prototype.entities.equipment.weapons.WeaponProperties;
+import com.condorgames.prototype.entities.equipment.weapons.WeaponPropertiesBase;
 
 public abstract class WeaponCreator {
 

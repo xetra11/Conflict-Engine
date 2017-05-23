@@ -2,7 +2,7 @@ package com.condorgames.prototype.entities.equipment.weapons;
 
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.entities.equipment.weapons.WeaponProperties.Status;
-import com.condorgames.prototype.entities.equipment.weapons.eventlistener.*;
+import com.condorgames.prototype.listener.*;
 
 public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
 

@@ -1,18 +1,12 @@
 package com.condorgames.prototype.entities.equipment.weapons;
 
-import com.condorgames.prototype.entities.equipment.weapons.eventlistener.WeaponEvent;
-
 public interface WeaponProperties {
-
-
-
   public enum Type {
     RIFLE,
     LMG,
     HMG,
     SMG;
   }
-
 
   public enum Status {
     RELOADING,
@@ -21,6 +15,7 @@ public interface WeaponProperties {
     NO_AMMO,
     JAMMED;
   }
+
   Status getState();
 
   void setState(Status state);
@@ -32,9 +27,11 @@ public interface WeaponProperties {
   int getMaxAmmo();
 
   float getReloadTime();
+
   void setReloadTime(float reloadTime);
 
   float getCadence();
+
   void setCadence(float cadence);
 
   Type getType();

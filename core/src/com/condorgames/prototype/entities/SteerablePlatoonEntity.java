@@ -7,9 +7,8 @@ import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.Helper;
-import com.condorgames.prototype.entities.equipment.weapons.RifleWeapon;
 import com.condorgames.prototype.entities.equipment.weapons.Weapon;
-import com.condorgames.prototype.entities.equipment.weapons.WeaponCreator;
+import com.condorgames.prototype.creator.WeaponCreator;
 import com.condorgames.prototype.entities.equipment.weapons.WeaponExecutorBase;
 
 public class SteerablePlatoonEntity extends PlatoonPhysicEntity implements Steerable<Vector2> {

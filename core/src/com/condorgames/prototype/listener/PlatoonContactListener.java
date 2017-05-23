@@ -1,4 +1,4 @@
-package com.condorgames.prototype;
+package com.condorgames.prototype.listener;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.condorgames.prototype.CondorAiPrototype;
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.entities.SteerablePlatoonEntity;
 import com.condorgames.prototype.battleresolver.BattleSituation;

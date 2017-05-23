@@ -11,7 +11,7 @@ public class WeaponPropertiesBase implements WeaponProperties {
   private float reloadTime;
   private float cadence;
 
-  protected WeaponPropertiesBase(int maxAmmo, Type type) {
+  public WeaponPropertiesBase(int maxAmmo, Type type) {
     this.maxAmmo = maxAmmo;
     this.type = type;
     this.status = Status.READY;
@@ -48,6 +48,7 @@ public class WeaponPropertiesBase implements WeaponProperties {
     return reloadTime;
   }
 
+  @Override
   public void setReloadTime(float reloadTime){
     this.reloadTime = reloadTime;
   }
@@ -57,6 +58,7 @@ public class WeaponPropertiesBase implements WeaponProperties {
     return cadence;
   }
 
+  @Override
   public void setCadence(float cadence){
     this.cadence = cadence;
   }
