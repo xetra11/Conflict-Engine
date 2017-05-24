@@ -1,18 +1,9 @@
 package com.condorgames.prototype;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import org.junit.Rule;
+import com.condorgames.prototype.helper.Helper;
 import org.junit.Test;
-import org.junit.internal.runners.JUnit38ClassRunner;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.mockito.stubbing.Answer;
 
-import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
 public class HelperTest {

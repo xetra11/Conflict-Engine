@@ -2,7 +2,7 @@ package com.condorgames.prototype.creator;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.condorgames.prototype.FilterCategories;
+import com.condorgames.prototype.helper.FilterCategories;
 import com.condorgames.prototype.entities.Platoon;
 import com.condorgames.prototype.entities.PlatoonEntityBase;
 import com.condorgames.prototype.entities.SteerablePlatoonEntity;

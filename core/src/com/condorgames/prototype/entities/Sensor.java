@@ -3,7 +3,7 @@ package com.condorgames.prototype.entities;
 import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.condorgames.prototype.Helper;
+import com.condorgames.prototype.helper.Helper;
 
 public class Sensor implements Location<Vector2> {
   private Body body;

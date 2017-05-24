@@ -1,4 +1,4 @@
-package com.condorgames.prototype;
+package com.condorgames.prototype.helper;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;

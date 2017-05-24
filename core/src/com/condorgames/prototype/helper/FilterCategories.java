@@ -1,4 +1,4 @@
-package com.condorgames.prototype;
+package com.condorgames.prototype.helper;
 
 public interface FilterCategories {
 
