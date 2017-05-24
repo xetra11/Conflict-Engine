@@ -13,11 +13,10 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.creator.EnemyCreator;
 import com.condorgames.prototype.creator.PlatoonCreator;
@@ -49,6 +48,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private Label labelHealth, labelFPS;
   private TextField textFieldHealth, textFieldFPS;
   private TextArea textAreaLogger;
+  private ScrollPane scrollPane;
 
   //Battle
   private BattleResolver battleResolver;
@@ -72,12 +72,26 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private void createUILoggerTextArea() {
     textAreaLogger = new TextArea("", skin, "default");
 
-    textAreaLogger.setX(Gdx.graphics.getWidth() - 200);
-    textAreaLogger.setY(Gdx.graphics.getHeight() - 225);
-    textAreaLogger.setWidth(200);
-    textAreaLogger.setHeight(200);
+//    textAreaLogger.setX(Gdx.graphics.getWidth() - 200);
+//    textAreaLogger.setY(Gdx.graphics.getHeight() - 225);
+//    textAreaLogger.setWidth(200);
+//    textAreaLogger.setHeight(200);
 
-    stage.addActor(textAreaLogger);
+    scrollPane = new ScrollPane(textAreaLogger, skin, "default");
+    scrollPane.setX(Gdx.graphics.getWidth() - 200);
+    scrollPane.setY(Gdx.graphics.getHeight() - 225);
+    scrollPane.setWidth(200);
+    scrollPane.setHeight(200);
+
+    scrollPane.addAction(Actions.sequence(Actions.delay(0.0f), new Action() {
+      @Override
+      public boolean act(float delta) {
+        scrollPane.setScrollPercentY(1.0f);
+        return true;
+      }
+    }));
+
+    stage.addActor(scrollPane);
   }
 
   private void createFPSUI() {
@@ -109,6 +123,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     spriteBatch.begin();
+    stage.act();
     stage.draw();
     spriteBatch.end();
 
