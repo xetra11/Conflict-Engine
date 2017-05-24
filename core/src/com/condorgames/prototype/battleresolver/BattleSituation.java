@@ -19,6 +19,6 @@ public class BattleSituation {
 
   public void resolve(float deltaTime) {
     activeContact.fire(deltaTime);
-//    wakeupCooldown.isDone(deltaTime, () -> passiveContact.fire(deltaTime));
+    wakeupCooldown.isDone(deltaTime, () -> passiveContact.fire(deltaTime));
   }
 }

@@ -1,5 +1,7 @@
 package com.condorgames.prototype.entities.equipment.weapons;
 
-public interface Weapon {
+import com.condorgames.prototype.listener.WeaponEvent;
+
+public interface Weapon extends WeaponEvent {
   void fireWeapon(float deltaTime);
 }

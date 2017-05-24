@@ -6,7 +6,7 @@ import com.condorgames.prototype.entities.equipment.weapons.WeaponProperties.Sta
 import com.condorgames.prototype.helper.Cooldown;
 import com.condorgames.prototype.listener.*;
 
-public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
+public class WeaponExecutorBase implements WeaponExecutor {
 
   private int ammoCount;
   private float remainingCadenceTime;
@@ -71,7 +71,6 @@ public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
   private void startReload() {
     // set new state
     weaponProperties.setState(Status.RELOADING);
-    System.out.println("START RELOAD");
     // play sudio
     AudioManager.playReloading2WithBackground();
     // reloading callback
