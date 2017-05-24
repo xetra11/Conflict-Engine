@@ -1,6 +1,5 @@
 package com.condorgames.prototype.entities.equipment.weapons;
 
-import com.badlogic.gdx.Gdx;
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.entities.equipment.weapons.WeaponProperties.Status;
 import com.condorgames.prototype.helper.Cooldown;
@@ -10,8 +9,8 @@ public class WeaponExecutorBase implements WeaponExecutor {
 
   private int ammoCount;
   private float remainingCadenceTime;
-  private float remainingReloadTime;
   private Cooldown reloadCooldown;
+  private Cooldown cadenceCooldown;
   private WeaponProperties weaponProperties;
 
   private WeaponFiredListener weaponFiredListener;
@@ -24,6 +23,7 @@ public class WeaponExecutorBase implements WeaponExecutor {
     this.weaponProperties = weaponProperties;
     this.ammoCount = weaponProperties.getAmmoCount();
     reloadCooldown = new Cooldown(weaponProperties.getReloadTime());
+    cadenceCooldown = new Cooldown(weaponProperties.getCadence());
   }
 
   public void execute(float deltaTime) {
@@ -32,30 +32,37 @@ public class WeaponExecutorBase implements WeaponExecutor {
       handleAmmoEmpty();
     }
 
-    if (isInCadenceState()) {
-      handleInCadence(deltaTime);
+    if (isReadyState()) {
+      fire();
     }
 
-    if (hasLeftCadenceState()) {
-      handleHasLeftCadenceState();
+    if (isCadenceState()){
+      handleCadenceCooldown(deltaTime);
     }
 
     // TODO Jammed weaponProperties state and event
 
-    if (isReadyState()) {
-      handleReady();
+    if (isAmmoEmptyState()) {
+      startReloading();
     }
 
-    if (isInAmmoEmptyState()) {
-      startReload();
-    }
-
-    if (isInReloadState()) {
-      reload(deltaTime);
+    if (isReloading()) {
+      handleReloadingCooldown(deltaTime);
     }
   }
 
-  private void reload(float deltaTime) {
+  private boolean isCadenceState() {
+    return weaponProperties.getState().equals(Status.CADENCE);
+  }
+
+  private void handleCadenceCooldown(float deltaTime) {
+    cadenceCooldown.isDone(deltaTime, () -> {
+      weaponProperties.setState(Status.READY);
+      cadenceCooldown.reset();
+    });
+  }
+
+  private void handleReloadingCooldown(float deltaTime) {
     reloadCooldown.isDone(deltaTime, () -> {
       weaponProperties.setState(Status.READY);
       ammoCount = weaponProperties.getMaxAmmo();
@@ -68,7 +75,7 @@ public class WeaponExecutorBase implements WeaponExecutor {
     });
   }
 
-  private void startReload() {
+  private void startReloading() {
     // set new state
     weaponProperties.setState(Status.RELOADING);
     // play sudio
@@ -79,61 +86,24 @@ public class WeaponExecutorBase implements WeaponExecutor {
     }
   }
 
-  private void handleFinishedReloading() {
-    weaponProperties.setAmmoCount(weaponProperties.getMaxAmmo());
-    weaponProperties.setState(Status.READY);
-    ammoCount = weaponProperties.getMaxAmmo();
-    System.out.println("Weapon reloaded!");
-  }
-
-  private boolean isInReloadState() {
+  private boolean isReloading() {
     return weaponProperties.getState().equals(Status.RELOADING);
   }
 
-  private boolean isInAmmoEmptyState() {
+  private boolean isAmmoEmptyState() {
     return weaponProperties.getState().equals(Status.NO_AMMO);
   }
 
-  private void handleReady() {
+  private void fire() {
     ammoCount--;
-    System.out.print("Fired: ");
-//    hitResolveMock();
     if (weaponFiredListener != null) {
       weaponFiredListener.onFired();
     }
     weaponProperties.setState(Status.CADENCE);
-    remainingCadenceTime = weaponProperties.getCadence();
   }
-
-//  private void hitResolveMock() {
-//    double random = Math.random();
-//    if (random > 0.95f) {
-//      System.out.println("hit! " + random);
-//    } else if (random > 0.5f) {
-//      System.out.println("surpressing hit! " + random);
-//    } else {
-//      System.out.println("no effect - bullet to the sky!");
-//    }
-//  }
 
   private boolean isReadyState() {
     return weaponProperties.getState().equals(Status.READY);
-  }
-
-  private void handleHasLeftCadenceState() {
-    weaponProperties.setState(Status.READY);
-  }
-
-  private void handleInCadence(float deltaTime) {
-    remainingCadenceTime -= deltaTime;
-  }
-
-  private boolean hasLeftCadenceState() {
-    return remainingCadenceTime < 0 && weaponProperties.getState().equals(Status.CADENCE);
-  }
-
-  private boolean isInCadenceState() {
-    return remainingCadenceTime > 0 && weaponProperties.getState().equals(Status.CADENCE);
   }
 
   private void handleAmmoEmpty() {
@@ -143,10 +113,16 @@ public class WeaponExecutorBase implements WeaponExecutor {
     }
   }
 
+  // TODO: isAbleToShoot really necessary? since no ammo means no ammo - independent of the weapon state
   private boolean isAmmoEmpty() {
-    return ammoCount <= 0 && (weaponProperties.getState().equals(Status.READY) || weaponProperties.getState().equals(Status.CADENCE));
+    return ammoCount <= 0 && isAbleToShoot();
   }
 
+  private boolean isAbleToShoot() {
+    return isReadyState() || isCadenceState();
+  }
+
+  //<editor-fold desc="Listener">
   public void setWeaponFiredListener(WeaponFiredListener weaponFiredListener) {
     this.weaponFiredListener = weaponFiredListener;
   }
@@ -170,4 +146,5 @@ public class WeaponExecutorBase implements WeaponExecutor {
   public void setWeaponProperties(WeaponProperties weaponProperties) {
     this.weaponProperties = weaponProperties;
   }
+  //</editor-fold>
 }
