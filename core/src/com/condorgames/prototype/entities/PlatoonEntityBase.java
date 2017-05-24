@@ -2,7 +2,6 @@ package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.condorgames.prototype.battleresolver.BattleParticipantBase;
-import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 
 public abstract class PlatoonEntityBase extends BattleParticipantBase {
   public enum Faction {
@@ -18,7 +17,7 @@ public abstract class PlatoonEntityBase extends BattleParticipantBase {
   private short strength;
   private Faction faction;
 
-  public PlatoonEntityBase(Morale morale, Faction faction) {
+  public PlatoonEntityBase(MoraleState morale, Faction faction) {
     super(morale);
     this.faction = faction;
     health = 100;

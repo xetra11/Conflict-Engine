@@ -1,21 +1,19 @@
 package com.condorgames.prototype.battleresolver;
 
-import com.condorgames.prototype.entities.equipment.weapons.Weapon;
-
 public abstract class BattleParticipantBase implements BattleParticipant {
-  protected Morale morale;
+  protected MoraleState morale;
 
-  public BattleParticipantBase(Morale morale) {
+  public BattleParticipantBase(MoraleState morale) {
     this.morale = morale;
   }
 
   @Override
-  public void setMorale(Morale morale) {
+  public void setMorale(MoraleState morale) {
     this.morale = morale;
   }
 
   @Override
-  public Morale getMorale() {
+  public MoraleState getMorale() {
     return morale;
   }
 

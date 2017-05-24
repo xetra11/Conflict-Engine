@@ -97,7 +97,7 @@ public class WeaponExecutorBase implements WeaponExecutor {
   private void handleReady() {
     ammoCount--;
     System.out.print("Fired: ");
-    hitResolveMock();
+//    hitResolveMock();
     if (weaponFiredListener != null) {
       weaponFiredListener.onFired();
     }
@@ -105,16 +105,16 @@ public class WeaponExecutorBase implements WeaponExecutor {
     remainingCadenceTime = weaponProperties.getCadence();
   }
 
-  private void hitResolveMock() {
-    double random = Math.random();
-    if (random > 0.95f) {
-      System.out.println("hit! " + random);
-    } else if (random > 0.5f) {
-      System.out.println("surpressing hit! " + random);
-    } else {
-      System.out.println("no effect - bullet to the sky!");
-    }
-  }
+//  private void hitResolveMock() {
+//    double random = Math.random();
+//    if (random > 0.95f) {
+//      System.out.println("hit! " + random);
+//    } else if (random > 0.5f) {
+//      System.out.println("surpressing hit! " + random);
+//    } else {
+//      System.out.println("no effect - bullet to the sky!");
+//    }
+//  }
 
   private boolean isReadyState() {
     return weaponProperties.getState().equals(Status.READY);
