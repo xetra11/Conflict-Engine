@@ -1,13 +1,15 @@
 package com.condorgames.prototype.battleresolver;
 
+import com.condorgames.prototype.helper.Cooldown;
+
 public class BattleSituation {
   private BattleParticipant activeContact, passiveContact;
-  private float wakeupTimer;
+  private Cooldown wakeupCooldown;
 
   private BattleSituation(BattleParticipant activeContact, BattleParticipant passiveContact) {
     this.activeContact = activeContact;
     this.passiveContact = passiveContact;
-    wakeupTimer = 10f;
+    wakeupCooldown = new Cooldown(10f);
   }
 
   public static BattleSituation createBattleSituation(BattleParticipant activeContact,
@@ -17,14 +19,8 @@ public class BattleSituation {
 
   public void resolve(float deltaTime) {
     activeContact.fire(deltaTime);
-    if (wokenUp()) {
+    if (wakeupCooldown.isDone(deltaTime)) {
       passiveContact.fire(deltaTime);
-    } else {
-      wakeupTimer -= deltaTime;
     }
-  }
-
-  private boolean wokenUp() {
-    return wakeupTimer <= 0;
   }
 }
