@@ -2,6 +2,7 @@ package com.condorgames.prototype.entities.equipment.weapons;
 
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.entities.equipment.weapons.WeaponProperties.Status;
+import com.condorgames.prototype.helper.Cooldown;
 import com.condorgames.prototype.listener.*;
 
 public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
@@ -9,6 +10,7 @@ public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
   private int ammoCount;
   private float remainingCadenceTime;
   private float remainingReloadTime;
+  private Cooldown reloadCooldown;
   private WeaponProperties weaponProperties;
 
   private WeaponFiredListener weaponFiredListener;
@@ -20,6 +22,7 @@ public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
   public WeaponExecutorBase(WeaponProperties weaponProperties) {
     this.weaponProperties = weaponProperties;
     this.ammoCount = weaponProperties.getAmmoCount();
+    reloadCooldown = new Cooldown(weaponProperties.getAmmoCount());
   }
 
   public void execute(float deltaTime) {
@@ -43,14 +46,37 @@ public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
     }
 
     if (isInAmmoEmptyState()) {
-      handleReload();
+      // set new state
+      weaponProperties.setState(Status.RELOADING);
+      // play sudio
+      AudioManager.playReloading2WithBackground();
+      // reloading callback
+      if (weaponReloadListener != null) {
+        weaponReloadListener.onReload();
+      }
     }
+
     if (isInReloadState()) {
-      handleReload(deltaTime);
+      reloadCooldown.isDone(deltaTime, () -> {
+        weaponProperties.setState(Status.READY);
+        ammoCount = weaponProperties.getMaxAmmo();
+        reloadCooldown.reset();
+
+        // reloaded callback
+        if (weaponReloadedListener != null) {
+          weaponReloadedListener.onReloadFinished();
+        }
+      });
+
     }
-    if (hasFinishedReloading()) {
-      handleFinishedReloading();
-    }
+
+
+//    if (isInReloadState()) {
+//      handleReload(deltaTime);
+//    }
+//    if (hasFinishedReloading()) {
+//      handleFinishedReloading();
+//    }
   }
 
   private void handleFinishedReloading() {
@@ -60,25 +86,8 @@ public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
     System.out.println("Weapon reloaded!");
   }
 
-  private void handleReload(float deltaTime) {
-    remainingReloadTime -= deltaTime;
-  }
-
-  private boolean hasFinishedReloading() {
-    return remainingReloadTime < 0 && weaponProperties.getState().equals(Status.RELOADING);
-  }
-
   private boolean isInReloadState() {
-    return remainingReloadTime > 0 && weaponProperties.getState().equals(Status.RELOADING);
-  }
-
-  private void handleReload() {
-    weaponProperties.setState(Status.RELOADING);
-    AudioManager.playReloading2WithBackground();
-    remainingReloadTime = weaponProperties.getReloadTime();
-    if (weaponReloadListener != null) {
-      weaponReloadListener.onReload();
-    }
+    return weaponProperties.getState().equals(Status.RELOADING);
   }
 
   private boolean isInAmmoEmptyState() {
@@ -102,7 +111,7 @@ public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
       System.out.println("hit! " + random);
     } else if (random > 0.5f) {
       System.out.println("surpressing hit! " + random);
-    } else{
+    } else {
       System.out.println("no effect - bullet to the sky!");
     }
   }
