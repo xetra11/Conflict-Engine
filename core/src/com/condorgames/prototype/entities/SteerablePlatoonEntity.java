@@ -18,7 +18,6 @@ public abstract class SteerablePlatoonEntity extends PhysicPlatoonEntity impleme
   private float maxAngularAcceleration = 0.5f;
   private boolean tagged;
 
-
   //TODO add speech library?
 
   public SteerablePlatoonEntity(Body body, Faction faction) {

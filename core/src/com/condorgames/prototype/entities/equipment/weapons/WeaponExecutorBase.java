@@ -23,7 +23,7 @@ public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
   public WeaponExecutorBase(WeaponProperties weaponProperties) {
     this.weaponProperties = weaponProperties;
     this.ammoCount = weaponProperties.getAmmoCount();
-    reloadCooldown = new Cooldown(weaponProperties.getAmmoCount());
+    reloadCooldown = new Cooldown(weaponProperties.getReloadTime());
   }
 
   public void execute(float deltaTime) {
@@ -47,37 +47,37 @@ public class WeaponExecutorBase implements WeaponEvent, WeaponExecutor {
     }
 
     if (isInAmmoEmptyState()) {
-      // set new state
-      weaponProperties.setState(Status.RELOADING);
-      // play sudio
-      AudioManager.playReloading2WithBackground();
-      // reloading callback
-      if (weaponReloadListener != null) {
-        weaponReloadListener.onReload();
-      }
+      startReload();
     }
 
     if (isInReloadState()) {
-      reloadCooldown.isDone(deltaTime, () -> {
-        weaponProperties.setState(Status.READY);
-        ammoCount = weaponProperties.getMaxAmmo();
-        reloadCooldown.reset();
-
-        // reloaded callback
-        if (weaponReloadedListener != null) {
-          weaponReloadedListener.onReloadFinished();
-        }
-      });
-
+      reload(deltaTime);
     }
+  }
 
+  private void reload(float deltaTime) {
+    reloadCooldown.isDone(deltaTime, () -> {
+      weaponProperties.setState(Status.READY);
+      ammoCount = weaponProperties.getMaxAmmo();
+      reloadCooldown.reset();
 
-//    if (isInReloadState()) {
-//      handleReload(deltaTime);
-//    }
-//    if (hasFinishedReloading()) {
-//      handleFinishedReloading();
-//    }
+      // reloaded callback
+      if (weaponReloadedListener != null) {
+        weaponReloadedListener.onReloadFinished();
+      }
+    });
+  }
+
+  private void startReload() {
+    // set new state
+    weaponProperties.setState(Status.RELOADING);
+    System.out.println("START RELOAD");
+    // play sudio
+    AudioManager.playReloading2WithBackground();
+    // reloading callback
+    if (weaponReloadListener != null) {
+      weaponReloadListener.onReload();
+    }
   }
 
   private void handleFinishedReloading() {
