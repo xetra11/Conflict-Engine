@@ -40,11 +40,7 @@ public class PlatoonContactListener implements ContactListener {
     activeContact.getBody().setLinearVelocity(0f, 0f);
     // Mock Health loss
     context.getTextFieldHealthFriendly().setText(String.valueOf(activeContact.getStrength()));
-    // Play Radio Report
-    Music background = Gdx.audio.newMusic(Gdx.files.internal("combat.wav"));
-    Music ammoReport = Gdx.audio.newMusic(Gdx.files.internal("chatter_wounded.wav"));
-    AudioManager.playWoundedWithBackground();
-
+    AudioManager.playAssault();
     //Create BattleSituation
     BattleSituation battleSituation = BattleSituation.createBattleSituation(activeContact, passiveContact);
     context.getBattleResolver().addBattleSituations(battleSituation);

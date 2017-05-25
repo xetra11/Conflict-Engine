@@ -1,5 +1,6 @@
 package com.condorgames.prototype.battleresolver;
 
+import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.battleresolver.HitMechanic.HitType;
 import com.condorgames.prototype.entities.PlatoonEntityBase;
 import com.condorgames.prototype.entities.equipment.weapons.Fireable;
@@ -32,7 +33,10 @@ public class BattleSituation {
       if (hitType.equals(HitType.HIT)) {
         activeContact.decreaseStrength(1);
         activeContact.decreaseMorale();
-        System.out.println("Enemy hit your ass!");
+        AudioManager.playCasualty();
+      } else if (hitType.equals(HitType.SURPRESSING_HIT)) {
+        activeContact.decreaseMorale();
+        AudioManager.playTakingFire();
       }
     }));
   }
