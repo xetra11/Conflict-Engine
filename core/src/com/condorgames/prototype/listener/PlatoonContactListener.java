@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.condorgames.prototype.CondorAiPrototype;
 import com.condorgames.prototype.audio.AudioManager;
-import com.condorgames.prototype.entities.PhysicPlatoonEntity;
 import com.condorgames.prototype.entities.Platoon;
 import com.condorgames.prototype.entities.SteerablePlatoonEntity;
 import com.condorgames.prototype.battleresolver.BattleSituation;
@@ -40,7 +39,7 @@ public class PlatoonContactListener implements ContactListener {
     activeContact.setTagged(true);
     activeContact.getBody().setLinearVelocity(0f, 0f);
     // Mock Health loss
-    context.getTextFieldHealth().setText(String.valueOf(activeContact.getStrength()));
+    context.getTextFieldHealthFriendly().setText(String.valueOf(activeContact.getStrength()));
     // Play Radio Report
     Music background = Gdx.audio.newMusic(Gdx.files.internal("combat.wav"));
     Music ammoReport = Gdx.audio.newMusic(Gdx.files.internal("chatter_wounded.wav"));

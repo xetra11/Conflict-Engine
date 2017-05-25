@@ -45,14 +45,13 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private SpriteBatch spriteBatch;
   private Skin skin;
 
-  private Label labelHealth, labelFPS;
-  private TextField textFieldHealth, textFieldFPS;
+  private Label labelHealthFriendly, labelHealthEnemy, labelFPS;
+  private TextField textFieldHealthFriendly, textFieldHealthEnemy, textFieldFPS;
   private TextArea textAreaLogger;
   private ScrollPane scrollPane;
 
   //Battle
   private BattleResolver battleResolver;
-
 
   @Override
   public void create() {
@@ -84,7 +83,8 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void updateUI() {
-    textFieldHealth.setText(String.valueOf(friendly.getStrength()));
+    textFieldHealthFriendly.setText(String.valueOf(friendly.getStrength()));
+    textFieldHealthEnemy.setText(String.valueOf(enemyOne.getStrength()));
   }
 
   private void createUI() {
@@ -124,12 +124,21 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void createHealthUI() {
-    labelHealth = new Label("Strength:", skin, "default");
-    textFieldHealth = new TextField("", skin, "default");
-    textFieldHealth.setPosition(Helper.getMeterToPixel(1.1f), Helper.getMeterToPixel(0f));
-    labelHealth.setPosition(Helper.getMeterToPixel(0f), Helper.getMeterToPixel(0f));
-    stage.addActor(labelHealth);
-    stage.addActor(textFieldHealth);
+    //Friendly
+    labelHealthFriendly = new Label("Friendly.Strength:", skin, "default");
+    textFieldHealthFriendly = new TextField("", skin, "default");
+    textFieldHealthFriendly.setPosition(Helper.getMeterToPixel(1.5f), Helper.getMeterToPixel(0f));
+    labelHealthFriendly.setPosition(Helper.getMeterToPixel(0f), Helper.getMeterToPixel(0f));
+    stage.addActor(labelHealthFriendly);
+    stage.addActor(textFieldHealthFriendly);
+
+    //Enemy
+    labelHealthEnemy = new Label("Enemy.Strength:", skin, "default");
+    textFieldHealthEnemy = new TextField("", skin, "default");
+    textFieldHealthEnemy.setPosition(Helper.getMeterToPixel(3.5f), Helper.getMeterToPixel(0f));
+    labelHealthEnemy.setPosition(Helper.getMeterToPixel(2f), Helper.getMeterToPixel(0f));
+    stage.addActor(labelHealthEnemy);
+    stage.addActor(textFieldHealthEnemy);
   }
 
   @Override
@@ -217,20 +226,20 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   //</editor-fold>
 
 
-  public Label getLabelHealth() {
-    return labelHealth;
+  public Label getLabelHealthFriendly() {
+    return labelHealthFriendly;
   }
 
-  public void setLabelHealth(Label labelHealth) {
-    this.labelHealth = labelHealth;
+  public void setLabelHealthFriendly(Label labelHealthFriendly) {
+    this.labelHealthFriendly = labelHealthFriendly;
   }
 
-  public TextField getTextFieldHealth() {
-    return textFieldHealth;
+  public TextField getTextFieldHealthFriendly() {
+    return textFieldHealthFriendly;
   }
 
-  public void setTextFieldHealth(TextField textFieldHealth) {
-    this.textFieldHealth = textFieldHealth;
+  public void setTextFieldHealthFriendly(TextField textFieldHealthFriendly) {
+    this.textFieldHealthFriendly = textFieldHealthFriendly;
   }
 
   public BattleResolver getBattleResolver() {
