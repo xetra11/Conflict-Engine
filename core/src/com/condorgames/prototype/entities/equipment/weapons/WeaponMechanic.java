@@ -73,7 +73,7 @@ public class WeaponMechanic implements Fireable, WeaponEvent {
   private void handleReloadingCooldown(float deltaTime) {
     reloadCooldown.isDone(deltaTime, () -> {
       weaponProperties.setState(Status.READY);
-      ammoCount = weaponProperties.getMaxAmmo();
+      ammoCount = weaponProperties.getAmmoCapacity();
       reloadCooldown.reset();
 
       // reloaded callback

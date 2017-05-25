@@ -24,7 +24,7 @@ public interface WeaponProperties {
 
   void setAmmoCount(int amount);
 
-  int getMaxAmmo();
+  int getAmmoCapacity();
 
   float getReloadTime();
 

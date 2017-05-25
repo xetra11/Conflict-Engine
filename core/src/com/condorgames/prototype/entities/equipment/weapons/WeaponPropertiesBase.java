@@ -5,17 +5,17 @@ public class WeaponPropertiesBase implements WeaponProperties {
   private Status status;
   private Type type;
   private int ammoCount;
-  private final int maxAmmo;
+  private final int ammoCapacity;
   private static float remainingReloadTime;
   private static float remainingCadenceTime;
   private float reloadTime;
   private float cadence;
 
-  public WeaponPropertiesBase(int maxAmmo, Type type) {
-    this.maxAmmo = maxAmmo;
+  public WeaponPropertiesBase(int ammoCapacity, Type type) {
+    this.ammoCapacity = ammoCapacity;
     this.type = type;
     this.status = Status.READY;
-    ammoCount = maxAmmo;
+    ammoCount = ammoCapacity;
   }
 
   @Override
@@ -35,12 +35,13 @@ public class WeaponPropertiesBase implements WeaponProperties {
 
   @Override
   public void setAmmoCount(int amount) {
+
     this.ammoCount = amount;
   }
 
   @Override
-  public int getMaxAmmo() {
-    return maxAmmo;
+  public int getAmmoCapacity() {
+    return ammoCapacity;
   }
 
   @Override
