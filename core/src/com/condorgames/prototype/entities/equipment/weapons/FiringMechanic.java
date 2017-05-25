@@ -7,10 +7,8 @@ import com.condorgames.prototype.entities.equipment.weapons.WeaponProperties.Sta
 import com.condorgames.prototype.helper.Cooldown;
 import com.condorgames.prototype.listener.*;
 
-public class WeaponMechanic implements Fireable, WeaponEvent {
+public class FiringMechanic implements Fireable, WeaponEvent {
 
-  private int ammoCount;
-  private float remainingCadenceTime;
   private Cooldown reloadCooldown;
   private Cooldown cadenceCooldown;
   private AimMechanic aimMechanic;
@@ -24,9 +22,8 @@ public class WeaponMechanic implements Fireable, WeaponEvent {
   private WeaponEmptyListener weaponEmptyListener;
   private WeaponJammedListener weaponJammedListener;
 
-  public WeaponMechanic(WeaponProperties weaponProperties) {
+  public FiringMechanic(WeaponProperties weaponProperties) {
     this.weaponProperties = weaponProperties;
-    this.ammoCount = weaponProperties.getAmmoCount();
     reloadCooldown = new Cooldown(weaponProperties.getReloadTime());
     cadenceCooldown = new Cooldown(weaponProperties.getCadence());
     aimMechanic = new AimMechanic();
@@ -73,7 +70,6 @@ public class WeaponMechanic implements Fireable, WeaponEvent {
   private void handleReloadingCooldown(float deltaTime) {
     reloadCooldown.isDone(deltaTime, () -> {
       weaponProperties.setState(Status.READY);
-      ammoCount = weaponProperties.getAmmoCapacity();
       reloadCooldown.reset();
 
       // reloaded callback
@@ -86,8 +82,6 @@ public class WeaponMechanic implements Fireable, WeaponEvent {
   private void startReloading() {
     // set new state
     weaponProperties.setState(Status.RELOADING);
-    // play sudio
-    AudioManager.playReloading2WithBackground();
     // reloading callback
     if (weaponReloadListener != null) {
       weaponReloadListener.onReload();
@@ -104,7 +98,7 @@ public class WeaponMechanic implements Fireable, WeaponEvent {
 
   private void handleFire(float deltaTime, HitListener hitListener) {
     aimMechanic.aim(deltaTime, () -> {
-      ammoCount--;
+      weaponProperties.setAmmoCount(weaponProperties.getAmmoCount()-1);
       if (weaponFiredListener != null) {
         weaponFiredListener.onFired();
       }
@@ -125,7 +119,7 @@ public class WeaponMechanic implements Fireable, WeaponEvent {
   }
 
   private boolean isAmmoEmpty() {
-    return ammoCount <= 0 && isAbleToShoot();
+    return weaponProperties.getAmmoCount() <= 0 && isAbleToShoot();
   }
 
   private boolean isAbleToShoot() {
