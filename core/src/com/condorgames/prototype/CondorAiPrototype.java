@@ -62,6 +62,31 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     setupAI();
   }
 
+  @Override
+  public void render() {
+    camera.update();
+    world.step(1f / 60f, 6, 2);
+    battleResolver.resolve(false, Gdx.graphics.getDeltaTime());
+    friendly.update();
+    updateUI();
+
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+    spriteBatch.begin();
+    stage.act();
+    stage.draw();
+    spriteBatch.end();
+
+    //render FPS
+    textFieldFPS.setText(String.valueOf(1 / Gdx.graphics.getDeltaTime()));
+
+    debugRenderer.render(world, debugMatrix);
+  }
+
+  private void updateUI() {
+    textFieldHealth.setText(String.valueOf(friendly.getStrength()));
+  }
+
   private void createUI() {
     BitmapFont bitmapFont = skin.get(BitmapFont.class);
     bitmapFont.getData().setScale(0.5f);
@@ -71,11 +96,6 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
 
   private void createUILoggerTextArea() {
     textAreaLogger = new TextArea("", skin, "default");
-
-//    textAreaLogger.setX(Gdx.graphics.getWidth() - 200);
-//    textAreaLogger.setY(Gdx.graphics.getHeight() - 225);
-//    textAreaLogger.setWidth(200);
-//    textAreaLogger.setHeight(200);
 
     scrollPane = new ScrollPane(textAreaLogger, skin, "default");
     scrollPane.setX(Gdx.graphics.getWidth() - 200);
@@ -105,32 +125,11 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
 
   private void createHealthUI() {
     labelHealth = new Label("Strength:", skin, "default");
-    textFieldHealth = new TextField(String.valueOf(friendly.getStrength()), skin, "default");
+    textFieldHealth = new TextField("", skin, "default");
     textFieldHealth.setPosition(Helper.getMeterToPixel(1.1f), Helper.getMeterToPixel(0f));
     labelHealth.setPosition(Helper.getMeterToPixel(0f), Helper.getMeterToPixel(0f));
     stage.addActor(labelHealth);
     stage.addActor(textFieldHealth);
-  }
-
-  @Override
-  public void render() {
-    camera.update();
-    world.step(1f / 60f, 6, 2);
-    battleResolver.resolve(false, Gdx.graphics.getDeltaTime());
-    friendly.update();
-
-
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-    spriteBatch.begin();
-    stage.act();
-    stage.draw();
-    spriteBatch.end();
-
-    //render FPS
-    textFieldFPS.setText(String.valueOf(1 / Gdx.graphics.getDeltaTime()));
-
-    debugRenderer.render(world, debugMatrix);
   }
 
   @Override
@@ -149,8 +148,8 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private void createEntities() {
     friendly = PlatoonCreator.createSteerablePlatoonEntity(world, new Vector2(3f, 2f));
     enemyOne = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(4f, 7f));
-    enemyTwo = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(6f, 5f));
-    enemyThree = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(9f, 9f));
+//    enemyTwo = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(6f, 5f));
+//    enemyThree = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(9f, 9f));
     targetCrosshair = SensorCreator.createTargetCircleEntity(world, 0.05f);
   }
 

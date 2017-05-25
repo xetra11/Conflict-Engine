@@ -6,17 +6,17 @@ import java.util.Objects;
 
 public class WeaponBase implements Fireable, WeaponEvent {
 
-  private WeaponExecutorBase weaponExecutor;
+  private WeaponMechanic weaponExecutor;
   private WeaponProperties weaponProperties;
 
   protected WeaponBase(int maxAmmo, WeaponProperties.Type type) {
     this.weaponProperties = new WeaponPropertiesBase(maxAmmo, type);
-    this.weaponExecutor = new WeaponExecutorBase(weaponProperties);
+    this.weaponExecutor = new WeaponMechanic(weaponProperties);
   }
 
   public WeaponBase(WeaponProperties weaponProperties) {
     this.weaponProperties = weaponProperties;
-    this.weaponExecutor = new WeaponExecutorBase(weaponProperties);
+    this.weaponExecutor = new WeaponMechanic(weaponProperties);
   }
 
   @Override

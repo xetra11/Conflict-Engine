@@ -3,19 +3,17 @@ package com.condorgames.prototype.entities.equipment.weapons;
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.battleresolver.AimMechanic;
 import com.condorgames.prototype.battleresolver.HitMechanic;
-import com.condorgames.prototype.battleresolver.HitResolver;
 import com.condorgames.prototype.entities.equipment.weapons.WeaponProperties.Status;
 import com.condorgames.prototype.helper.Cooldown;
 import com.condorgames.prototype.listener.*;
 
-public class WeaponExecutorBase implements Fireable, WeaponEvent {
+public class WeaponMechanic implements Fireable, WeaponEvent {
 
   private int ammoCount;
   private float remainingCadenceTime;
   private Cooldown reloadCooldown;
   private Cooldown cadenceCooldown;
   private AimMechanic aimMechanic;
-  private HitResolver hitResolver;
   private HitMechanic hitMechanic;
 
   private WeaponProperties weaponProperties;
@@ -26,14 +24,13 @@ public class WeaponExecutorBase implements Fireable, WeaponEvent {
   private WeaponEmptyListener weaponEmptyListener;
   private WeaponJammedListener weaponJammedListener;
 
-  public WeaponExecutorBase(WeaponProperties weaponProperties) {
+  public WeaponMechanic(WeaponProperties weaponProperties) {
     this.weaponProperties = weaponProperties;
     this.ammoCount = weaponProperties.getAmmoCount();
     reloadCooldown = new Cooldown(weaponProperties.getReloadTime());
     cadenceCooldown = new Cooldown(weaponProperties.getCadence());
     aimMechanic = new AimMechanic();
     hitMechanic = new HitMechanic();
-    hitResolver = new HitResolver(hitMechanic);
   }
 
   public void fire(float deltaTime, HitListener hitListener) {
