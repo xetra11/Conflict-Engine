@@ -15,7 +15,6 @@ public class AimMechanic {
     aimCooldown.isDone(deltaTime, () -> {
       onAimedListener.OnAimed();
       float newAimTime = (float) Math.random() * MULTIPLIER;
-      System.out.println("AimTime: " + newAimTime);
       aimCooldown.resetWith(newAimTime);
     });
   }

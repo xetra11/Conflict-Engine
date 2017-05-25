@@ -4,9 +4,9 @@ import com.condorgames.prototype.listener.*;
 
 import java.util.Objects;
 
-public class WeaponBase implements Weapon {
+public class WeaponBase implements Fireable {
 
-  private WeaponExecutor weaponExecutor;
+  private Fireable weaponExecutor;
   private WeaponProperties weaponProperties;
 
   protected WeaponBase(int maxAmmo, WeaponProperties.Type type) {
@@ -20,12 +20,12 @@ public class WeaponBase implements Weapon {
   }
 
   @Override
-  public void fireWeapon(float deltaTime) {
+  public void fire(float deltaTime, HitListener hitListener) {
     Objects.requireNonNull(weaponExecutor, "No WeaponExecuter set in " + this);
-    weaponExecutor.execute(deltaTime);
+    weaponExecutor.fire(deltaTime, hitListener);
   }
 
-  public WeaponExecutor getWeaponExecutor() {
+  public Fireable getWeaponExecutor() {
     return weaponExecutor;
   }
 

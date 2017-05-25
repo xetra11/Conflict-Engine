@@ -2,17 +2,21 @@ package com.condorgames.prototype.entities.equipment.weapons;
 
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.battleresolver.AimMechanic;
+import com.condorgames.prototype.battleresolver.HitMechanic;
+import com.condorgames.prototype.battleresolver.HitResolver;
 import com.condorgames.prototype.entities.equipment.weapons.WeaponProperties.Status;
 import com.condorgames.prototype.helper.Cooldown;
 import com.condorgames.prototype.listener.*;
 
-public class WeaponExecutorBase implements WeaponExecutor {
+public class WeaponExecutorBase implements Fireable {
 
   private int ammoCount;
   private float remainingCadenceTime;
   private Cooldown reloadCooldown;
   private Cooldown cadenceCooldown;
   private AimMechanic aimMechanic;
+  private HitResolver hitResolver;
+  private HitMechanic hitMechanic;
 
   private WeaponProperties weaponProperties;
 
@@ -28,9 +32,11 @@ public class WeaponExecutorBase implements WeaponExecutor {
     reloadCooldown = new Cooldown(weaponProperties.getReloadTime());
     cadenceCooldown = new Cooldown(weaponProperties.getCadence());
     aimMechanic = new AimMechanic();
+    hitMechanic = new HitMechanic();
+    hitResolver = new HitResolver(hitMechanic);
   }
 
-  public void execute(float deltaTime) {
+  public void fire(float deltaTime, HitListener hitListener) {
 
     if (isAmmoEmpty()) {
       handleAmmoEmpty();
@@ -45,7 +51,7 @@ public class WeaponExecutorBase implements WeaponExecutor {
     }
 
     if (isReadyState()) {
-      fire(deltaTime);
+      handleFire(deltaTime, hitListener);
     }
 
     if (isCadenceState()) {
@@ -99,13 +105,14 @@ public class WeaponExecutorBase implements WeaponExecutor {
     return weaponProperties.getState().equals(Status.NO_AMMO);
   }
 
-  private void fire(float deltaTime) {
+  private void handleFire(float deltaTime, HitListener hitListener) {
     aimMechanic.aim(deltaTime, () -> {
       ammoCount--;
       if (weaponFiredListener != null) {
         weaponFiredListener.onFired();
       }
       weaponProperties.setState(Status.CADENCE);
+      hitListener.onHit(hitMechanic.hit());
     });
   }
 
