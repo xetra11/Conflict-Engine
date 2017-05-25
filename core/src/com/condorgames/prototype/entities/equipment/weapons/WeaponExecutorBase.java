@@ -1,6 +1,7 @@
 package com.condorgames.prototype.entities.equipment.weapons;
 
 import com.condorgames.prototype.audio.AudioManager;
+import com.condorgames.prototype.battleresolver.AimMechanic;
 import com.condorgames.prototype.entities.equipment.weapons.WeaponProperties.Status;
 import com.condorgames.prototype.helper.Cooldown;
 import com.condorgames.prototype.listener.*;
@@ -11,6 +12,8 @@ public class WeaponExecutorBase implements WeaponExecutor {
   private float remainingCadenceTime;
   private Cooldown reloadCooldown;
   private Cooldown cadenceCooldown;
+  private AimMechanic aimMechanic;
+
   private WeaponProperties weaponProperties;
 
   private WeaponFiredListener weaponFiredListener;
@@ -24,6 +27,7 @@ public class WeaponExecutorBase implements WeaponExecutor {
     this.ammoCount = weaponProperties.getAmmoCount();
     reloadCooldown = new Cooldown(weaponProperties.getReloadTime());
     cadenceCooldown = new Cooldown(weaponProperties.getCadence());
+    aimMechanic = new AimMechanic();
   }
 
   public void execute(float deltaTime) {
@@ -32,16 +36,6 @@ public class WeaponExecutorBase implements WeaponExecutor {
       handleAmmoEmpty();
     }
 
-    if (isReadyState()) {
-      fire();
-    }
-
-    if (isCadenceState()){
-      handleCadenceCooldown(deltaTime);
-    }
-
-    // TODO Jammed weaponProperties state and event
-
     if (isAmmoEmptyState()) {
       startReloading();
     }
@@ -49,6 +43,17 @@ public class WeaponExecutorBase implements WeaponExecutor {
     if (isReloading()) {
       handleReloadingCooldown(deltaTime);
     }
+
+    if (isReadyState()) {
+      fire(deltaTime);
+    }
+
+    if (isCadenceState()) {
+      handleCadenceCooldown(deltaTime);
+    }
+
+    // TODO Jammed weaponProperties state and event
+
   }
 
   private boolean isCadenceState() {
@@ -94,12 +99,14 @@ public class WeaponExecutorBase implements WeaponExecutor {
     return weaponProperties.getState().equals(Status.NO_AMMO);
   }
 
-  private void fire() {
-    ammoCount--;
-    if (weaponFiredListener != null) {
-      weaponFiredListener.onFired();
-    }
-    weaponProperties.setState(Status.CADENCE);
+  private void fire(float deltaTime) {
+    aimMechanic.aim(deltaTime, () -> {
+      ammoCount--;
+      if (weaponFiredListener != null) {
+        weaponFiredListener.onFired();
+      }
+      weaponProperties.setState(Status.CADENCE);
+    });
   }
 
   private boolean isReadyState() {
@@ -113,7 +120,6 @@ public class WeaponExecutorBase implements WeaponExecutor {
     }
   }
 
-  // TODO: isAbleToShoot really necessary? since no ammo means no ammo - independent of the weapon state
   private boolean isAmmoEmpty() {
     return ammoCount <= 0 && isAbleToShoot();
   }
