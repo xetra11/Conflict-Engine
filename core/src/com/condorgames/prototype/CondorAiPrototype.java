@@ -56,6 +56,10 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private TextField textFieldMoraleEnemy;
   //Battle
   private BattleResolver battleResolver;
+  private Label labelAmmoFriendly;
+  private TextField textFieldAmmoFriendly;
+  private TextField textFieldAmmoEnemy;
+  private Label labelAmmoEnemy;
 
   @Override
   public void create() {
@@ -92,11 +96,15 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
 
     textFieldMoraleFriendly.setText(String.valueOf(friendly.getMorale()));
     textFieldMoraleEnemy.setText(String.valueOf(enemyOne.getMorale()));
+
+    textFieldAmmoFriendly.setText(String.valueOf(friendly.getAmmo()));
+    textFieldAmmoEnemy.setText(String.valueOf(enemyOne.getAmmo()));
   }
 
   private void createUI() {
     BitmapFont bitmapFont = skin.get(BitmapFont.class);
     bitmapFont.getData().setScale(0.5f);
+    createAmmoUI();
     createHealthUI();
     createMoraleUI();
     createFPSUI();
@@ -129,6 +137,24 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     labelFPS.setPosition(Gdx.graphics.getWidth() - 100f, Gdx.graphics.getHeight() - 25f);
     stage.addActor(labelFPS);
     stage.addActor(textFieldFPS);
+  }
+
+  private void createAmmoUI() {
+    //Friendly
+    labelAmmoFriendly = new Label("Friendly.Ammo:", skin, "default");
+    textFieldAmmoFriendly = new TextField("", skin, "default");
+    textFieldAmmoFriendly.setPosition(Helper.getMeterToPixel(5.2f), Helper.getMeterToPixel(0f));
+    labelAmmoFriendly.setPosition(Helper.getMeterToPixel(4f), Helper.getMeterToPixel(0f));
+    stage.addActor(labelAmmoFriendly);
+    stage.addActor(textFieldAmmoFriendly);
+
+    //Enemy
+    labelAmmoEnemy = new Label("Enemy.Ammo:", skin, "default");
+    textFieldAmmoEnemy = new TextField("", skin, "default");
+    textFieldAmmoEnemy.setPosition(Helper.getMeterToPixel(7.7f), Helper.getMeterToPixel(0f));
+    labelAmmoEnemy.setPosition(Helper.getMeterToPixel(6.5f), Helper.getMeterToPixel(0f));
+    stage.addActor(labelAmmoEnemy);
+    stage.addActor(textFieldAmmoEnemy);
   }
 
   private void createMoraleUI() {

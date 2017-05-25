@@ -16,12 +16,14 @@ public abstract class PlatoonEntityBase extends BattleParticipantBase {
 //  private byte strength;
   private short strength;
   private Faction faction;
+  private int ammo;
 
   public PlatoonEntityBase(MoraleState morale, Faction faction) {
     super(morale);
     this.faction = faction;
     health = 100;
     strength = 9;
+    ammo = strength * 60;
     platoonID = ++platoonCount;
     Gdx.app.log("PlatoonEntityBase", "created new PlatoonEntityBase with ID: " + platoonID + ", Faction: " + faction.name());
   }
@@ -45,4 +47,14 @@ public abstract class PlatoonEntityBase extends BattleParticipantBase {
   public Faction getFaction() {
     return faction;
   }
+
+  public int getAmmo(){
+    return ammo;
+  }
+
+  public void setAmmo(int ammo){
+    this.ammo = ammo;
+  }
+
+
 }
