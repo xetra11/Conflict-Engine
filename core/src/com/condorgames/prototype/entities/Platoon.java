@@ -4,10 +4,11 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.battleresolver.AimMechanic;
 import com.condorgames.prototype.creator.WeaponCreator;
 import com.condorgames.prototype.entities.equipment.weapons.Fireable;
+import com.condorgames.prototype.entities.equipment.weapons.WeaponBase;
 import com.condorgames.prototype.entities.equipment.weapons.WeaponExecutorBase;
 
 public class Platoon extends SteerablePlatoonEntity {
-  private Fireable weapon;
+  private WeaponBase weapon;
 
   public Platoon(Body body, Faction faction) {
     super(body, faction);
@@ -20,7 +21,7 @@ public class Platoon extends SteerablePlatoonEntity {
   }
 
   @Override
-  public void fire(float deltaTime) {
-    weapon.fire(deltaTime, hitType -> System.out.println("hittype:" + hitType));
+  public void fire(float deltaTime, HitListener hitListener) {
+    weapon.fire(deltaTime, hitListener);
   }
 }

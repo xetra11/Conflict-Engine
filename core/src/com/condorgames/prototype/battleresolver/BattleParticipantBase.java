@@ -1,6 +1,8 @@
 package com.condorgames.prototype.battleresolver;
 
-public abstract class BattleParticipantBase implements BattleParticipant {
+import com.condorgames.prototype.entities.equipment.weapons.Fireable;
+
+public abstract class BattleParticipantBase implements Fireable, Morale {
   protected MoraleState morale;
 
   public BattleParticipantBase(MoraleState morale) {

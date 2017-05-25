@@ -8,7 +8,7 @@ import com.condorgames.prototype.entities.equipment.weapons.WeaponProperties.Sta
 import com.condorgames.prototype.helper.Cooldown;
 import com.condorgames.prototype.listener.*;
 
-public class WeaponExecutorBase implements Fireable {
+public class WeaponExecutorBase implements Fireable, WeaponEvent {
 
   private int ammoCount;
   private float remainingCadenceTime;

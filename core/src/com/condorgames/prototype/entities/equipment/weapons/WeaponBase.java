@@ -4,9 +4,9 @@ import com.condorgames.prototype.listener.*;
 
 import java.util.Objects;
 
-public class WeaponBase implements Fireable {
+public class WeaponBase implements Fireable, WeaponEvent {
 
-  private Fireable weaponExecutor;
+  private WeaponExecutorBase weaponExecutor;
   private WeaponProperties weaponProperties;
 
   protected WeaponBase(int maxAmmo, WeaponProperties.Type type) {
