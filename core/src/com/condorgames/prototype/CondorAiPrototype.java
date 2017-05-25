@@ -50,6 +50,10 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private TextArea textAreaLogger;
   private ScrollPane scrollPane;
 
+  private Label labelMoraleFriendly;
+  private TextField textFieldMoraleFriendly;
+  private Label labelMoraleEnemy;
+  private TextField textFieldMoraleEnemy;
   //Battle
   private BattleResolver battleResolver;
 
@@ -85,12 +89,16 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private void updateUI() {
     textFieldHealthFriendly.setText(String.valueOf(friendly.getStrength()));
     textFieldHealthEnemy.setText(String.valueOf(enemyOne.getStrength()));
+
+    textFieldMoraleFriendly.setText(String.valueOf(friendly.getMorale()));
+    textFieldMoraleEnemy.setText(String.valueOf(enemyOne.getMorale()));
   }
 
   private void createUI() {
     BitmapFont bitmapFont = skin.get(BitmapFont.class);
     bitmapFont.getData().setScale(0.5f);
     createHealthUI();
+    createMoraleUI();
     createFPSUI();
   }
 
@@ -121,6 +129,24 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     labelFPS.setPosition(Gdx.graphics.getWidth() - 100f, Gdx.graphics.getHeight() - 25f);
     stage.addActor(labelFPS);
     stage.addActor(textFieldFPS);
+  }
+
+  private void createMoraleUI() {
+    //Friendly
+    labelMoraleFriendly = new Label("Friendly.Morale:", skin, "default");
+    textFieldMoraleFriendly = new TextField("", skin, "default");
+    textFieldMoraleFriendly.setPosition(Helper.getMeterToPixel(1.5f), Helper.getMeterToPixel(0.3f));
+    labelMoraleFriendly.setPosition(Helper.getMeterToPixel(0f), Helper.getMeterToPixel(0.3f));
+    stage.addActor(labelMoraleFriendly);
+    stage.addActor(textFieldMoraleFriendly);
+
+    //Enemy
+    labelMoraleEnemy = new Label("Enemy.Morale:", skin, "default");
+    textFieldMoraleEnemy = new TextField("", skin, "default");
+    textFieldMoraleEnemy.setPosition(Helper.getMeterToPixel(4f), Helper.getMeterToPixel(0.3f));
+    labelMoraleEnemy.setPosition(Helper.getMeterToPixel(2.5f), Helper.getMeterToPixel(0.3f));
+    stage.addActor(labelMoraleEnemy);
+    stage.addActor(textFieldMoraleEnemy);
   }
 
   private void createHealthUI() {

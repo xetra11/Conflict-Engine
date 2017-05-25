@@ -22,13 +22,16 @@ public class BattleSituation {
 
   public void resolve(float deltaTime) {
     activeContact.fire(deltaTime, hitType -> {
-      if(hitType.equals(HitType.HIT)){
+      if (hitType.equals(HitType.HIT)) {
         passiveContact.decreaseStrength(1);
+        passiveContact.decreaseMorale();
       }
     });
+
     wakeupCooldown.isDone(deltaTime, () -> passiveContact.fire(deltaTime, hitType -> {
       if (hitType.equals(HitType.HIT)) {
         activeContact.decreaseStrength(1);
+        activeContact.decreaseMorale();
         System.out.println("Enemy hit your ass!");
       }
     }));
