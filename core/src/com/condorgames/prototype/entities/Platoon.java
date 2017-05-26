@@ -27,23 +27,15 @@ public class Platoon extends SteerablePlatoonEntity {
     soldiers.add(new Soldier(60, WeaponCreator.createRifle()));
     soldiers.add(new Soldier(60, WeaponCreator.createRifle()));
 
-//    //Listener
-//    weapon.setWeaponFiredListener(() -> System.out.println(faction + " fired!"));
-//    weapon.setWeaponReloadedListener(() -> {
-//      System.out.println(faction + " reloaded!");
-//      // passes the whole ammo to the weapon and if a rest exists it will be reassigned as the current ammoCount
-//      setAmmo(weapon.reload(getAmmo()));
-//    });
-//    weapon.setWeaponReloadListener(() -> {
-//      System.out.println(faction + " reloading...");
-//      AudioManager.playReloading2WithBackground();
-//    });
-//    weapon.setWeaponEmptyListener(() -> System.out.println(faction + " Empty Ammo!"));
-//    weapon.setWeaponJammedListener(() -> System.out.println(faction + " Jammed!"));
   }
 
   @Override
   public void fire(float deltaTime, HitListener hitListener) {
     soldiers.forEach(soldier -> soldier.fire(deltaTime, hitListener));
+  }
+
+  @Override
+  public int getAmmo() {
+    return soldiers.stream().mapToInt(Soldier::getAmmo).sum();
   }
 }
