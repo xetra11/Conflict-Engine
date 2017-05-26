@@ -61,4 +61,8 @@ public class Weapon implements Fireable, Reloadable, WeaponEvent {
   public void setWeaponJammedListener(WeaponJammedListener weaponJammedListener) {
     firingMechanic.setWeaponJammedListener(weaponJammedListener);
   }
+
+  public WeaponProperties getProperties(){
+    return weaponProperties;
+  }
 }
