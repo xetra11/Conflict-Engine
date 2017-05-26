@@ -7,7 +7,6 @@ import java.util.Objects;
 public class Weapon implements Fireable, Reloadable, WeaponEvent {
 
   private FiringMechanic firingMechanic;
-  //TODO let weaponproperties be passed in by CTOR to define weaponkind within WeaponCreator
   private WeaponProperties weaponProperties;
 
   protected Weapon(int maxAmmo, WeaponProperties.Type type) {
