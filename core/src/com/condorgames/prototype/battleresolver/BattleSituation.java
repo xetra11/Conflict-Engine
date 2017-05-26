@@ -25,37 +25,37 @@ public class BattleSituation {
   // TODO declare environment here to avoid hits!
   public void resolve(float deltaTime) {
 
-    if(activeContact.getStrength() <= 0){
+    if (activeContact.getStrength() <= 0) {
       System.out.println("+++ ALLIED WON BATTLE! +++");
-    }else if(passiveContact.getStrength() <= 0){
+    } else if (passiveContact.getStrength() <= 0) {
       System.out.println("+++ AXIS WON BATTLE! +++");
+    } else {
+      activeContact.fire(deltaTime, hitType -> {
+        System.out.print(">AXIS: ");
+        if (hitType.equals(HitType.HIT)) {
+          //Double morale decrease due hit!
+          passiveContact.decreaseMorale();
+          passiveContact.decreaseMorale();
+          passiveContact.takeCasualty();
+        } else if (hitType.equals(HitType.SURPRESSING_HIT)) {
+          passiveContact.decreaseMorale();
+        }
+      });
+
+      //TODO decrease Strength & Morale needs to be shifted down to concrete class
+      wakeupCooldown.isDone(deltaTime, () -> passiveContact.fire(deltaTime, hitType -> {
+        System.out.print(">ALLIED: ");
+        if (hitType.equals(HitType.HIT)) {
+          //Double morale decrease due hit!
+          activeContact.decreaseMorale();
+          activeContact.decreaseMorale();
+          activeContact.takeCasualty();
+          AudioManager.playCasualty();
+        } else if (hitType.equals(HitType.SURPRESSING_HIT)) {
+          activeContact.decreaseMorale();
+          AudioManager.playTakingFire();
+        }
+      }));
     }
-
-    activeContact.fire(deltaTime, hitType -> {
-      System.out.print(">AXIS: ");
-      if (hitType.equals(HitType.HIT)) {
-        //Double morale decrease due hit!
-        passiveContact.decreaseMorale();
-        passiveContact.decreaseMorale();
-        passiveContact.takeCasualty();
-      } else if (hitType.equals(HitType.SURPRESSING_HIT)) {
-        passiveContact.decreaseMorale();
-      }
-    });
-
-    //TODO decrease Strength & Morale needs to be shifted down to concrete class
-    wakeupCooldown.isDone(deltaTime, () -> passiveContact.fire(deltaTime, hitType -> {
-      System.out.print(">ALLIED: ");
-      if (hitType.equals(HitType.HIT)) {
-        //Double morale decrease due hit!
-        activeContact.decreaseMorale();
-        activeContact.decreaseMorale();
-        activeContact.takeCasualty();
-        AudioManager.playCasualty();
-      } else if (hitType.equals(HitType.SURPRESSING_HIT)) {
-        activeContact.decreaseMorale();
-        AudioManager.playTakingFire();
-      }
-    }));
   }
 }

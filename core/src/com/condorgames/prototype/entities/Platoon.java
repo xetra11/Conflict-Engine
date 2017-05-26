@@ -37,6 +37,8 @@ public class Platoon extends SteerablePlatoonEntity {
 
   }
 
+  //TODO Salvage Ammo from dead comrades!
+
   @Override
   public void fire(float deltaTime, HitListener hitListener) {
     getActiveSoldiers()
