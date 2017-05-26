@@ -36,6 +36,4 @@ public interface WeaponProperties {
 
   Type getType();
 
-  void setType(Type type);
-
 }

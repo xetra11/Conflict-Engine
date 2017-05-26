@@ -69,8 +69,4 @@ public class WeaponPropertiesImpl implements WeaponProperties {
     return type;
   }
 
-  @Override
-  public void setType(Type type) {
-    this.type = type;
-  }
 }
