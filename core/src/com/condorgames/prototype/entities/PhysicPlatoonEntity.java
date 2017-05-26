@@ -14,7 +14,7 @@ public abstract class PhysicPlatoonEntity extends PlatoonEntityBase {
   }
 
   public PhysicPlatoonEntity(MoraleState morale, Faction faction, Body body) {
-    super(morale, faction);
+    super(faction);
     body.setUserData(this);
     this.body = body;
   }

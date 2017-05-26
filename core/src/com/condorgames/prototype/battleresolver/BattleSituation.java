@@ -24,14 +24,14 @@ public class BattleSituation {
   public void resolve(float deltaTime) {
     activeContact.fire(deltaTime, hitType -> {
       if (hitType.equals(HitType.HIT)) {
-        passiveContact.decreaseStrength(1);
         passiveContact.decreaseMorale();
       }
     });
 
+
+    //TODO decrease Strength & Morale needs to be shifted down to concrete class
     wakeupCooldown.isDone(deltaTime, () -> passiveContact.fire(deltaTime, hitType -> {
       if (hitType.equals(HitType.HIT)) {
-        activeContact.decreaseStrength(1);
         activeContact.decreaseMorale();
         AudioManager.playCasualty();
       } else if (hitType.equals(HitType.SURPRESSING_HIT)) {

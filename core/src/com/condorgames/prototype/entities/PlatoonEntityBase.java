@@ -1,9 +1,10 @@
 package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.condorgames.prototype.battleresolver.BattleParticipantBase;
+import com.condorgames.prototype.battleresolver.Morale;
+import com.condorgames.prototype.entities.equipment.weapons.Fireable;
 
-public abstract class PlatoonEntityBase extends BattleParticipantBase {
+public abstract class PlatoonEntityBase implements Fireable, Morale {
   public enum Faction {
     AXIS,
     ALLY
@@ -14,29 +15,13 @@ public abstract class PlatoonEntityBase extends BattleParticipantBase {
   private short platoonID;
   private float health;
 //  private byte strength;
-  private short strength;
   private Faction faction;
 
-  public PlatoonEntityBase(MoraleState morale, Faction faction) {
-    super(morale);
+  public PlatoonEntityBase(Faction faction) {
     this.faction = faction;
     health = 100;
-    strength = 9;
     platoonID = ++platoonCount;
     Gdx.app.log("PlatoonEntityBase", "created new PlatoonEntityBase with ID: " + platoonID + ", Faction: " + faction.name());
-  }
-
-  //TODO make this abstract and let Platoon handle this number through List.size
-  public short getStrength() {
-    return strength;
-  }
-
-  public void setStrength(short strength) {
-    this.strength = strength;
-  }
-
-  public void decreaseStrength(int amount){
-    this.strength -= amount;
   }
 
   public short getPlatoonID() {
@@ -49,4 +34,5 @@ public abstract class PlatoonEntityBase extends BattleParticipantBase {
 
   public abstract int getAmmo();
 
+  public abstract int getStrength();
 }

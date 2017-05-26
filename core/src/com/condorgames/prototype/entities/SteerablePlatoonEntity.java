@@ -23,7 +23,6 @@ public abstract class SteerablePlatoonEntity extends PhysicPlatoonEntity impleme
   public SteerablePlatoonEntity(Body body, Faction faction) {
     super(body, faction);
     steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
-//    weapon.setWeaponFiredListener(() -> System.out.println("fired"));
   }
 
   public void setSteeringBehavior(SteeringBehavior steeringBehavior) {

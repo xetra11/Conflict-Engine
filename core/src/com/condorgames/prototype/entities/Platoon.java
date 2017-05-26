@@ -1,12 +1,13 @@
 package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.creator.WeaponCreator;
+import com.condorgames.prototype.entities.SoldierProperties.Health;
 import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Platoon extends SteerablePlatoonEntity {
   private Weapon weapon;
@@ -37,5 +38,52 @@ public class Platoon extends SteerablePlatoonEntity {
   @Override
   public int getAmmo() {
     return soldiers.stream().mapToInt(Soldier::getAmmo).sum();
+  }
+
+  @Override
+  public int getStrength() {
+    return Math.toIntExact(soldiers.stream()
+            .filter(soldier -> isNotAbleToFight(soldier))
+            .count());
+  }
+
+  @Override
+  public void setMorale(MoraleState morale) {
+    randomSoldier().setMorale(morale);
+  }
+
+  @Override
+  public void decreaseMorale() {
+    randomSoldier().decreaseMorale();
+  }
+
+  @Override
+  public void raiseMorale() {
+   randomSoldier().raiseMorale();
+  }
+
+  @Override
+  public MoraleState getMorale() {
+    //TODO: map to soldier morale anyhow
+    return MoraleState.NORMAL;
+  }
+
+  private Soldier randomSoldier(){
+    Random random = new Random();
+    int index = random.nextInt(soldiers.size());
+    return soldiers.get(index);
+  }
+
+  private boolean isNotAbleToFight(Soldier soldier) {
+    return hasSevereWound(soldier) == false &&
+            isDead(soldier) == false;
+  }
+
+  private boolean isDead(Soldier soldier) {
+    return soldier.getProperties().getHealth().equals(Health.DEAD);
+  }
+
+  private boolean hasSevereWound(Soldier soldier) {
+    return soldier.getProperties().getHealth().equals(Health.SEVERE_WOUND);
   }
 }

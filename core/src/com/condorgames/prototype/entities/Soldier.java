@@ -1,5 +1,6 @@
 package com.condorgames.prototype.entities;
 
+import com.condorgames.prototype.battleresolver.Morale;
 import com.condorgames.prototype.entities.equipment.weapons.Fireable;
 import com.condorgames.prototype.entities.equipment.weapons.Reloadable;
 import com.condorgames.prototype.entities.equipment.weapons.Weapon;
