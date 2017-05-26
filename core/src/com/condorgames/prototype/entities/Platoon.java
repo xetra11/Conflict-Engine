@@ -1,7 +1,6 @@
 package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.condorgames.prototype.battleresolver.Morale;
 import com.condorgames.prototype.creator.WeaponCreator;
 import com.condorgames.prototype.entities.SoldierProperties.Health;
 import com.condorgames.prototype.entities.equipment.weapons.Weapon;
@@ -9,6 +8,7 @@ import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Platoon extends SteerablePlatoonEntity {
   private static final int UPPER_HIGH_THRESHOLD = 36;
@@ -37,38 +37,50 @@ public class Platoon extends SteerablePlatoonEntity {
 
   @Override
   public void fire(float deltaTime, HitListener hitListener) {
-    soldiers.forEach(soldier -> soldier.fire(deltaTime, hitListener));
+    soldiers.stream()
+            .filter(this::isAbleToFight)
+            .forEach(soldier -> soldier.fire(deltaTime, hitListener));
   }
 
   @Override
   public int getAmmo() {
-    return soldiers.stream().mapToInt(Soldier::getAmmo).sum();
+    return soldiers.stream()
+            .mapToInt(Soldier::getAmmo)
+            .sum();
   }
+
 
   @Override
   public int getStrength() {
     return Math.toIntExact(soldiers.stream()
-            .filter(soldier -> isNotAbleToFight(soldier))
+            .filter(this::isAbleToFight)
             .count());
   }
 
   @Override
+  public void takeCasualty() {
+    System.out.println("Casualty!");
+    randomActiveSoldier().wound();
+  }
+
+  @Override
   public void setMorale(MoraleState morale) {
-    randomSoldier().setMorale(morale);
+    randomActiveSoldier().setMorale(morale);
   }
 
   @Override
   public void decreaseMorale() {
-    randomSoldier().decreaseMorale();
+    randomActiveSoldier().decreaseMorale();
   }
 
   @Override
   public void raiseMorale() {
-    randomSoldier().raiseMorale();
+    randomActiveSoldier().raiseMorale();
   }
 
   @Override
   public MoraleState getMorale() {
+    //TODO Add morale debuffs here so they can be aggregated
     int platoonMorale = getPlatoonMorale();
     return getPlatoonMoraleState(platoonMorale);
   }
@@ -91,7 +103,7 @@ public class Platoon extends SteerablePlatoonEntity {
       return MoraleState.NORMAL;
     } else if (platoonMorale > UPPER_FLEEING_THRESHOLD) {
       return MoraleState.LOW;
-    } else if(platoonMorale >= UPPER_PINNEDDOWN_THRESHOLD){
+    } else if (platoonMorale >= UPPER_PINNEDDOWN_THRESHOLD) {
       return MoraleState.FLEEING;
     } else {
       return MoraleState.PINNED_DOWN;
@@ -102,16 +114,21 @@ public class Platoon extends SteerablePlatoonEntity {
     return soldiers.stream().mapToInt(soldier -> soldier.getMorale().getValue()).sum();
   }
 
-  private Soldier randomSoldier() {
-    // TODO Only soldiers who are alive/not wounded
+  private Soldier randomActiveSoldier() {
     Random random = new Random();
     int index = random.nextInt(soldiers.size());
-    return soldiers.get(index);
+    return soldiers.stream()
+            .filter(this::isAbleToFight)
+            .collect(Collectors.toList())
+            .get(index);
+  }
+
+  private boolean isAbleToFight(Soldier soldier) {
+    return !isNotAbleToFight(soldier);
   }
 
   private boolean isNotAbleToFight(Soldier soldier) {
-    return hasSevereWound(soldier) == false &&
-            isDead(soldier) == false;
+    return hasSevereWound(soldier) || isDead(soldier);
   }
 
   private boolean isDead(Soldier soldier) {

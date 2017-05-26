@@ -18,9 +18,7 @@ public class SoldierPropertiesImpl implements SoldierProperties {
 
   @Override
   public void decreaseMorale() {
-    System.out.println("PreDec: " + getMorale());
     morale = morale.decrease();
-    System.out.println("PostDec: " + getMorale());
   }
 
   @Override

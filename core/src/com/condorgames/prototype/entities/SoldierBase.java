@@ -35,6 +35,10 @@ public class SoldierBase implements Morale {
     return soldierProperties;
   }
 
+  public void wound() {
+    soldierProperties.setHealth(soldierProperties.getHealth().decrease());
+  }
+
   @Override
   public void setMorale(MoraleState morale) {
     soldierProperties.setMorale(morale);

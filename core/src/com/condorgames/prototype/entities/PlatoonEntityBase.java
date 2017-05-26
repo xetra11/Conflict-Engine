@@ -13,13 +13,10 @@ public abstract class PlatoonEntityBase implements Fireable, Morale {
   private static short platoonCount = 0;
 
   private short platoonID;
-  private float health;
-//  private byte strength;
   private Faction faction;
 
   public PlatoonEntityBase(Faction faction) {
     this.faction = faction;
-    health = 100;
     platoonID = ++platoonCount;
     Gdx.app.log("PlatoonEntityBase", "created new PlatoonEntityBase with ID: " + platoonID + ", Faction: " + faction.name());
   }
@@ -35,4 +32,6 @@ public abstract class PlatoonEntityBase implements Fireable, Morale {
   public abstract int getAmmo();
 
   public abstract int getStrength();
+
+  public abstract void takeCasualty();
 }
