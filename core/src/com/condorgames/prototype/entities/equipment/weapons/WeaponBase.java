@@ -6,23 +6,23 @@ import java.util.Objects;
 
 public class WeaponBase implements Fireable, Reloadable, WeaponEvent {
 
-  private FiringMechanic weaponExecutor;
+  private FiringMechanic firingMechanic;
   private WeaponProperties weaponProperties;
 
   protected WeaponBase(int maxAmmo, WeaponProperties.Type type) {
-    this.weaponProperties = new WeaponPropertiesBase(maxAmmo, type);
-    this.weaponExecutor = new FiringMechanic(weaponProperties);
+    this.weaponProperties = new WeaponPropertiesImpl(maxAmmo, type);
+    this.firingMechanic = new FiringMechanic(weaponProperties);
   }
 
   public WeaponBase(WeaponProperties weaponProperties) {
     this.weaponProperties = weaponProperties;
-    this.weaponExecutor = new FiringMechanic(weaponProperties);
+    this.firingMechanic = new FiringMechanic(weaponProperties);
   }
 
   @Override
   public void fire(float deltaTime, HitListener hitListener) {
-    Objects.requireNonNull(weaponExecutor, "No WeaponExecuter set in " + this);
-    weaponExecutor.fire(deltaTime, hitListener);
+    Objects.requireNonNull(firingMechanic, "No WeaponExecuter set in " + this);
+    firingMechanic.fire(deltaTime, hitListener);
   }
 
   @Override
@@ -39,26 +39,26 @@ public class WeaponBase implements Fireable, Reloadable, WeaponEvent {
 
   @Override
   public void setWeaponFiredListener(WeaponFiredListener weaponFiredListener) {
-    weaponExecutor.setWeaponFiredListener(weaponFiredListener);
+    firingMechanic.setWeaponFiredListener(weaponFiredListener);
   }
 
   @Override
   public void setWeaponReloadListener(WeaponReloadListener weaponReloadListener) {
-    weaponExecutor.setWeaponReloadListener(weaponReloadListener);
+    firingMechanic.setWeaponReloadListener(weaponReloadListener);
   }
 
   @Override
   public void setWeaponReloadedListener(WeaponReloadedListener weaponReloadedListener) {
-    weaponExecutor.setWeaponReloadedListener(weaponReloadedListener);
+    firingMechanic.setWeaponReloadedListener(weaponReloadedListener);
   }
 
   @Override
   public void setWeaponEmptyListener(WeaponEmptyListener weaponEmptyListener) {
-    weaponExecutor.setWeaponEmptyListener(weaponEmptyListener);
+    firingMechanic.setWeaponEmptyListener(weaponEmptyListener);
   }
 
   @Override
   public void setWeaponJammedListener(WeaponJammedListener weaponJammedListener) {
-    weaponExecutor.setWeaponJammedListener(weaponJammedListener);
+    firingMechanic.setWeaponJammedListener(weaponJammedListener);
   }
 }

@@ -1,6 +1,6 @@
 package com.condorgames.prototype.entities.equipment.weapons;
 
-public class WeaponPropertiesBase implements WeaponProperties {
+public class WeaponPropertiesImpl implements WeaponProperties {
 
   private Status status;
   private Type type;
@@ -11,7 +11,7 @@ public class WeaponPropertiesBase implements WeaponProperties {
   private float reloadTime;
   private float cadence;
 
-  public WeaponPropertiesBase(int ammoCapacity, Type type) {
+  public WeaponPropertiesImpl(int ammoCapacity, Type type) {
     this.ammoCapacity = ammoCapacity;
     this.type = type;
     this.status = Status.READY;
