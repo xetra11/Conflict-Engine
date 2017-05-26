@@ -15,7 +15,7 @@ public class Soldier extends SoldierBase implements Fireable {
     this.ammo = ammo;
     this.weapon = weapon;
 
-    weapon.setWeaponFiredListener(() -> System.out.println("Fired"));
+//    weapon.setWeaponFiredListener(() -> System.out.println("Fired"));
     weapon.setWeaponEmptyListener(() -> System.out.println("Empty"));
     weapon.setWeaponReloadListener(() -> System.out.println("Reloading..."));
     weapon.setWeaponReloadedListener(() -> {

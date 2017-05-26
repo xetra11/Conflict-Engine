@@ -15,7 +15,6 @@ public class Platoon extends SteerablePlatoonEntity {
 
   public Platoon(Body body, Faction faction) {
     super(body, faction);
-    weapon = WeaponCreator.createRifle();
 
     //Soldiers
     soldiers.add(new Soldier(60, WeaponCreator.createRifle()));
@@ -65,10 +64,11 @@ public class Platoon extends SteerablePlatoonEntity {
   @Override
   public MoraleState getMorale() {
     //TODO: map to soldier morale anyhow
-    return MoraleState.NORMAL;
+    return soldiers.stream().findFirst().get().getMorale();
   }
 
   private Soldier randomSoldier(){
+    // TODO Only soldiers who are alive/not wounded
     Random random = new Random();
     int index = random.nextInt(soldiers.size());
     return soldiers.get(index);
