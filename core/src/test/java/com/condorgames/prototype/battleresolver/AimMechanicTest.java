@@ -17,15 +17,16 @@ public class AimMechanicTest {
   AimMechanic aimMechanic;
 
   @Before
-  public void setup(){
+  public void setup() {
     aimMechanic = new AimMechanic();
   }
 
   @Test
-  @Ignore
   public void shouldExecuteAimListenerInTime() throws Exception {
     float aimCooldownTime = 1.5f;
-    aimMechanic.aim(0f, () -> assertTrue(false));
+    final boolean[] bool = {false};
+    aimMechanic.aim(1.5f, () -> bool[0] = true);
+    assertTrue(bool[0]);
   }
 
 }

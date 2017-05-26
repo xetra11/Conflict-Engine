@@ -32,6 +32,14 @@ public class CooldownTest {
   }
 
   @Test
+  public void shouldNotExecuteListenerIfCDTimeHasNotBeenMoveThroughDeltaTime() throws Exception {
+    final boolean[] bool = {false};
+    float deltaTimePassed = 1.9f;
+    cooldown.isDone(deltaTimePassed, () -> bool[0] = true);
+    assertFalse(bool[0]);
+  }
+
+  @Test
   public void shouldCallListenerAfterDeltaTimeTickSimulationHasFinished() throws Exception {
     final boolean[] bool = {false};
     float deltaTimePassed = 0.8f;
