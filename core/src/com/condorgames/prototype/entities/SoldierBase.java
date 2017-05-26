@@ -26,7 +26,11 @@ public class SoldierBase {
     this.skillset = new SkillsetImpl(aimSkill, weaponSkill);
   }
 
-  public Skillset getSkillset() {
+  public Skillset getSkills() {
     return skillset;
+  }
+
+  public SoldierProperties getProperties(){
+    return soldierProperties;
   }
 }

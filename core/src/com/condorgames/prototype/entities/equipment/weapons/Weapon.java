@@ -4,17 +4,17 @@ import com.condorgames.prototype.listener.*;
 
 import java.util.Objects;
 
-public class WeaponBase implements Fireable, Reloadable, WeaponEvent {
+public class Weapon implements Fireable, Reloadable, WeaponEvent {
 
   private FiringMechanic firingMechanic;
   private WeaponProperties weaponProperties;
 
-  protected WeaponBase(int maxAmmo, WeaponProperties.Type type) {
+  protected Weapon(int maxAmmo, WeaponProperties.Type type) {
     this.weaponProperties = new WeaponPropertiesImpl(maxAmmo, type);
     this.firingMechanic = new FiringMechanic(weaponProperties);
   }
 
-  public WeaponBase(WeaponProperties weaponProperties) {
+  public Weapon(WeaponProperties weaponProperties) {
     this.weaponProperties = weaponProperties;
     this.firingMechanic = new FiringMechanic(weaponProperties);
   }
