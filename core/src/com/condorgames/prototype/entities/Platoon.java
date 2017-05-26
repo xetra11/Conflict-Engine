@@ -7,8 +7,10 @@ import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Platoon extends SteerablePlatoonEntity {
   private static final int UPPER_HIGH_THRESHOLD = 36;
@@ -37,9 +39,13 @@ public class Platoon extends SteerablePlatoonEntity {
 
   @Override
   public void fire(float deltaTime, HitListener hitListener) {
-    soldiers.stream()
-            .filter(this::isAbleToFight)
+    getActiveSoldiers()
             .forEach(soldier -> soldier.fire(deltaTime, hitListener));
+  }
+
+  private Stream<Soldier> getActiveSoldiers() {
+    return soldiers.stream()
+            .filter(this::isAbleToFight);
   }
 
   @Override
@@ -49,17 +55,16 @@ public class Platoon extends SteerablePlatoonEntity {
             .sum();
   }
 
-
   @Override
   public int getStrength() {
-    return Math.toIntExact(soldiers.stream()
-            .filter(this::isAbleToFight)
-            .count());
+    return Math.toIntExact(getActiveSoldiers().count());
   }
 
   @Override
   public void takeCasualty() {
     System.out.println("Casualty!");
+    Objects.requireNonNull(randomActiveSoldier(),
+            "Could not resolve a random soldier, platoon seems to be empty!");
     randomActiveSoldier().wound();
   }
 
@@ -86,6 +91,7 @@ public class Platoon extends SteerablePlatoonEntity {
   }
 
   private MoraleState getPlatoonMoraleState(int platoonMorale) {
+
     /***
      * 45 = Fanatic
      * 36 = High
@@ -116,11 +122,15 @@ public class Platoon extends SteerablePlatoonEntity {
 
   private Soldier randomActiveSoldier() {
     Random random = new Random();
-    int index = random.nextInt(soldiers.size());
-    return soldiers.stream()
-            .filter(this::isAbleToFight)
-            .collect(Collectors.toList())
-            .get(index);
+    int bound = (int) getActiveSoldiers().count();
+    if(bound > 0){
+      int index = random.nextInt((int) getActiveSoldiers().count());
+      return getActiveSoldiers()
+              .collect(Collectors.toList())
+              .get(index);
+    }else{
+      return null;
+    }
   }
 
   private boolean isAbleToFight(Soldier soldier) {

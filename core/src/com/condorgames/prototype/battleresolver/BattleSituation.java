@@ -24,7 +24,15 @@ public class BattleSituation {
 
   // TODO declare environment here to avoid hits!
   public void resolve(float deltaTime) {
+
+    if(activeContact.getStrength() <= 0){
+      System.out.println("+++ ALLIED WON BATTLE! +++");
+    }else if(passiveContact.getStrength() <= 0){
+      System.out.println("+++ AXIS WON BATTLE! +++");
+    }
+
     activeContact.fire(deltaTime, hitType -> {
+      System.out.print(">AXIS: ");
       if (hitType.equals(HitType.HIT)) {
         //Double morale decrease due hit!
         passiveContact.decreaseMorale();
@@ -37,6 +45,7 @@ public class BattleSituation {
 
     //TODO decrease Strength & Morale needs to be shifted down to concrete class
     wakeupCooldown.isDone(deltaTime, () -> passiveContact.fire(deltaTime, hitType -> {
+      System.out.print(">ALLIED: ");
       if (hitType.equals(HitType.HIT)) {
         //Double morale decrease due hit!
         activeContact.decreaseMorale();
