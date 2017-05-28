@@ -6,9 +6,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.condorgames.prototype.helper.FilterCategories;
-import com.condorgames.prototype.entities.Platoon;
-import com.condorgames.prototype.entities.PlatoonEntityBase;
-import com.condorgames.prototype.entities.SteerablePlatoonEntity;
+import com.condorgames.prototype.entities.platoon.Platoon;
+import com.condorgames.prototype.entities.platoon.PlatoonEntityBase;
+import com.condorgames.prototype.entities.platoon.SteerablePlatoonEntity;
 
 public abstract class EnemyCreator {
 

@@ -1,4 +1,4 @@
-package com.condorgames.prototype.battleresolver;
+package com.condorgames.prototype.entities.equipment.weapons;
 
 import com.condorgames.prototype.helper.Cooldown;
 

@@ -1,4 +1,4 @@
-package com.condorgames.prototype.entities;
+package com.condorgames.prototype.entities.platoon;
 
 import com.badlogic.gdx.Gdx;
 import com.condorgames.prototype.battleresolver.Morale;

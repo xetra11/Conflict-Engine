@@ -1,4 +1,6 @@
-package com.condorgames.prototype.listener;
+package com.condorgames.prototype.entities.equipment.weapons;
+
+import com.condorgames.prototype.listener.*;
 
 public interface WeaponEvent {
   public void setWeaponFiredListener(WeaponFiredListener weaponFiredListener);

@@ -1,8 +1,11 @@
-package com.condorgames.prototype.entities;
+package com.condorgames.prototype.entities.platoon;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.condorgames.prototype.battleresolver.Morale;
 import com.condorgames.prototype.creator.WeaponCreator;
-import com.condorgames.prototype.entities.SoldierProperties.Health;
+import com.condorgames.prototype.entities.soldier.Soldier;
+import com.condorgames.prototype.entities.soldier.SoldierProperties.Health;
+import com.condorgames.prototype.entities.equipment.weapons.Fireable;
 import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ public class Platoon extends SteerablePlatoonEntity {
   private Weapon weapon;
   private List<Soldier> soldiers = new ArrayList<>(9);
 
-  public Platoon(Body body, Faction faction) {
+  public Platoon(Body body, PlatoonEntityBase.Faction faction) {
     super(body, faction);
 
     //Soldiers
@@ -36,7 +39,7 @@ public class Platoon extends SteerablePlatoonEntity {
   }
 
   @Override
-  public void fire(float deltaTime, HitListener hitListener) {
+  public void fire(float deltaTime, Fireable.HitListener hitListener) {
     soldiers.stream()
             .filter(this::isAbleToFight)
             .forEach(soldier -> soldier.fire(deltaTime, hitListener));
@@ -64,7 +67,7 @@ public class Platoon extends SteerablePlatoonEntity {
   }
 
   @Override
-  public void setMorale(MoraleState morale) {
+  public void setMorale(Morale.MoraleState morale) {
     randomActiveSoldier().setMorale(morale);
   }
 
@@ -79,13 +82,13 @@ public class Platoon extends SteerablePlatoonEntity {
   }
 
   @Override
-  public MoraleState getMorale() {
+  public Morale.MoraleState getMorale() {
     //TODO Add morale debuffs here so they can be aggregated
     int platoonMorale = getPlatoonMorale();
     return getPlatoonMoraleState(platoonMorale);
   }
 
-  private MoraleState getPlatoonMoraleState(int platoonMorale) {
+  private Morale.MoraleState getPlatoonMoraleState(int platoonMorale) {
     /***
      * 45 = Fanatic
      * 36 = High
@@ -96,17 +99,17 @@ public class Platoon extends SteerablePlatoonEntity {
      */
 
     if (platoonMorale > UPPER_HIGH_THRESHOLD) {
-      return MoraleState.FANATIC;
+      return Morale.MoraleState.FANATIC;
     } else if (platoonMorale > UPPER_NORMAL_THRESHOLD) {
-      return MoraleState.HIGH;
+      return Morale.MoraleState.HIGH;
     } else if (platoonMorale > UPPER_LOW_THRESHOLD) {
-      return MoraleState.NORMAL;
+      return Morale.MoraleState.NORMAL;
     } else if (platoonMorale > UPPER_FLEEING_THRESHOLD) {
-      return MoraleState.LOW;
+      return Morale.MoraleState.LOW;
     } else if (platoonMorale >= UPPER_PINNEDDOWN_THRESHOLD) {
-      return MoraleState.FLEEING;
+      return Morale.MoraleState.FLEEING;
     } else {
-      return MoraleState.PINNED_DOWN;
+      return Morale.MoraleState.PINNED_DOWN;
     }
   }
 

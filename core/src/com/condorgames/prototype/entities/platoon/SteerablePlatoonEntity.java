@@ -1,4 +1,4 @@
-package com.condorgames.prototype.entities;
+package com.condorgames.prototype.entities.platoon;
 
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;

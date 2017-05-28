@@ -1,10 +1,7 @@
-package com.condorgames.prototype.entities;
+package com.condorgames.prototype.entities.soldier;
 
-import com.condorgames.prototype.battleresolver.Morale;
 import com.condorgames.prototype.entities.equipment.weapons.Fireable;
-import com.condorgames.prototype.entities.equipment.weapons.Reloadable;
 import com.condorgames.prototype.entities.equipment.weapons.Weapon;
-import com.sun.org.apache.regexp.internal.RE;
 
 public class Soldier extends SoldierBase implements Fireable {
   Weapon weapon;

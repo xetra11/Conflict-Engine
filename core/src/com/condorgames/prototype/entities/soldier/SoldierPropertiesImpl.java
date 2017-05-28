@@ -1,6 +1,4 @@
-package com.condorgames.prototype.entities;
-
-import com.condorgames.prototype.battleresolver.Morale;
+package com.condorgames.prototype.entities.soldier;
 
 public class SoldierPropertiesImpl implements SoldierProperties {
   private MoraleState morale;

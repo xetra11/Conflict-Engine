@@ -2,8 +2,7 @@ package com.condorgames.prototype.battleresolver;
 
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.battleresolver.HitMechanic.HitType;
-import com.condorgames.prototype.entities.PlatoonEntityBase;
-import com.condorgames.prototype.entities.equipment.weapons.Fireable;
+import com.condorgames.prototype.entities.platoon.PlatoonEntityBase;
 import com.condorgames.prototype.helper.Cooldown;
 
 public class BattleSituation {

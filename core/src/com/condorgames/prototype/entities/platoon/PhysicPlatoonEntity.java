@@ -1,4 +1,4 @@
-package com.condorgames.prototype.entities;
+package com.condorgames.prototype.entities.platoon;
 
 import com.badlogic.gdx.physics.box2d.Body;
 

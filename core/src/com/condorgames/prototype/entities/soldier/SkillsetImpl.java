@@ -1,4 +1,4 @@
-package com.condorgames.prototype.entities;
+package com.condorgames.prototype.entities.soldier;
 
 public class SkillsetImpl implements Skillset {
   AimSkill aimSkill;
