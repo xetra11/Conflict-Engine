@@ -64,4 +64,8 @@ public class StandardWeapon implements Weapon {
   public void setWeaponJammedListener(WeaponJammedListener weaponJammedListener) {
     firingMechanic.setWeaponJammedListener(weaponJammedListener);
   }
+
+  public WeaponProperties getProperties(){
+    return weaponProperties;
+  }
 }
