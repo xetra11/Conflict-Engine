@@ -14,7 +14,6 @@ public class PlatoonContactListener implements ContactListener {
   private CondorAiPrototype context;
 
   public PlatoonContactListener(CondorAiPrototype context) {
-
     this.context = context;
   }
 

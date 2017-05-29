@@ -1,13 +1,14 @@
 package com.condorgames.prototype.entities.equipment.weapons;
 
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.AimMechanic;
 import com.condorgames.prototype.helper.Cooldown;
 
-public class AimMechanic {
+public class StandardAimMechanic implements AimMechanic {
   private static final float MULTIPLIER = 3f;
   private static final float INIT = 1.5f;
   private Cooldown aimCooldown = new Cooldown(INIT);
 
-  public AimMechanic() {
+  public StandardAimMechanic() {
     aimCooldown = new Cooldown(1f);
   }
 
@@ -18,11 +19,5 @@ public class AimMechanic {
       aimCooldown.resetWith(newAimTime);
     });
   }
-
-  @FunctionalInterface
-  public interface AimingListener {
-    public void OnAimed();
-  }
-
 }
 

@@ -2,15 +2,15 @@ package com.condorgames.prototype.entities.platoon;
 
 import com.badlogic.gdx.Gdx;
 import com.condorgames.prototype.battleresolver.Morale;
-import com.condorgames.prototype.entities.equipment.weapons.Fireable;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
 
 public abstract class PlatoonEntityBase implements Fireable, Morale {
+  private static short platoonCount = 0;
   public enum Faction {
     AXIS,
     ALLY
-  }
 
-  private static short platoonCount = 0;
+  }
 
   private short platoonID;
   private Faction faction;

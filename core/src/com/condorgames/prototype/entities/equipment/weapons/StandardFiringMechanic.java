@@ -1,15 +1,17 @@
 package com.condorgames.prototype.entities.equipment.weapons;
 
 import com.condorgames.prototype.battleresolver.HitMechanic;
-import com.condorgames.prototype.entities.equipment.weapons.WeaponProperties.Status;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.WeaponProperties;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.WeaponProperties.Status;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.FiringMechanic;
 import com.condorgames.prototype.helper.Cooldown;
 import com.condorgames.prototype.listener.*;
 
-public class FiringMechanic implements Fireable, WeaponEvent {
+public class StandardFiringMechanic implements FiringMechanic {
 
   private Cooldown reloadCooldown;
   private Cooldown cadenceCooldown;
-  private AimMechanic aimMechanic;
+  private StandardAimMechanic aimMechanic;
   private HitMechanic hitMechanic;
 
   private WeaponProperties weaponProperties;
@@ -20,11 +22,11 @@ public class FiringMechanic implements Fireable, WeaponEvent {
   private WeaponEmptyListener weaponEmptyListener;
   private WeaponJammedListener weaponJammedListener;
 
-  public FiringMechanic(WeaponProperties weaponProperties) {
+  public StandardFiringMechanic(WeaponProperties weaponProperties) {
     this.weaponProperties = weaponProperties;
     reloadCooldown = new Cooldown(weaponProperties.getReloadTime());
     cadenceCooldown = new Cooldown(weaponProperties.getCadence());
-    aimMechanic = new AimMechanic();
+    aimMechanic = new StandardAimMechanic();
     hitMechanic = new HitMechanic();
   }
 

@@ -3,11 +3,9 @@ package com.condorgames.prototype.entities.platoon;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.battleresolver.Morale;
 import com.condorgames.prototype.creator.SquadCreator;
-import com.condorgames.prototype.creator.WeaponCreator;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
 import com.condorgames.prototype.entities.soldier.Soldier;
 import com.condorgames.prototype.entities.soldier.SoldierProperties.Health;
-import com.condorgames.prototype.entities.equipment.weapons.Fireable;
-import com.condorgames.prototype.entities.equipment.weapons.Weapon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,6 @@ public class Platoon extends SteerablePlatoonEntity {
   private static final int UPPER_LOW_THRESHOLD = 18;
   private static final int UPPER_FLEEING_THRESHOLD = 9;
   public static final int UPPER_PINNEDDOWN_THRESHOLD = 0;
-  private Weapon weapon;
   private List<Soldier> soldiers = new ArrayList<>();
 
   public Platoon(Body body, PlatoonEntityBase.Faction faction) {

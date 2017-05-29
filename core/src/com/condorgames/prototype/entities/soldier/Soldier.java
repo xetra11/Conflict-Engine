@@ -1,7 +1,7 @@
 package com.condorgames.prototype.entities.soldier;
 
-import com.condorgames.prototype.entities.equipment.weapons.Fireable;
-import com.condorgames.prototype.entities.equipment.weapons.Weapon;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.Weapon;
 
 public class Soldier extends SoldierBase implements Fireable {
   Weapon weapon;

@@ -1,4 +1,4 @@
-package com.condorgames.prototype.entities.equipment.weapons;
+package com.condorgames.prototype.entities.equipment.weapons.interfaces;
 
 public interface WeaponProperties {
   public enum Type {
