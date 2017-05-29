@@ -24,7 +24,7 @@ public class WeaponTest {
     weaponProperties = mock(WeaponProperties.class);
     when(weaponProperties.getAmmoCapacity()).thenReturn(5);
     when(weaponProperties.getAmmoCount()).thenReturn(5);
-    weapon = WeaponCreator.createRifle();
+    weapon = new StandardWeapon(weaponProperties);
   }
 
   @Test
