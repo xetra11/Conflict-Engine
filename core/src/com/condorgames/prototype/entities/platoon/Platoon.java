@@ -2,6 +2,7 @@ package com.condorgames.prototype.entities.platoon;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.battleresolver.Morale;
+import com.condorgames.prototype.battleresolver.Morale.MoraleState;
 import com.condorgames.prototype.creator.SquadCreator;
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
 import com.condorgames.prototype.entities.soldier.Soldier;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Platoon extends SteerablePlatoonEntity {
   private static final int UPPER_HIGH_THRESHOLD = 36;
@@ -31,9 +33,13 @@ public class Platoon extends SteerablePlatoonEntity {
 
   @Override
   public void fire(float deltaTime, Fireable.HitListener hitListener) {
-    soldiers.stream()
-            .filter(this::isAbleToFight)
+    getActiveSoldiers()
             .forEach(soldier -> soldier.fire(deltaTime, hitListener));
+  }
+
+  private Stream<Soldier> getActiveSoldiers() {
+    return soldiers.stream()
+            .filter(this::isAbleToFight);
   }
 
   @Override
@@ -46,8 +52,7 @@ public class Platoon extends SteerablePlatoonEntity {
 
   @Override
   public int getStrength() {
-    return Math.toIntExact(soldiers.stream()
-            .filter(this::isAbleToFight)
+    return Math.toIntExact(getActiveSoldiers()
             .count());
   }
 
@@ -58,7 +63,7 @@ public class Platoon extends SteerablePlatoonEntity {
   }
 
   @Override
-  public void setMorale(Morale.MoraleState morale) {
+  public void setMorale(MoraleState morale) {
     randomActiveSoldier().setMorale(morale);
   }
 
@@ -73,13 +78,13 @@ public class Platoon extends SteerablePlatoonEntity {
   }
 
   @Override
-  public Morale.MoraleState getMorale() {
+  public MoraleState getMorale() {
     //TODO Add morale debuffs here so they can be aggregated
     int platoonMorale = getPlatoonMorale();
     return getPlatoonMoraleState(platoonMorale);
   }
 
-  private Morale.MoraleState getPlatoonMoraleState(int platoonMorale) {
+  private MoraleState getPlatoonMoraleState(int platoonMorale) {
     /***
      * 45 = Fanatic
      * 36 = High
@@ -89,32 +94,34 @@ public class Platoon extends SteerablePlatoonEntity {
      * 0 = Pinned_Down
      */
 
-    if (platoonMorale > UPPER_HIGH_THRESHOLD) {
-      return Morale.MoraleState.FANATIC;
-    } else if (platoonMorale > UPPER_NORMAL_THRESHOLD) {
-      return Morale.MoraleState.HIGH;
-    } else if (platoonMorale > UPPER_LOW_THRESHOLD) {
-      return Morale.MoraleState.NORMAL;
-    } else if (platoonMorale > UPPER_FLEEING_THRESHOLD) {
-      return Morale.MoraleState.LOW;
-    } else if (platoonMorale >= UPPER_PINNEDDOWN_THRESHOLD) {
-      return Morale.MoraleState.FLEEING;
+    if (platoonMorale > getActiveSoldiers().count() * MoraleState.HIGH.getValue()) {
+      return MoraleState.FANATIC;
+    } else if (platoonMorale > getActiveSoldiers().count() * MoraleState.NORMAL.getValue()) {
+      return MoraleState.HIGH;
+    } else if (platoonMorale > getActiveSoldiers().count() * MoraleState.LOW.getValue()) {
+      return MoraleState.NORMAL;
+    } else if (platoonMorale > getActiveSoldiers().count() * MoraleState.FLEEING.getValue()) {
+      return MoraleState.LOW;
+    } else if (platoonMorale > getActiveSoldiers().count() * MoraleState.PINNED_DOWN.getValue()) {
+      return MoraleState.FLEEING;
     } else {
-      return Morale.MoraleState.PINNED_DOWN;
+      return MoraleState.PINNED_DOWN;
     }
   }
 
   private int getPlatoonMorale() {
-    return soldiers.stream().mapToInt(soldier -> soldier.getMorale().getValue()).sum();
+    return getActiveSoldiers().mapToInt(soldier -> soldier.getMorale().getValue()).sum();
   }
 
   private Soldier randomActiveSoldier() {
     Random random = new Random();
-    List<Soldier> activeSoldiers = soldiers.stream()
-            .filter(this::isAbleToFight)
+    List<Soldier> activeSoldiers = getActiveSoldiers()
             .collect(Collectors.toList());
-    int index = random.nextInt(activeSoldiers.size());
-    return activeSoldiers.get(index);
+    if(activeSoldiers.size() > 0){
+      int index = random.nextInt(activeSoldiers.size());
+      return activeSoldiers.get(index);
+    }
+    return null;
   }
 
   private boolean isAbleToFight(Soldier soldier) {

@@ -5,11 +5,11 @@ import com.condorgames.prototype.helper.Cooldown;
 
 public class StandardAimMechanic implements AimMechanic {
   private static final float MULTIPLIER = 3f;
-  private static final float INIT = 1.5f;
-  private Cooldown aimCooldown = new Cooldown(INIT);
+  private static final float INIT = 5f;
+  private Cooldown aimCooldown;
 
   public StandardAimMechanic() {
-    aimCooldown = new Cooldown(1f);
+    aimCooldown = new Cooldown(INIT);
   }
 
   public void aim(float deltaTime, AimingListener onAimedListener) {
