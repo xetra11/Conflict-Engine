@@ -2,6 +2,7 @@ package com.condorgames.prototype.entities.platoon;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.battleresolver.Morale;
+import com.condorgames.prototype.creator.SquadCreator;
 import com.condorgames.prototype.creator.WeaponCreator;
 import com.condorgames.prototype.entities.soldier.Soldier;
 import com.condorgames.prototype.entities.soldier.SoldierProperties.Health;
@@ -20,22 +21,15 @@ public class Platoon extends SteerablePlatoonEntity {
   private static final int UPPER_FLEEING_THRESHOLD = 9;
   public static final int UPPER_PINNEDDOWN_THRESHOLD = 0;
   private Weapon weapon;
-  private List<Soldier> soldiers = new ArrayList<>(9);
+  private List<Soldier> soldiers = new ArrayList<>();
 
   public Platoon(Body body, PlatoonEntityBase.Faction faction) {
     super(body, faction);
 
-    //Soldiers
-    soldiers.add(new Soldier(60, WeaponCreator.createRifle()));
-    soldiers.add(new Soldier(60, WeaponCreator.createRifle()));
-    soldiers.add(new Soldier(60, WeaponCreator.createRifle()));
-    soldiers.add(new Soldier(60, WeaponCreator.createRifle()));
-    soldiers.add(new Soldier(60, WeaponCreator.createRifle()));
-    soldiers.add(new Soldier(60, WeaponCreator.createRifle()));
-    soldiers.add(new Soldier(60, WeaponCreator.createRifle()));
-    soldiers.add(new Soldier(60, WeaponCreator.createRifle()));
-    soldiers.add(new Soldier(60, WeaponCreator.createRifle()));
-
+    soldiers.addAll(SquadCreator.createRifleSquad());
+    soldiers.addAll(SquadCreator.createRifleSquad());
+    soldiers.addAll(SquadCreator.createRifleSquad());
+    soldiers.addAll(SquadCreator.createRifleSquad());
   }
 
   @Override
@@ -119,11 +113,11 @@ public class Platoon extends SteerablePlatoonEntity {
 
   private Soldier randomActiveSoldier() {
     Random random = new Random();
-    int index = random.nextInt(soldiers.size());
-    return soldiers.stream()
+    List<Soldier> activeSoldiers = soldiers.stream()
             .filter(this::isAbleToFight)
-            .collect(Collectors.toList())
-            .get(index);
+            .collect(Collectors.toList());
+    int index = random.nextInt(activeSoldiers.size());
+    return activeSoldiers.get(index);
   }
 
   private boolean isAbleToFight(Soldier soldier) {
