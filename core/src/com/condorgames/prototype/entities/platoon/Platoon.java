@@ -122,7 +122,7 @@ public class Platoon extends SteerablePlatoonEntity {
     Random random = new Random();
     int bound = (int) getActiveSoldiers().count();
     if(bound > 0){
-      int index = random.nextInt((int) getActiveSoldiers().count());
+      int index = random.nextInt(bound);
       return getActiveSoldiers()
               .collect(Collectors.toList())
               .get(index);

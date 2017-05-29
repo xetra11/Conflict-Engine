@@ -2,10 +2,12 @@ package com.condorgames.prototype.entities;
 
 import com.condorgames.prototype.battleresolver.Morale;
 import com.condorgames.prototype.battleresolver.Morale.MoraleState;
-import com.condorgames.prototype.entities.SoldierProperties.Health;
+import com.condorgames.prototype.entities.soldier.SoldierProperties;
+import com.condorgames.prototype.entities.soldier.SoldierPropertiesImpl;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.condorgames.prototype.entities.soldier.SoldierProperties.*;
 import static org.junit.Assert.*;
 
 public class SoldierPropertiesImplTest {

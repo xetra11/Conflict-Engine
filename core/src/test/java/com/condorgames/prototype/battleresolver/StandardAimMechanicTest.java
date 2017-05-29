@@ -1,5 +1,7 @@
 package com.condorgames.prototype.battleresolver;
 
+import com.condorgames.prototype.entities.equipment.weapons.StandardAimMechanic;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.AimMechanic;
 import com.sun.javafx.animation.TickCalculation;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -12,13 +14,13 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 
-public class AimMechanicTest {
+public class StandardAimMechanicTest {
 
   AimMechanic aimMechanic;
 
   @Before
   public void setup() {
-    aimMechanic = new AimMechanic();
+    aimMechanic = new StandardAimMechanic();
   }
 
   @Test

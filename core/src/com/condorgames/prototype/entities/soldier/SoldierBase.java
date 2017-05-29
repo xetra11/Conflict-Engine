@@ -6,23 +6,25 @@ import com.condorgames.prototype.entities.soldier.Skillset.WeaponSkill;
 
 import java.util.Random;
 
+import static com.condorgames.prototype.entities.soldier.SoldierProperties.*;
+
 public class SoldierBase implements Morale {
   private SoldierProperties soldierProperties;
   private Skillset skillset;
 
   public SoldierBase() {
-    this(AimSkill.NORMAL, WeaponSkill.NORMAL, MoraleState.NORMAL, SoldierProperties.Health.OK);
+    this(AimSkill.NORMAL, WeaponSkill.NORMAL, MoraleState.NORMAL, Health.OK);
   }
 
   public SoldierBase(AimSkill aimSkill) {
-    this(aimSkill, WeaponSkill.NORMAL, MoraleState.NORMAL, SoldierProperties.Health.OK);
+    this(aimSkill, WeaponSkill.NORMAL, MoraleState.NORMAL, Health.OK);
   }
 
   public SoldierBase(AimSkill aimSkill, WeaponSkill weaponSkill) {
-    this(aimSkill, weaponSkill, MoraleState.NORMAL, SoldierProperties.Health.OK);
+    this(aimSkill, weaponSkill, MoraleState.NORMAL, Health.OK);
   }
 
-  public SoldierBase(AimSkill aimSkill, WeaponSkill weaponSkill, MoraleState moraleState, SoldierProperties.Health health) {
+  public SoldierBase(AimSkill aimSkill, WeaponSkill weaponSkill, MoraleState moraleState, Health health) {
     this.soldierProperties = new SoldierPropertiesImpl(moraleState, health);
     this.skillset = new SkillsetImpl(aimSkill, weaponSkill);
   }

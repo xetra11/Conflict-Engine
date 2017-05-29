@@ -1,7 +1,7 @@
 package com.condorgames.prototype.creator;
 
-import com.condorgames.prototype.entities.equipment.weapons.Weapon;
-import com.condorgames.prototype.entities.equipment.weapons.WeaponProperties;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.Weapon;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.WeaponProperties;
 import org.junit.Before;
 import org.junit.Test;
 

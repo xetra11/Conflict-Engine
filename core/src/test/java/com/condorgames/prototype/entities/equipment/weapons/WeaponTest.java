@@ -1,6 +1,10 @@
 package com.condorgames.prototype.entities.equipment.weapons;
 
 import com.condorgames.prototype.battleresolver.HitMechanic;
+import com.condorgames.prototype.creator.WeaponCreator;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.FiringMechanic;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.Weapon;
+import com.condorgames.prototype.entities.equipment.weapons.interfaces.WeaponProperties;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -20,7 +24,7 @@ public class WeaponTest {
     weaponProperties = mock(WeaponProperties.class);
     when(weaponProperties.getAmmoCapacity()).thenReturn(5);
     when(weaponProperties.getAmmoCount()).thenReturn(5);
-    weapon = new Weapon(weaponProperties);
+    weapon = WeaponCreator.createRifle();
   }
 
   @Test

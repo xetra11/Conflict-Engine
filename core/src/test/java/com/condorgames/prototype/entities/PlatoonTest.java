@@ -5,6 +5,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.condorgames.prototype.creator.BodyCreator;
+import com.condorgames.prototype.entities.platoon.Platoon;
+import com.condorgames.prototype.entities.platoon.PlatoonEntityBase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
