@@ -32,10 +32,7 @@ public class BattleSituation implements ResolvableSituation{
       activeContact.fire(deltaTime, hitType -> {
         System.out.print(">AXIS: ");
         if (hitType.equals(HitType.HIT)) {
-          //Double morale decrease due hit!
-          passiveContact.decreaseMorale();
-          passiveContact.decreaseMorale();
-          passiveContact.takeCasualty();
+          resolveHit(passiveContact);
         } else if (hitType.equals(HitType.SURPRESSING_HIT)) {
           passiveContact.decreaseMorale();
         }
@@ -45,16 +42,20 @@ public class BattleSituation implements ResolvableSituation{
       wakeupCooldown.isDone(deltaTime, () -> passiveContact.fire(deltaTime, hitType -> {
         System.out.print(">ALLIED: ");
         if (hitType.equals(HitType.HIT)) {
-          //Double morale decrease due hit!
-          activeContact.decreaseMorale();
-          activeContact.decreaseMorale();
-          activeContact.takeCasualty();
-          AudioManager.playCasualty();
+          resolveHit(activeContact);
         } else if (hitType.equals(HitType.SURPRESSING_HIT)) {
           activeContact.decreaseMorale();
           AudioManager.playTakingFire();
         }
       }));
     }
+  }
+
+  private void resolveHit(PlatoonEntityBase contact) {
+    //Double morale decrease due hit!
+    contact.decreaseMorale();
+    contact.decreaseMorale();
+    contact.takeCasualty();
+    AudioManager.playCasualty();
   }
 }

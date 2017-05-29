@@ -9,11 +9,9 @@ import com.condorgames.prototype.entities.equipment.weapons.StandardWeaponProper
 public abstract class WeaponCreator {
 
   public static Weapon createRifle() {
-    // TODO Make a weapon immutable by its properties
     WeaponProperties weaponPropertiesImpl = new StandardWeaponProperties(5, Type.RIFLE);
     weaponPropertiesImpl.setReloadTime(10f);
     weaponPropertiesImpl.setCadence(2f);
-    Weapon weapon = new StandardWeapon(weaponPropertiesImpl);
-    return weapon;
+    return new StandardWeapon(weaponPropertiesImpl);
   }
 }
