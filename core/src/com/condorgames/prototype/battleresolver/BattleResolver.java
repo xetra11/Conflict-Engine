@@ -6,13 +6,13 @@ import java.util.List;
 
 public class BattleResolver {
 
-  private List<BattleSituation> battleSituations = new ArrayList<>();
+  private List<ResolvableSituation> battleSituations = new ArrayList<>();
 
-  public void addBattleSituations(List<BattleSituation> battleSituations) {
+  public void addBattleSituations(List<ResolvableSituation> battleSituations) {
     battleSituations.addAll(battleSituations);
   }
 
-  public void addBattleSituations(BattleSituation... battleSituations) {
+  public void addBattleSituations(ResolvableSituation... battleSituations) {
     this.battleSituations.addAll(Arrays.asList(battleSituations));
   }
 

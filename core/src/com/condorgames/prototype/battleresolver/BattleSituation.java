@@ -5,7 +5,7 @@ import com.condorgames.prototype.battleresolver.HitMechanic.HitType;
 import com.condorgames.prototype.entities.platoon.PlatoonEntityBase;
 import com.condorgames.prototype.helper.Cooldown;
 
-public class BattleSituation {
+public class BattleSituation implements ResolvableSituation{
   private PlatoonEntityBase activeContact, passiveContact;
   private Cooldown wakeupCooldown;
 
