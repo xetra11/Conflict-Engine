@@ -3,9 +3,10 @@ package com.condorgames.prototype.entities.soldier;
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Weapon;
 
-public class Soldier extends SoldierBase implements Fireable {
+public class Soldier extends SoldierBase implements Fireable, Coverable {
   Weapon weapon;
   int ammo;
+  private Cover cover;
 
   public Soldier(int ammo, Weapon weapon) {
     super();
@@ -33,5 +34,15 @@ public class Soldier extends SoldierBase implements Fireable {
   @Override
   public void fire(float deltaTime, HitListener hitListener) {
     weapon.fire(deltaTime, hitListener);
+  }
+
+  @Override
+  public Cover getCover() {
+    return cover;
+  }
+
+  @Override
+  public void setCover(Cover cover) {
+    this.cover = cover;
   }
 }
