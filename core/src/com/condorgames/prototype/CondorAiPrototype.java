@@ -74,7 +74,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   public void render() {
     camera.update();
     world.step(1f / 60f, 6, 2);
-    battleResolver.resolve(false, Gdx.graphics.getDeltaTime());
+    battleResolver.resolve(Gdx.graphics.getDeltaTime(), false );
     friendly.update();
     updateUI();
 

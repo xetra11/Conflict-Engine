@@ -4,19 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BattleResolver {
+public class BattleResolver implements SituationResolver {
 
   private List<ResolvableSituation> battleSituations = new ArrayList<>();
 
-  public void addBattleSituations(List<ResolvableSituation> battleSituations) {
+  public void addSituations(List<ResolvableSituation> battleSituations) {
     battleSituations.addAll(battleSituations);
   }
 
-  public void addBattleSituations(ResolvableSituation... battleSituations) {
+  @Override
+  public void addSituations(ResolvableSituation... battleSituations) {
     this.battleSituations.addAll(Arrays.asList(battleSituations));
   }
 
-  public void resolve(boolean parallel, float deltaTime) {
+  public void resolve(float deltaTime, boolean parallel) {
     if (battleSituations.isEmpty() == false) {
       if (parallel) {
         battleSituations.parallelStream().forEach(battleSituation -> battleSituation.resolve(deltaTime));

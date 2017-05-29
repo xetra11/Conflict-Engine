@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.condorgames.prototype.CondorAiPrototype;
 import com.condorgames.prototype.audio.AudioManager;
+import com.condorgames.prototype.battleresolver.ResolvableSituation;
 import com.condorgames.prototype.entities.platoon.Platoon;
 import com.condorgames.prototype.entities.platoon.SteerablePlatoonEntity;
 import com.condorgames.prototype.battleresolver.BattleSituation;
@@ -39,8 +40,8 @@ public class PlatoonContactListener implements ContactListener {
     context.getTextFieldHealthFriendly().setText(String.valueOf(activeContact.getStrength()));
     AudioManager.playAssault();
     //Create BattleSituation
-    BattleSituation battleSituation = BattleSituation.createBattleSituation(activeContact, passiveContact);
-    context.getBattleResolver().addBattleSituations(battleSituation);
+    ResolvableSituation battleSituation = BattleSituation.createBattleSituation(activeContact, passiveContact);
+    context.getBattleResolver().addSituations(battleSituation);
   }
 
   @Override

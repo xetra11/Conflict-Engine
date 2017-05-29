@@ -25,9 +25,9 @@ public class StandardAimMechanicTest {
 
   @Test
   public void shouldExecuteAimListenerInTime() throws Exception {
-    float aimCooldownTime = 1.5f;
+    float aimCooldownTime = 5.0f;
     final boolean[] bool = {false};
-    aimMechanic.aim(1.5f, () -> bool[0] = true);
+    aimMechanic.aim(aimCooldownTime, () -> bool[0] = true);
     assertTrue(bool[0]);
   }
 

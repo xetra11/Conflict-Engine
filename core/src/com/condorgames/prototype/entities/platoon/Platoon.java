@@ -90,15 +90,6 @@ public class Platoon extends SteerablePlatoonEntity {
 
   private MoraleState getPlatoonMoraleState(int platoonMorale) {
 
-    /***
-     * 45 = Fanatic
-     * 36 = High
-     * 27 = Normal
-     * 18 = Low
-     * 9 = Fleeing
-     * 0 = Pinned_Down
-     */
-
     if (platoonMorale > getActiveSoldiers().count() * MoraleState.HIGH.getValue()) {
       return MoraleState.FANATIC;
     } else if (platoonMorale > getActiveSoldiers().count() * MoraleState.NORMAL.getValue()) {

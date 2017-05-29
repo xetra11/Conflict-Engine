@@ -15,7 +15,7 @@ public class BattleSituation implements ResolvableSituation{
     wakeupCooldown = new Cooldown(10f);
   }
 
-  public static BattleSituation createBattleSituation(PlatoonEntityBase activeContact,
+  public static ResolvableSituation createBattleSituation(PlatoonEntityBase activeContact,
                                                       PlatoonEntityBase passiveContact) {
     return new BattleSituation(activeContact, passiveContact);
   }
