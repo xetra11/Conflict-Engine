@@ -16,7 +16,7 @@ public class SoldierPropertiesImplTest {
 
   @Before
   public void setup() {
-    soldierProperties = new SoldierPropertiesImpl(MoraleState.NORMAL, Health.OK);
+    soldierProperties = new SoldierPropertiesImpl(MoraleState.NORMAL, Health.OK, "Peter");
   }
 
   @Test

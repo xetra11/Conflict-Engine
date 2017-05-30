@@ -12,19 +12,19 @@ public class Soldier extends SoldierBase implements Fireable, Coverable {
   private Cover cover;
   private int ammo;
 
-  public Soldier(int ammo, Weapon weapon) {
-    super();
+  public Soldier(int ammo, Weapon weapon, String name) {
+    super(null, name);
     this.ammo = ammo;
     this.weapon = weapon;
 
-    weapon.setWeaponFiredListener(() -> System.out.println("Fired"));
-    weapon.setWeaponEmptyListener(() -> System.out.println("Empty"));
-    weapon.setWeaponReloadListener(() -> System.out.println("Reloading..."));
+    weapon.setWeaponFiredListener(() -> System.out.println(this.getName() + " fired"));
+    weapon.setWeaponEmptyListener(() -> System.out.println(this.getName() + " empty"));
+    weapon.setWeaponReloadListener(() -> System.out.println(this.getName() + " reloading..."));
     weapon.setWeaponReloadedListener(() -> {
       this.ammo = this.weapon.reload(this.ammo);
-      System.out.println("Reloaded");
+      System.out.println(this.getName() + " reloaded");
     });
-    weapon.setWeaponJammedListener(() -> System.out.println("Jammed"));
+    weapon.setWeaponJammedListener(() -> System.out.println(this.getName() + " jammed"));
   }
 
   public void wound() {
@@ -36,19 +36,19 @@ public class Soldier extends SoldierBase implements Fireable, Coverable {
         //if soldier already is lightly wounded - make him severely wounded!
         if(super.getProperties().getHealth().equals(Health.LIGHT_WOUND)){
           super.getProperties().setHealth(Health.SEVERE_WOUND);
-          System.out.println("already lightly wounded! -> severe wound!");
+          System.out.println(this.getName() + " already lightly wounded! -> severe wound!");
         }else{
           super.getProperties().setHealth(Health.LIGHT_WOUND);
-          System.out.println("lightly wounded!");
+          System.out.println(this.getName() + " lightly wounded!");
         }
         break;
       case 2:
         super.getProperties().setHealth(Health.SEVERE_WOUND);
-        System.out.println("severe wounded!");
+        System.out.println(this.getName() + " severe wounded!");
         break;
       case 3:
         super.getProperties().setHealth(Health.DEAD);
-        System.out.println("dead wounded!");
+        System.out.println(this.getName() + " dead wounded!");
         break;
     }
   }
@@ -78,11 +78,6 @@ public class Soldier extends SoldierBase implements Fireable, Coverable {
 
   @Override
   public String getName() {
-    return null;
-  }
-
-  @Override
-  public void setName(String name) {
-
+    return super.getName();
   }
 }

@@ -30,7 +30,6 @@ public class BattleSituation implements ResolvableSituation{
       System.out.println("+++ AXIS WON BATTLE! +++");
     } else {
       activeContact.fire(deltaTime, hitType -> {
-        System.out.print(">AXIS: ");
         if (hitType.equals(HitType.HIT)) {
           resolveHit(passiveContact);
         } else if (hitType.equals(HitType.SURPRESSING_HIT)) {
@@ -40,7 +39,6 @@ public class BattleSituation implements ResolvableSituation{
 
       //TODO decrease Strength & Morale needs to be shifted down to concrete class
       wakeupCooldown.isDone(deltaTime, () -> passiveContact.fire(deltaTime, hitType -> {
-        System.out.print(">ALLIED: ");
         if (hitType.equals(HitType.HIT)) {
           resolveHit(activeContact);
         } else if (hitType.equals(HitType.SURPRESSING_HIT)) {
@@ -52,6 +50,8 @@ public class BattleSituation implements ResolvableSituation{
   }
 
   private void resolveHit(PlatoonEntityBase contact) {
+    System.out.print(">> " + contact.getFaction() + ": ");
+
     //Double morale decrease due hit!
     contact.decreaseMorale();
     contact.decreaseMorale();
