@@ -8,7 +8,7 @@ import java.util.Random;
 
 import static com.condorgames.prototype.entities.soldier.SoldierProperties.*;
 
-public class SoldierBase implements Morale {
+public abstract class SoldierBase implements Morale {
   private SoldierProperties soldierProperties;
   private Skillset skillset;
 
@@ -37,31 +37,8 @@ public class SoldierBase implements Morale {
     return soldierProperties;
   }
 
-  public void wound() {
-    Random random = new Random();
-    int index = random.nextInt(Health.values().length - 1);
 
-    switch (index) {
-      case 1:
-        //if soldier already is lightly wounded - make him severely wounded!
-        if(soldierProperties.getHealth().equals(Health.LIGHT_WOUND)){
-          soldierProperties.setHealth(Health.SEVERE_WOUND);
-          System.out.println("already lightly wounded! -> severe wound!");
-        }else{
-          soldierProperties.setHealth(Health.LIGHT_WOUND);
-          System.out.println("lightly wounded!");
-        }
-        break;
-      case 2:
-        soldierProperties.setHealth(Health.SEVERE_WOUND);
-        System.out.println("severe wounded!");
-        break;
-      case 3:
-        soldierProperties.setHealth(Health.DEAD);
-        System.out.println("dead wounded!");
-        break;
-    }
-  }
+  public abstract void wound();
 
   @Override
   public void setMorale(MoraleState morale) {
