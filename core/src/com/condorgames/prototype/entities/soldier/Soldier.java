@@ -3,6 +3,7 @@ package com.condorgames.prototype.entities.soldier;
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Weapon;
 import com.condorgames.prototype.entities.soldier.SoldierProperties.Health;
+import com.sun.scenario.effect.Identity;
 
 import java.util.Random;
 
@@ -52,7 +53,6 @@ public class Soldier extends SoldierBase implements Fireable, Coverable {
     }
   }
 
-
   public int getAmmo() {
     return ammo;
   }
@@ -74,5 +74,15 @@ public class Soldier extends SoldierBase implements Fireable, Coverable {
   @Override
   public void setCover(Cover cover) {
     this.cover = cover;
+  }
+
+  @Override
+  public String getName() {
+    return null;
+  }
+
+  @Override
+  public void setName(String name) {
+
   }
 }

@@ -2,7 +2,7 @@ package com.condorgames.prototype.entities.soldier;
 
 import com.condorgames.prototype.battleresolver.Morale;
 
-public interface SoldierProperties extends Morale {
+public interface SoldierProperties extends Morale, Identity {
 
   public enum Health {
     DEAD,

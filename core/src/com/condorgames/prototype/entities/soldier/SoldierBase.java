@@ -8,24 +8,24 @@ import java.util.Random;
 
 import static com.condorgames.prototype.entities.soldier.SoldierProperties.*;
 
-public abstract class SoldierBase implements Morale {
+public abstract class SoldierBase implements Morale, Identity {
   private SoldierProperties soldierProperties;
   private Skillset skillset;
 
   public SoldierBase() {
-    this(AimSkill.NORMAL, WeaponSkill.NORMAL, MoraleState.NORMAL, Health.OK);
+    this(AimSkill.NORMAL, WeaponSkill.NORMAL, MoraleState.NORMAL, Health.OK, "NoName");
   }
 
-  public SoldierBase(AimSkill aimSkill) {
-    this(aimSkill, WeaponSkill.NORMAL, MoraleState.NORMAL, Health.OK);
+  public SoldierBase(AimSkill aimSkill, String name) {
+    this(aimSkill, WeaponSkill.NORMAL, MoraleState.NORMAL, Health.OK, name);
   }
 
-  public SoldierBase(AimSkill aimSkill, WeaponSkill weaponSkill) {
-    this(aimSkill, weaponSkill, MoraleState.NORMAL, Health.OK);
+  public SoldierBase(AimSkill aimSkill, WeaponSkill weaponSkill, String name) {
+    this(aimSkill, weaponSkill, MoraleState.NORMAL, Health.OK, name);
   }
 
-  public SoldierBase(AimSkill aimSkill, WeaponSkill weaponSkill, MoraleState moraleState, Health health) {
-    this.soldierProperties = new SoldierPropertiesImpl(moraleState, health);
+  public SoldierBase(AimSkill aimSkill, WeaponSkill weaponSkill, MoraleState moraleState, Health health, String name) {
+    this.soldierProperties = new SoldierPropertiesImpl(moraleState, health, name);
     this.skillset = new SkillsetImpl(aimSkill, weaponSkill);
   }
 
@@ -39,6 +39,11 @@ public abstract class SoldierBase implements Morale {
 
 
   public abstract void wound();
+
+  @Override
+  public String getName() {
+    return soldierProperties.getName();
+  }
 
   @Override
   public void setMorale(MoraleState morale) {
