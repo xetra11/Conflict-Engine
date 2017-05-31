@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,25 +45,28 @@ public class Platoon extends SteerablePlatoonEntity {
   }
 
   private void salvageAmmoOfInactiveSoldiers() {
-    getActiveSoldiers()
+    getActiveSoldiers().stream()
             .filter(soldier -> soldier.getAmmo() <= 0)
             .forEach(soldier -> {
               int amountAmmo = getAmmoOfDeadSoldier();
               soldier.setAmmo(amountAmmo);
-              System.out.println(soldier.getName() + " ammo salvaged: " + amountAmmo);
+              if(amountAmmo > 0){
+                System.out.println(soldier.getName() + " ammo salvaged: " + amountAmmo);
+              }
             });
   }
 
-  private Stream<Soldier> getActiveSoldiers() {
+  private List<Soldier> getActiveSoldiers() {
     return soldiers.stream()
-            .filter(this::isAbleToFight);
+            .filter(this::isAbleToFight)
+            .collect(Collectors.toList());
   }
 
-  private Stream<Soldier> getInactiveSoldiers() {
+  private List<Soldier> getInactiveSoldiers() {
     return soldiers.stream()
-            .filter(this::isNotAbleToFight);
+            .filter(this::isNotAbleToFight)
+            .collect(Collectors.toList());
   }
-
 
   @Override
   public int getAmmo() {
@@ -75,6 +79,7 @@ public class Platoon extends SteerablePlatoonEntity {
   @Override
   public int getStrength() {
     return Math.toIntExact(getActiveSoldiers()
+            .stream()
             .count());
   }
 
@@ -110,15 +115,15 @@ public class Platoon extends SteerablePlatoonEntity {
 
   private MoraleState getPlatoonMoraleState(int platoonMorale) {
 
-    if (platoonMorale > getActiveSoldiers().count() * MoraleState.HIGH.getValue()) {
+    if (platoonMorale > getActiveSoldiers().stream().count() * MoraleState.HIGH.getValue()) {
       return MoraleState.FANATIC;
-    } else if (platoonMorale > getActiveSoldiers().count() * MoraleState.NORMAL.getValue()) {
+    } else if (platoonMorale > getActiveSoldiers().stream().count() * MoraleState.NORMAL.getValue()) {
       return MoraleState.HIGH;
-    } else if (platoonMorale > getActiveSoldiers().count() * MoraleState.LOW.getValue()) {
+    } else if (platoonMorale > getActiveSoldiers().stream().count() * MoraleState.LOW.getValue()) {
       return MoraleState.NORMAL;
-    } else if (platoonMorale > getActiveSoldiers().count() * MoraleState.FLEEING.getValue()) {
+    } else if (platoonMorale > getActiveSoldiers().stream().count() * MoraleState.FLEEING.getValue()) {
       return MoraleState.LOW;
-    } else if (platoonMorale > getActiveSoldiers().count() * MoraleState.PINNED_DOWN.getValue()) {
+    } else if (platoonMorale > getActiveSoldiers().stream().count() * MoraleState.PINNED_DOWN.getValue()) {
       return MoraleState.FLEEING;
     } else {
       return MoraleState.PINNED_DOWN;
@@ -126,17 +131,18 @@ public class Platoon extends SteerablePlatoonEntity {
   }
 
   private int getPlatoonMorale() {
-    return getActiveSoldiers().mapToInt(soldier -> soldier.getMorale().getValue()).sum();
+    return getActiveSoldiers()
+            .stream()
+            .mapToInt(soldier -> soldier.getMorale().getValue()).sum();
   }
 
   private Soldier randomActiveSoldier() {
     Random random = new Random();
-    int bound = (int) getActiveSoldiers().count();
+    List<Soldier> activeSoldiers = getActiveSoldiers();
+    int bound = activeSoldiers.size();
     if (bound > 0) {
-      int index = random.nextInt(bound);
-      return getActiveSoldiers()
-              .collect(Collectors.toList())
-              .get(index);
+      int randomIndex = random.nextInt(bound);
+      return activeSoldiers.get(randomIndex);
     } else {
       return null;
     }
@@ -144,12 +150,13 @@ public class Platoon extends SteerablePlatoonEntity {
 
   private Soldier randomInactiveSoldierWithAmmo() {
     Random random = new Random();
-    int bound = (int) getInactiveSoldiers().count();
+    List<Soldier> inactiveSoldiersWithAmmo = getInactiveSoldiers().stream()
+            .filter(soldier -> soldier.getAmmo() > 0)
+            .collect(Collectors.toList());
+    int bound = inactiveSoldiersWithAmmo.size();
     if (bound > 0) {
-      int index = random.nextInt(bound);
-      return getInactiveSoldiers().filter(soldier -> soldier.getAmmo() > 0)
-              .collect(Collectors.toList())
-              .get(index);
+      int randomIndex = random.nextInt(bound);
+      return inactiveSoldiersWithAmmo.get(randomIndex);
     } else {
       return null;
     }
@@ -157,9 +164,12 @@ public class Platoon extends SteerablePlatoonEntity {
 
   private int getAmmoOfDeadSoldier() {
     Soldier inactiveSoldier = randomInactiveSoldierWithAmmo();
-    int ammoTaken = inactiveSoldier.getAmmo();
-    inactiveSoldier.setAmmo(0);
-    return ammoTaken;
+    if (inactiveSoldier != null) {
+      int ammoTaken = inactiveSoldier.getAmmo();
+      inactiveSoldier.setAmmo(0);
+      return ammoTaken;
+    }
+    return 0;
   }
 
   private boolean isAbleToFight(Soldier soldier) {

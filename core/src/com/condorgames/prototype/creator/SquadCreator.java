@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class SquadCreator {
 
-  public static final int AMMO = 60;
+  public static final int AMMO = 10;
 
   public static List<Soldier> createAxisRifleSquad(){
     List<Soldier> soldiers = new ArrayList<>();
