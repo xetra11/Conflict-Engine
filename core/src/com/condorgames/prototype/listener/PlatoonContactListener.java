@@ -36,7 +36,7 @@ public class PlatoonContactListener implements ContactListener {
     // Stop Entity
     activeContact.setTagged(true);
     activeContact.getBody().setLinearVelocity(0f, 0f);
-    // Mock Health loss
+    // Mock SoldierHealth loss
     context.getTextFieldHealthFriendly().setText(String.valueOf(activeContact.getStrength()));
     AudioManager.playAssault();
     //Create BattleSituation

@@ -2,8 +2,6 @@ package com.condorgames.prototype.entities.soldier;
 
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Weapon;
-import com.condorgames.prototype.entities.soldier.SoldierProperties.Health;
-import com.sun.scenario.effect.Identity;
 
 import java.util.Random;
 
@@ -30,25 +28,25 @@ public class Soldier extends SoldierBase implements Fireable, Coverable {
 
   public void wound() {
     Random random = new Random();
-    int index = random.nextInt(Health.values().length - 1);
+    int index = random.nextInt(SoldierProperties.SoldierHealth.values().length - 1);
 
     switch (index) {
       case 1:
         //if soldier already is lightly wounded - make him severely wounded!
-        if(super.getProperties().getHealth().equals(Health.LIGHT_WOUND)){
-          super.getProperties().setHealth(Health.SEVERE_WOUND);
+        if(super.getProperties().getSoldierHealth().equals(SoldierProperties.SoldierHealth.LIGHT_WOUND)){
+          super.getProperties().setSoldierHealth(SoldierProperties.SoldierHealth.SEVERE_WOUND);
           System.out.println(this.getName() + " already lightly wounded! -> severe wound!");
         }else{
-          super.getProperties().setHealth(Health.LIGHT_WOUND);
+          super.getProperties().setSoldierHealth(SoldierProperties.SoldierHealth.LIGHT_WOUND);
           System.out.println(this.getName() + " lightly wounded!");
         }
         break;
       case 2:
-        super.getProperties().setHealth(Health.SEVERE_WOUND);
+        super.getProperties().setSoldierHealth(SoldierProperties.SoldierHealth.SEVERE_WOUND);
         System.out.println(this.getName() + " severe wounded!");
         break;
       case 3:
-        super.getProperties().setHealth(Health.DEAD);
+        super.getProperties().setSoldierHealth(SoldierProperties.SoldierHealth.DEAD);
         System.out.println(this.getName() + " dead wounded!");
         break;
     }

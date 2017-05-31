@@ -3,12 +3,12 @@ package com.condorgames.prototype.entities.soldier;
 public class SoldierPropertiesImpl implements SoldierProperties {
   private MoraleBase moraleBase;
   private float morale;
-  private Health health;
+  private SoldierHealth soldierHealth;
   private String name;
 
-  public SoldierPropertiesImpl(MoraleBase morale, Health health, String name) {
+  public SoldierPropertiesImpl(MoraleBase morale, SoldierHealth soldierHealth, String name) {
     this.moraleBase = morale;
-    this.health = health;
+    this.soldierHealth = soldierHealth;
     this.name = name;
     this.morale = 100f;
   }
@@ -78,13 +78,13 @@ public class SoldierPropertiesImpl implements SoldierProperties {
   }
 
   @Override
-  public void setHealth(Health health) {
-    this.health = health;
+  public void setSoldierHealth(SoldierHealth soldierHealth) {
+    this.soldierHealth = soldierHealth;
   }
 
   @Override
-  public Health getHealth() {
-    return health;
+  public SoldierHealth getSoldierHealth() {
+    return soldierHealth;
   }
 
   @Override

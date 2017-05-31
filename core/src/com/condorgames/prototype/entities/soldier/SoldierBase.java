@@ -11,19 +11,19 @@ public abstract class SoldierBase implements Morale, Identity {
   private Skillset skillset;
 
   public SoldierBase() {
-    this(AimSkill.NORMAL, WeaponSkill.NORMAL, MoraleBase.NORMAL, Health.OK, "NoName");
+    this(AimSkill.NORMAL, WeaponSkill.NORMAL, MoraleBase.NORMAL, SoldierHealth.OK, "NoName");
   }
 
   public SoldierBase(AimSkill aimSkill, String name) {
-    this(aimSkill, WeaponSkill.NORMAL, MoraleBase.NORMAL, Health.OK, name);
+    this(aimSkill, WeaponSkill.NORMAL, MoraleBase.NORMAL, SoldierHealth.OK, name);
   }
 
   public SoldierBase(AimSkill aimSkill, WeaponSkill weaponSkill, String name) {
-    this(aimSkill, weaponSkill, MoraleBase.NORMAL, Health.OK, name);
+    this(aimSkill, weaponSkill, MoraleBase.NORMAL, SoldierHealth.OK, name);
   }
 
-  public SoldierBase(AimSkill aimSkill, WeaponSkill weaponSkill, MoraleBase moraleState, Health health, String name) {
-    this.soldierProperties = new SoldierPropertiesImpl(moraleState, health, name);
+  public SoldierBase(AimSkill aimSkill, WeaponSkill weaponSkill, MoraleBase moraleState, SoldierHealth soldierHealth, String name) {
+    this.soldierProperties = new SoldierPropertiesImpl(moraleState, soldierHealth, name);
     this.skillset = new SkillsetImpl(aimSkill, weaponSkill);
   }
 

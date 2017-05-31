@@ -3,7 +3,7 @@ package com.condorgames.prototype.entities.squad;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
 import com.condorgames.prototype.entities.soldier.Soldier;
-import com.condorgames.prototype.entities.soldier.SoldierProperties.Health;
+import com.condorgames.prototype.entities.soldier.SoldierProperties.SoldierHealth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,11 +159,11 @@ public class Squad extends SteerableSquadEntity {
   }
 
   private boolean isDead(Soldier soldier) {
-    return soldier.getProperties().getHealth().equals(Health.DEAD);
+    return soldier.getProperties().getSoldierHealth().equals(SoldierHealth.DEAD);
   }
 
   private boolean hasSevereWound(Soldier soldier) {
-    return soldier.getProperties().getHealth().equals(Health.SEVERE_WOUND);
+    return soldier.getProperties().getSoldierHealth().equals(SoldierHealth.SEVERE_WOUND);
   }
 
   public List<Soldier> getSoldiers() {
