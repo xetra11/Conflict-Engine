@@ -8,11 +8,13 @@ import com.condorgames.prototype.helper.Cooldown;
 public class BattleSituation implements ResolvableSituation{
   private PlatoonEntityBase activeContact, passiveContact;
   private Cooldown wakeupCooldown;
+  private Cooldown moraleTick;
 
   private BattleSituation(PlatoonEntityBase activeContact, PlatoonEntityBase passiveContact) {
     this.activeContact = activeContact;
     this.passiveContact = passiveContact;
     wakeupCooldown = new Cooldown(10f);
+    moraleTick = new Cooldown(2f, true);
   }
 
   public static ResolvableSituation createBattleSituation(PlatoonEntityBase activeContact,
@@ -24,11 +26,17 @@ public class BattleSituation implements ResolvableSituation{
   // TODO declare environment here to avoid hits!
   public void resolve(float deltaTime) {
 
+
     if (activeContact.getStrength() <= 0) {
       System.out.println("+++ ALLIED WON BATTLE! +++");
     } else if (passiveContact.getStrength() <= 0) {
       System.out.println("+++ AXIS WON BATTLE! +++");
     } else {
+      moraleTick.isDone(deltaTime, () -> {
+        activeContact.raiseMorale();
+        passiveContact.raiseMorale();
+      });
+
       activeContact.fire(deltaTime, hitType -> {
         if (hitType.equals(HitType.HIT)) {
           resolveHit(passiveContact);
@@ -37,7 +45,6 @@ public class BattleSituation implements ResolvableSituation{
         }
       });
 
-      //TODO decrease Strength & Morale needs to be shifted down to concrete class
       wakeupCooldown.isDone(deltaTime, () -> passiveContact.fire(deltaTime, hitType -> {
         if (hitType.equals(HitType.HIT)) {
           resolveHit(activeContact);

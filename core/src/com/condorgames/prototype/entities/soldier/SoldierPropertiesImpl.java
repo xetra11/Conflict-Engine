@@ -20,12 +20,46 @@ public class SoldierPropertiesImpl implements SoldierProperties {
 
   @Override
   public void decreaseMorale() {
-    morale -= 1f;
+    switch (getMoraleBase()) {
+      case FANATIC: {
+        morale -= 0.5f;
+        break;
+      }
+      case HIGH:{
+        morale -= 0.8f;
+        break;
+      }
+      case NORMAL:{
+        morale -= 1.0f;
+        break;
+      }
+      case LOW: {
+        morale -= 1.5f;
+        break;
+      }
+    }
   }
 
   @Override
   public void raiseMorale() {
-//    moraleBase = morale();
+    switch (getMoraleBase()) {
+      case FANATIC: {
+        morale += 1.5f;
+        break;
+      }
+      case HIGH:{
+        morale += 1.2f;
+        break;
+      }
+      case NORMAL:{
+        morale += 1.0f;
+        break;
+      }
+      case LOW: {
+        morale += 0.5f;
+        break;
+      }
+    }
   }
 
   @Override
