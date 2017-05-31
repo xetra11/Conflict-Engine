@@ -8,6 +8,10 @@ import java.util.List;
 
 public class Platoon implements PlatoonProperties{
 
+  public Platoon(){
+    super();
+  }
+
   private List<Squad> squads = new ArrayList<>(4);
 
   public List<Squad> getSquads() {

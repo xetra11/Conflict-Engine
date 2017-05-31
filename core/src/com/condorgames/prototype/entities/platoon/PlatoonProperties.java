@@ -4,10 +4,10 @@ import com.condorgames.prototype.entities.soldier.SoldierProperties;
 
 public interface PlatoonProperties {
   public enum PlatoonHealth {
-    DEAD,
-    SEVERE_WOUND,
-    LIGHT_WOUND,
-    OK;
+    SCATTERED,
+    PINNED_DOWN,
+    STRESSED,
+    COMBAT_READY;
   }
 
   void setPlatoonHealth(PlatoonHealth soldierHealth);

@@ -23,6 +23,8 @@ import com.condorgames.prototype.creator.SquadCreator;
 import com.condorgames.prototype.creator.SensorCreator;
 import com.condorgames.prototype.entities.*;
 import com.condorgames.prototype.battleresolver.BattleResolver;
+import com.condorgames.prototype.entities.platoon.Platoon;
+import com.condorgames.prototype.entities.squad.Squad;
 import com.condorgames.prototype.entities.squad.SteerableSquadEntity;
 import com.condorgames.prototype.helper.Helper;
 import com.condorgames.prototype.helper.UILogger;
@@ -61,6 +63,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private TextField textFieldAmmoFriendly;
   private TextField textFieldAmmoEnemy;
   private Label labelAmmoEnemy;
+  private Platoon platoon;
 
   @Override
   public void create() {
@@ -208,10 +211,14 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void createEntities() {
+    platoon = new Platoon();
     friendly = SquadCreator.createSteerableSquadEntity(world, new Vector2(3f, 2f));
     enemyOne = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(4f, 7f));
 //    enemyTwo = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(6f, 5f));
 //    enemyThree = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(9f, 9f));
+
+    platoon.getSquads().add((Squad) friendly);
+
     targetCrosshair = SensorCreator.createTargetCircleEntity(world, 0.05f);
   }
 
