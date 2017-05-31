@@ -18,6 +18,7 @@ public class Soldier extends SoldierBase implements Fireable, Coverable {
     this.weapon = weapon;
 
     weapon.setWeaponFiredListener(() -> System.out.println(this.getName() + " fired"));
+    //TODO: delegate listeners to unit hierarchy up to let higher unit order handle event
     weapon.setWeaponEmptyListener(() -> System.out.println(this.getName() + " empty"));
     weapon.setWeaponReloadListener(() -> System.out.println(this.getName() + " reloading..."));
     weapon.setWeaponReloadedListener(() -> {

@@ -23,7 +23,7 @@ import com.condorgames.prototype.creator.SquadCreator;
 import com.condorgames.prototype.creator.SensorCreator;
 import com.condorgames.prototype.entities.*;
 import com.condorgames.prototype.battleresolver.BattleResolver;
-import com.condorgames.prototype.entities.platoon.SteerableSquadEntity;
+import com.condorgames.prototype.entities.squad.SteerableSquadEntity;
 import com.condorgames.prototype.helper.Helper;
 import com.condorgames.prototype.helper.UILogger;
 import com.condorgames.prototype.listener.PlatoonContactListener;

@@ -3,9 +3,9 @@ package com.condorgames.prototype.creator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.condorgames.prototype.helper.FilterCategories;
-import com.condorgames.prototype.entities.platoon.Squad;
-import com.condorgames.prototype.entities.platoon.SquadEntityBase;
-import com.condorgames.prototype.entities.platoon.SteerableSquadEntity;
+import com.condorgames.prototype.entities.squad.Squad;
+import com.condorgames.prototype.entities.squad.SquadEntityBase;
+import com.condorgames.prototype.entities.squad.SteerableSquadEntity;
 
 public abstract class SquadCreator {
 

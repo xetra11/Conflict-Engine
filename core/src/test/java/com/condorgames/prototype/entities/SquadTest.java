@@ -1,8 +1,8 @@
 package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.condorgames.prototype.entities.platoon.Squad;
-import com.condorgames.prototype.entities.platoon.SquadEntityBase;
+import com.condorgames.prototype.entities.squad.Squad;
+import com.condorgames.prototype.entities.squad.SquadEntityBase;
 import org.junit.Ignore;
 import org.junit.Test;
 

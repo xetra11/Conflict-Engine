@@ -1,4 +1,4 @@
-package com.condorgames.prototype.entities.platoon;
+package com.condorgames.prototype.entities.squad;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
@@ -18,13 +18,11 @@ public class Squad extends SteerableSquadEntity {
     super(body, faction);
   }
 
-  //TODO Create some more fine grained platoon mechanics due the high amount of methods
+  //TODO Create some more fine grained Platoon mechanics due the high amount of methods
 
   @Override
   public void fire(float deltaTime, Fireable.HitListener hitListener) {
-
     salvageAmmoOfInactiveSoldiers();
-
     getActiveSoldiers()
             .forEach(soldier -> soldier.fire(deltaTime, hitListener));
   }
@@ -72,7 +70,7 @@ public class Squad extends SteerableSquadEntity {
   public void takeCasualty() {
     System.out.println("Casualty!");
     Objects.requireNonNull(randomActiveSoldier(),
-            "Could not resolve a random soldier, platoon seems to be empty!");
+            "Could not resolve a random soldier, Platoon seems to be empty!");
     randomActiveSoldier().wound();
   }
 

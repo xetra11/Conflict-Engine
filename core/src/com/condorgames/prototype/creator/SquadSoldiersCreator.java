@@ -1,6 +1,5 @@
 package com.condorgames.prototype.creator;
 
-import com.condorgames.prototype.entities.platoon.Squad;
 import com.condorgames.prototype.entities.soldier.Soldier;
 
 import java.util.ArrayList;

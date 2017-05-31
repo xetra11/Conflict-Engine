@@ -7,8 +7,8 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.condorgames.prototype.CondorAiPrototype;
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.battleresolver.ResolvableSituation;
-import com.condorgames.prototype.entities.platoon.Squad;
-import com.condorgames.prototype.entities.platoon.SteerableSquadEntity;
+import com.condorgames.prototype.entities.squad.Squad;
+import com.condorgames.prototype.entities.squad.SteerableSquadEntity;
 import com.condorgames.prototype.battleresolver.BattleSituation;
 
 public class PlatoonContactListener implements ContactListener {

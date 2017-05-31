@@ -2,7 +2,7 @@ package com.condorgames.prototype.battleresolver;
 
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.battleresolver.HitMechanic.HitType;
-import com.condorgames.prototype.entities.platoon.SquadEntityBase;
+import com.condorgames.prototype.entities.squad.SquadEntityBase;
 import com.condorgames.prototype.helper.Cooldown;
 
 public class BattleSituation implements ResolvableSituation{
