@@ -102,6 +102,7 @@ public class Platoon extends SteerablePlatoonEntity {
   @Override
   public MoraleBase getMoraleBase() {
     //TODO Add morale debuffs here so they can be aggregated
+
     return null;
   }
 
