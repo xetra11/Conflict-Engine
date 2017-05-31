@@ -15,11 +15,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Platoon extends SteerablePlatoonEntity {
-  private static final int UPPER_HIGH_THRESHOLD = 36;
-  private static final int UPPER_NORMAL_THRESHOLD = 27;
-  private static final int UPPER_LOW_THRESHOLD = 18;
-  private static final int UPPER_FLEEING_THRESHOLD = 9;
-  public static final int UPPER_PINNEDDOWN_THRESHOLD = 0;
   private List<Soldier> soldiers = new ArrayList<>();
 
   public Platoon(Body body, PlatoonEntityBase.Faction faction) {
@@ -33,7 +28,7 @@ public class Platoon extends SteerablePlatoonEntity {
 
   }
 
-  //TODO Salvage Ammo from dead comrades!
+  //TODO Create some more fine grained platoon mechanics due the high amount of methods
 
   @Override
   public void fire(float deltaTime, Fireable.HitListener hitListener) {
@@ -115,15 +110,15 @@ public class Platoon extends SteerablePlatoonEntity {
 
   private MoraleState getPlatoonMoraleState(int platoonMorale) {
 
-    if (platoonMorale > getActiveSoldiers().stream().count() * MoraleState.HIGH.getValue()) {
+    if (platoonMorale > getActiveSoldiers().size() * MoraleState.HIGH.getValue()) {
       return MoraleState.FANATIC;
-    } else if (platoonMorale > getActiveSoldiers().stream().count() * MoraleState.NORMAL.getValue()) {
+    } else if (platoonMorale > getActiveSoldiers().size() * MoraleState.NORMAL.getValue()) {
       return MoraleState.HIGH;
-    } else if (platoonMorale > getActiveSoldiers().stream().count() * MoraleState.LOW.getValue()) {
+    } else if (platoonMorale > getActiveSoldiers().size() * MoraleState.LOW.getValue()) {
       return MoraleState.NORMAL;
-    } else if (platoonMorale > getActiveSoldiers().stream().count() * MoraleState.FLEEING.getValue()) {
+    } else if (platoonMorale > getActiveSoldiers().size() * MoraleState.FLEEING.getValue()) {
       return MoraleState.LOW;
-    } else if (platoonMorale > getActiveSoldiers().stream().count() * MoraleState.PINNED_DOWN.getValue()) {
+    } else if (platoonMorale > getActiveSoldiers().size() * MoraleState.PINNED_DOWN.getValue()) {
       return MoraleState.FLEEING;
     } else {
       return MoraleState.PINNED_DOWN;
