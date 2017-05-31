@@ -1,7 +1,6 @@
 package com.condorgames.prototype.entities.platoon;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.condorgames.prototype.creator.SquadCreator;
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
 import com.condorgames.prototype.entities.soldier.Soldier;
 import com.condorgames.prototype.entities.soldier.SoldierProperties.Health;
@@ -17,13 +16,6 @@ public class Squad extends SteerableSquadEntity {
 
   public Squad(Body body, SquadEntityBase.Faction faction) {
     super(body, faction);
-
-    if (faction.equals(Faction.AXIS)) {
-      soldiers.addAll(SquadCreator.createAxisRifleSquad());
-    } else {
-      soldiers.addAll(SquadCreator.createAlliedRifleSquad());
-    }
-
   }
 
   //TODO Create some more fine grained platoon mechanics due the high amount of methods
@@ -174,5 +166,13 @@ public class Squad extends SteerableSquadEntity {
 
   private boolean hasSevereWound(Soldier soldier) {
     return soldier.getProperties().getHealth().equals(Health.SEVERE_WOUND);
+  }
+
+  public List<Soldier> getSoldiers() {
+    return soldiers;
+  }
+
+  public void setSoldiers(List<Soldier> soldiers) {
+    this.soldiers = soldiers;
   }
 }

@@ -19,7 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.creator.EnemyCreator;
-import com.condorgames.prototype.creator.PlatoonCreator;
+import com.condorgames.prototype.creator.SquadCreator;
 import com.condorgames.prototype.creator.SensorCreator;
 import com.condorgames.prototype.entities.*;
 import com.condorgames.prototype.battleresolver.BattleResolver;
@@ -208,7 +208,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void createEntities() {
-    friendly = PlatoonCreator.createSteerablePlatoonEntity(world, new Vector2(3f, 2f));
+    friendly = SquadCreator.createSteerableSquadEntity(world, new Vector2(3f, 2f));
     enemyOne = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(4f, 7f));
 //    enemyTwo = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(6f, 5f));
 //    enemyThree = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(9f, 9f));

@@ -18,6 +18,8 @@ public abstract class EnemyCreator {
             FilterCategories.ENEMY,
             FilterCategories.LOS);
     PolygonShape shape = new PolygonShape();
-    return new Squad(rectangleBody, SquadEntityBase.Faction.ALLY);
+    Squad squad = new Squad(rectangleBody, SquadEntityBase.Faction.ALLY);
+    squad.getSoldiers().addAll(SquadSoldiersCreator.createAlliedRifleSquad());
+    return squad;
   }
 }
