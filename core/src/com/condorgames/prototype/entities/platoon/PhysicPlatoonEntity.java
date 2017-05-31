@@ -6,14 +6,14 @@ public abstract class PhysicPlatoonEntity extends PlatoonEntityBase {
   private Body body;
 
   public PhysicPlatoonEntity(Body body) {
-    this(MoraleState.NORMAL, Faction.ALLY, body);
+    this(MoraleBase.NORMAL, Faction.ALLY, body);
   }
 
   public PhysicPlatoonEntity(Body body, Faction faction) {
-    this(MoraleState.NORMAL, faction, body);
+    this(MoraleBase.NORMAL, faction, body);
   }
 
-  public PhysicPlatoonEntity(MoraleState morale, Faction faction, Body body) {
+  public PhysicPlatoonEntity(MoraleBase morale, Faction faction, Body body) {
     super(faction);
     body.setUserData(this);
     this.body = body;

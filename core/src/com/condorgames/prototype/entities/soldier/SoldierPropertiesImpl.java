@@ -1,34 +1,46 @@
 package com.condorgames.prototype.entities.soldier;
 
 public class SoldierPropertiesImpl implements SoldierProperties {
-  private MoraleState morale;
+  private MoraleBase moraleBase;
+  private float morale;
   private Health health;
   private String name;
 
-  public SoldierPropertiesImpl(MoraleState morale, Health health, String name) {
-    this.morale = morale;
+  public SoldierPropertiesImpl(MoraleBase morale, Health health, String name) {
+    this.moraleBase = morale;
     this.health = health;
     this.name = name;
+    this.morale = 100f;
   }
 
   @Override
-  public void setMorale(MoraleState morale) {
-    this.morale = morale;
+  public void setMoraleBase(MoraleBase morale) {
+    this.moraleBase = morale;
   }
 
   @Override
   public void decreaseMorale() {
-    morale = morale.decrease();
+    morale -= 1f;
   }
 
   @Override
   public void raiseMorale() {
-    morale = morale.raise();
+//    moraleBase = morale();
   }
 
   @Override
-  public MoraleState getMorale() {
+  public MoraleBase getMoraleBase() {
+    return moraleBase;
+  }
+
+  @Override
+  public float getMorale() {
     return morale;
+  }
+
+  @Override
+  public void setMorale(float morale) {
+    this.morale = morale;
   }
 
   @Override

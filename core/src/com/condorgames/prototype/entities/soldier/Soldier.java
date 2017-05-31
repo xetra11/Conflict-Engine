@@ -80,4 +80,14 @@ public class Soldier extends SoldierBase implements Fireable, Coverable {
   public String getName() {
     return super.getName();
   }
+
+  @Override
+  public float getMorale() {
+    return getProperties().getMorale();
+  }
+
+  @Override
+  public void setMorale(float morale) {
+    getProperties().setMorale(morale);
+  }
 }

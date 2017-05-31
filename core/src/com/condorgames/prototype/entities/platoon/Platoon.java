@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Platoon extends SteerablePlatoonEntity {
   private List<Soldier> soldiers = new ArrayList<>();
@@ -45,7 +43,7 @@ public class Platoon extends SteerablePlatoonEntity {
             .forEach(soldier -> {
               int amountAmmo = getAmmoOfDeadSoldier();
               soldier.setAmmo(amountAmmo);
-              if(amountAmmo > 0){
+              if (amountAmmo > 0) {
                 System.out.println(soldier.getName() + " ammo salvaged: " + amountAmmo);
               }
             });
@@ -87,8 +85,8 @@ public class Platoon extends SteerablePlatoonEntity {
   }
 
   @Override
-  public void setMorale(MoraleState morale) {
-    randomActiveSoldier().setMorale(morale);
+  public void setMoraleBase(MoraleBase morale) {
+    randomActiveSoldier().setMoraleBase(morale);
   }
 
   @Override
@@ -102,33 +100,27 @@ public class Platoon extends SteerablePlatoonEntity {
   }
 
   @Override
-  public MoraleState getMorale() {
+  public MoraleBase getMoraleBase() {
     //TODO Add morale debuffs here so they can be aggregated
-    int platoonMorale = getPlatoonMorale();
-    return getPlatoonMoraleState(platoonMorale);
+    return null;
   }
 
-  private MoraleState getPlatoonMoraleState(int platoonMorale) {
-
-    if (platoonMorale > getActiveSoldiers().size() * MoraleState.HIGH.getValue()) {
-      return MoraleState.FANATIC;
-    } else if (platoonMorale > getActiveSoldiers().size() * MoraleState.NORMAL.getValue()) {
-      return MoraleState.HIGH;
-    } else if (platoonMorale > getActiveSoldiers().size() * MoraleState.LOW.getValue()) {
-      return MoraleState.NORMAL;
-    } else if (platoonMorale > getActiveSoldiers().size() * MoraleState.FLEEING.getValue()) {
-      return MoraleState.LOW;
-    } else if (platoonMorale > getActiveSoldiers().size() * MoraleState.PINNED_DOWN.getValue()) {
-      return MoraleState.FLEEING;
-    } else {
-      return MoraleState.PINNED_DOWN;
-    }
+  @Override
+  public float getMorale() {
+    return getPlatoonMorale();
   }
 
-  private int getPlatoonMorale() {
-    return getActiveSoldiers()
+  @Override
+  public void setMorale(float morale) {
+    //TODO not implemented
+  }
+
+  private float getPlatoonMorale() {
+    double moraleSum = getActiveSoldiers()
             .stream()
-            .mapToInt(soldier -> soldier.getMorale().getValue()).sum();
+            .mapToDouble(soldier -> soldier.getMorale())
+            .sum();
+    return (float) (moraleSum / getActiveSoldiers().size());
   }
 
   private Soldier randomActiveSoldier() {
