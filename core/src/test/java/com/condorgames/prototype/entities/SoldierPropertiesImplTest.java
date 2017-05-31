@@ -1,6 +1,5 @@
 package com.condorgames.prototype.entities;
 
-import com.condorgames.prototype.battleresolver.Morale.MoraleState;
 import com.condorgames.prototype.entities.soldier.SoldierPropertiesImpl;
 import org.junit.Before;
 import org.junit.Ignore;
