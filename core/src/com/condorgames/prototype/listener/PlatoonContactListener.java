@@ -7,8 +7,8 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.condorgames.prototype.CondorAiPrototype;
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.battleresolver.ResolvableSituation;
-import com.condorgames.prototype.entities.platoon.Platoon;
-import com.condorgames.prototype.entities.platoon.SteerablePlatoonEntity;
+import com.condorgames.prototype.entities.platoon.Squad;
+import com.condorgames.prototype.entities.platoon.SteerableSquadEntity;
 import com.condorgames.prototype.battleresolver.BattleSituation;
 
 public class PlatoonContactListener implements ContactListener {
@@ -20,19 +20,19 @@ public class PlatoonContactListener implements ContactListener {
 
   @Override
   public void beginContact(Contact contact) {
-    Platoon activeContact = null;
-    Platoon passiveContact = null;
+    Squad activeContact = null;
+    Squad passiveContact = null;
     if (contact.getFixtureA().getUserData().equals("LOS")) {
-      activeContact = (Platoon) contact.getFixtureA().getBody().getUserData();
-      passiveContact = (Platoon) contact.getFixtureB().getBody().getUserData();
+      activeContact = (Squad) contact.getFixtureA().getBody().getUserData();
+      passiveContact = (Squad) contact.getFixtureB().getBody().getUserData();
     } else {
-      activeContact = (Platoon) contact.getFixtureB().getBody().getUserData();
-      passiveContact = (Platoon) contact.getFixtureA().getBody().getUserData();
+      activeContact = (Squad) contact.getFixtureB().getBody().getUserData();
+      passiveContact = (Squad) contact.getFixtureA().getBody().getUserData();
     }
     triggerEnemyContact(activeContact, passiveContact);
   }
 
-  private void triggerEnemyContact(SteerablePlatoonEntity activeContact, SteerablePlatoonEntity passiveContact) {
+  private void triggerEnemyContact(SteerableSquadEntity activeContact, SteerableSquadEntity passiveContact) {
     // Stop Entity
     activeContact.setTagged(true);
     activeContact.getBody().setLinearVelocity(0f, 0f);

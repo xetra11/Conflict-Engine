@@ -12,10 +12,10 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class Platoon extends SteerablePlatoonEntity {
+public class Squad extends SteerableSquadEntity {
   private List<Soldier> soldiers = new ArrayList<>();
 
-  public Platoon(Body body, PlatoonEntityBase.Faction faction) {
+  public Squad(Body body, SquadEntityBase.Faction faction) {
     super(body, faction);
 
     if (faction.equals(Faction.AXIS)) {

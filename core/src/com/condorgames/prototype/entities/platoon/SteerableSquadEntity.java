@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.helper.Helper;
 
-public abstract class SteerablePlatoonEntity extends PhysicPlatoonEntity implements Steerable<Vector2> {
+public abstract class SteerableSquadEntity extends PhysicSquadEntity implements Steerable<Vector2> {
   private SteeringBehavior steeringBehavior;
   private SteeringAcceleration<Vector2> steeringOutput;
 
@@ -20,7 +20,7 @@ public abstract class SteerablePlatoonEntity extends PhysicPlatoonEntity impleme
 
   //TODO add speech library?
 
-  public SteerablePlatoonEntity(Body body, Faction faction) {
+  public SteerableSquadEntity(Body body, Faction faction) {
     super(body, faction);
     steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
   }
@@ -151,32 +151,32 @@ public abstract class SteerablePlatoonEntity extends PhysicPlatoonEntity impleme
     return new Location<Vector2>() {
       @Override
       public Vector2 getPosition() {
-        return SteerablePlatoonEntity.this.getPosition();
+        return SteerableSquadEntity.this.getPosition();
       }
 
       @Override
       public float getOrientation() {
-        return SteerablePlatoonEntity.this.getOrientation();
+        return SteerableSquadEntity.this.getOrientation();
       }
 
       @Override
       public void setOrientation(float orientation) {
-        SteerablePlatoonEntity.this.setOrientation(orientation);
+        SteerableSquadEntity.this.setOrientation(orientation);
       }
 
       @Override
       public float vectorToAngle(Vector2 vector) {
-        return SteerablePlatoonEntity.this.vectorToAngle(vector);
+        return SteerableSquadEntity.this.vectorToAngle(vector);
       }
 
       @Override
       public Vector2 angleToVector(Vector2 outVector, float angle) {
-        return SteerablePlatoonEntity.this.angleToVector(outVector, angle);
+        return SteerableSquadEntity.this.angleToVector(outVector, angle);
       }
 
       @Override
       public Location<Vector2> newLocation() {
-        return SteerablePlatoonEntity.this.newLocation();
+        return SteerableSquadEntity.this.newLocation();
       }
     };
   }

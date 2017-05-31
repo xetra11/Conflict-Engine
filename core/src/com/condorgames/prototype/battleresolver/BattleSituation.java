@@ -2,23 +2,23 @@ package com.condorgames.prototype.battleresolver;
 
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.battleresolver.HitMechanic.HitType;
-import com.condorgames.prototype.entities.platoon.PlatoonEntityBase;
+import com.condorgames.prototype.entities.platoon.SquadEntityBase;
 import com.condorgames.prototype.helper.Cooldown;
 
 public class BattleSituation implements ResolvableSituation{
-  private PlatoonEntityBase activeContact, passiveContact;
+  private SquadEntityBase activeContact, passiveContact;
   private Cooldown wakeupCooldown;
   private Cooldown moraleTick;
 
-  private BattleSituation(PlatoonEntityBase activeContact, PlatoonEntityBase passiveContact) {
+  private BattleSituation(SquadEntityBase activeContact, SquadEntityBase passiveContact) {
     this.activeContact = activeContact;
     this.passiveContact = passiveContact;
     wakeupCooldown = new Cooldown(10f);
     moraleTick = new Cooldown(2f, true);
   }
 
-  public static ResolvableSituation createBattleSituation(PlatoonEntityBase activeContact,
-                                                      PlatoonEntityBase passiveContact) {
+  public static ResolvableSituation createBattleSituation(SquadEntityBase activeContact,
+                                                      SquadEntityBase passiveContact) {
     return new BattleSituation(activeContact, passiveContact);
   }
 
@@ -56,7 +56,7 @@ public class BattleSituation implements ResolvableSituation{
     }
   }
 
-  private void resolveHit(PlatoonEntityBase contact) {
+  private void resolveHit(SquadEntityBase contact) {
     System.out.print(">> " + contact.getFaction() + ": ");
 
     //Double morale decrease due hit!

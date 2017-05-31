@@ -3,19 +3,19 @@ package com.condorgames.prototype.creator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.condorgames.prototype.helper.FilterCategories;
-import com.condorgames.prototype.entities.platoon.Platoon;
-import com.condorgames.prototype.entities.platoon.PlatoonEntityBase;
-import com.condorgames.prototype.entities.platoon.SteerablePlatoonEntity;
+import com.condorgames.prototype.entities.platoon.Squad;
+import com.condorgames.prototype.entities.platoon.SquadEntityBase;
+import com.condorgames.prototype.entities.platoon.SteerableSquadEntity;
 
 public abstract class PlatoonCreator {
 
-  public static SteerablePlatoonEntity createSteerablePlatoonEntity(World world, Vector2 position) {
+  public static SteerableSquadEntity createSteerablePlatoonEntity(World world, Vector2 position) {
     final Body rectangleBody = BodyCreator.createRectangleBody(0.5f, 0.25f, position, world,
             BodyDef.BodyType.DynamicBody,
             FilterCategories.ALLY,
             FilterCategories.COMMON_BODIES);
     addLOS(rectangleBody);
-    return new Platoon(rectangleBody, PlatoonEntityBase.Faction.AXIS);
+    return new Squad(rectangleBody, SquadEntityBase.Faction.AXIS);
   }
 
   private static void addLOS(Body body) {

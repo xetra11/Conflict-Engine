@@ -1,34 +1,26 @@
 package com.condorgames.prototype.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
-import com.condorgames.prototype.creator.BodyCreator;
-import com.condorgames.prototype.entities.platoon.Platoon;
-import com.condorgames.prototype.entities.platoon.PlatoonEntityBase;
-import org.junit.Before;
+import com.condorgames.prototype.entities.platoon.Squad;
+import com.condorgames.prototype.entities.platoon.SquadEntityBase;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @Ignore
-public class PlatoonTest {
+public class SquadTest {
 
-  private Platoon UUT;
+  private Squad UUT;
   private Body body;
 
-  public PlatoonTest() {
+  public SquadTest() {
     body = mock(Body.class);
 
 //    when(Gdx.graphics.getWidth()).thenReturn(200);
 //    when(Gdx.graphics.getHeight()).thenReturn(200);
 
-    UUT = new Platoon(body, PlatoonEntityBase.Faction.AXIS);
+    UUT = new Squad(body, SquadEntityBase.Faction.AXIS);
   }
 
   @Test

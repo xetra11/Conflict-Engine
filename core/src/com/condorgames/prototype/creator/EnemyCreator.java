@@ -5,19 +5,19 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.condorgames.prototype.entities.platoon.SquadEntityBase;
 import com.condorgames.prototype.helper.FilterCategories;
-import com.condorgames.prototype.entities.platoon.Platoon;
-import com.condorgames.prototype.entities.platoon.PlatoonEntityBase;
-import com.condorgames.prototype.entities.platoon.SteerablePlatoonEntity;
+import com.condorgames.prototype.entities.platoon.Squad;
+import com.condorgames.prototype.entities.platoon.SteerableSquadEntity;
 
 public abstract class EnemyCreator {
 
-  public static SteerablePlatoonEntity createSteerableEnemyEntity(World world, Vector2 position) {
+  public static SteerableSquadEntity createSteerableEnemyEntity(World world, Vector2 position) {
     final Body rectangleBody = BodyCreator.createRectangleBody(0.25f, 0.25f, position, world,
             BodyDef.BodyType.StaticBody,
             FilterCategories.ENEMY,
             FilterCategories.LOS);
     PolygonShape shape = new PolygonShape();
-    return new Platoon(rectangleBody, PlatoonEntityBase.Faction.ALLY);
+    return new Squad(rectangleBody, SquadEntityBase.Faction.ALLY);
   }
 }
