@@ -39,7 +39,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private OrthographicCamera camera;
   private UILogger uiLogger;
 
-  private SteerableSquadEntity friendly;
+  private SteerableSquadEntity axisSquadOne, axisSquadTwo;
   private SteerableSquadEntity enemyOne, enemyTwo, enemyThree;
   private Sensor moveTarget;
 
@@ -78,7 +78,8 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     camera.update();
     world.step(1f / 60f, 6, 2);
     battleResolver.resolve(Gdx.graphics.getDeltaTime(), false );
-    friendly.update();
+    axisSquadOne.update();
+    axisSquadTwo.update();
     updateUI();
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -95,13 +96,13 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void updateUI() {
-    textFieldHealthFriendly.setText(String.valueOf(friendly.getStrength()));
+    textFieldHealthFriendly.setText(String.valueOf(axisSquadOne.getStrength()));
     textFieldHealthEnemy.setText(String.valueOf(enemyOne.getStrength()));
 
-    textFieldMoraleFriendly.setText(String.valueOf(friendly.getMorale()));
+    textFieldMoraleFriendly.setText(String.valueOf(axisSquadOne.getMorale()));
     textFieldMoraleEnemy.setText(String.valueOf(enemyOne.getMorale()));
 
-    textFieldAmmoFriendly.setText(String.valueOf(friendly.getAmmo()));
+    textFieldAmmoFriendly.setText(String.valueOf(axisSquadOne.getAmmo()));
     textFieldAmmoEnemy.setText(String.valueOf(enemyOne.getAmmo()));
   }
 
@@ -202,22 +203,31 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void setupAI() {
-    Arrive<Vector2> arrive = new Arrive<Vector2>(friendly, targetCrosshair);
-    arrive.setArrivalTolerance(0.01f);
-    arrive.setDecelerationRadius(0.5f);
-    arrive.setTimeToTarget(0.1f);
+    Arrive<Vector2> arriveAxisOne = new Arrive<Vector2>(axisSquadOne, targetCrosshair);
+    arriveAxisOne.setArrivalTolerance(0.01f);
+    arriveAxisOne.setDecelerationRadius(0.5f);
+    arriveAxisOne.setTimeToTarget(0.1f);
 
-    friendly.setSteeringBehavior(arrive);
+    Arrive<Vector2> arriveAxisTwo = new Arrive<Vector2>(axisSquadTwo, axisSquadOne);
+    arriveAxisTwo.setArrivalTolerance(0.01f);
+    arriveAxisTwo.setDecelerationRadius(0.5f);
+    arriveAxisTwo.setTimeToTarget(0.1f);
+
+
+    axisSquadOne.setSteeringBehavior(arriveAxisOne);
+    axisSquadTwo.setSteeringBehavior(arriveAxisTwo);
   }
 
   private void createEntities() {
     platoon = new Platoon();
-    friendly = SquadCreator.createSteerableSquadEntity(world, new Vector2(3f, 2f));
+    axisSquadOne = SquadCreator.createSteerableSquadEntity(world, new Vector2(3f, 2f));
+    axisSquadTwo = SquadCreator.createSteerableSquadEntity(world, new Vector2(4f, 2f));
     enemyOne = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(4f, 7f));
 //    enemyTwo = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(6f, 5f));
 //    enemyThree = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(9f, 9f));
 
-    platoon.getSquads().add((Squad) friendly);
+    platoon.addSquad((Squad) axisSquadOne);
+    platoon.addSquad((Squad) axisSquadTwo);
 
     targetCrosshair = SensorCreator.createTargetCircleEntity(world, 0.05f);
   }

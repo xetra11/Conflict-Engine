@@ -18,8 +18,8 @@ public class Platoon implements PlatoonProperties{
     return squads;
   }
 
-  public void setSquads(List<Squad> squads) {
-    this.squads = squads;
+  public void addSquad(Squad squad) {
+    this.squads.add(squad);
   }
 
   @Override

@@ -35,6 +35,7 @@ public abstract class SquadCreator {
     losFixtureDef.shape = shape;
     losFixtureDef.isSensor = true;
     losFixtureDef.filter.categoryBits = FilterCategories.LOS;
+    losFixtureDef.filter.maskBits = FilterCategories.ENEMY;
     body.createFixture(losFixtureDef).setUserData("LOS");
   }
 }
