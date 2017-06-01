@@ -87,10 +87,10 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     camera.update();
     world.step(1f / 60f, 6, 2);
     battleResolver.resolve(Gdx.graphics.getDeltaTime(), false);
-    axisSquadOne.update();
-    axisSquadTwo.update();
-    platoon.update();
-    formation.updateSlots();
+    axisSquadOne.update(Gdx.graphics.getDeltaTime());
+    axisSquadTwo.update(Gdx.graphics.getDeltaTime());
+    platoon.update(Gdx.graphics.getDeltaTime());
+//    formation.updateSlots();
 
     updateUI();
 

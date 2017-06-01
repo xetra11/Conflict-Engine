@@ -17,6 +17,8 @@ public abstract class SteerableEntity extends PhysicalEntity implements Steerabl
   private float maxAngularSpeed = 0.5f;
   private float maxAngularAcceleration = 0.5f;
   private boolean tagged;
+  //TODO CTOR param
+  private boolean independentFacing = false;
 
   //TODO add speech library?
 
@@ -29,19 +31,39 @@ public abstract class SteerableEntity extends PhysicalEntity implements Steerabl
     this.steeringBehavior = steeringBehavior;
   }
 
-  public void applySteering() {
+  public void applySteering(float deltaTime) {
+    boolean anyAccelerations = false;
+
+    steeringBehavior.calculateSteering(steeringOutput);
     if (isTagged() == false) {
-      steeringBehavior.calculateSteering(steeringOutput);
-      if (steeringOutput.isZero() == false) {
-        if (!steeringOutput.linear.isZero()) {
-          getBody().setLinearVelocity(steeringOutput.linear);
+// Update position and linear velocity.
+      if (!steeringOutput.linear.isZero()) {
+        // this method internally scales the force by deltaTime
+        getBody().applyForceToCenter(steeringOutput.linear, true);
+        anyAccelerations = true;
+      }
+
+      // Update orientation and angular velocity
+      if (isIndependentFacing()) {
+        if (steeringOutput.angular != 0) {
+          // this method internally scales the torque by deltaTime
+          getBody().applyTorque(steeringOutput.angular, true);
+          anyAccelerations = true;
+        }
+      } else {
+        // If we haven't got any velocity, then we can do nothing.
+        Vector2 linVel = getLinearVelocity();
+        if (!linVel.isZero(getZeroLinearSpeedThreshold())) {
+          float newOrientation = vectorToAngle(linVel);
+          getBody().setAngularVelocity((newOrientation - getAngularVelocity()) * deltaTime); // this is superfluous if independentFacing is always true
+          getBody().setTransform(getBody().getPosition(), newOrientation);
         }
       }
     }
   }
 
-  public void update() {
-    applySteering();
+  public void update(float deltaTime) {
+    applySteering(deltaTime);
   }
 
 
@@ -150,5 +172,10 @@ public abstract class SteerableEntity extends PhysicalEntity implements Steerabl
   public Location<Vector2> newLocation() {
     return new Scene2dLocation() ;
   }
+
+  public boolean isIndependentFacing () {
+    return independentFacing;
+  }
+
   //</editor-fold>
 }
