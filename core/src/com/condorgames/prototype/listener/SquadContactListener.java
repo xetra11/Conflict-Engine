@@ -11,10 +11,10 @@ import com.condorgames.prototype.battleresolver.ResolvableSituation;
 import com.condorgames.prototype.entities.base.SteerableEntity;
 import com.condorgames.prototype.entities.squad.Squad;
 
-public class PlatoonContactListener implements ContactListener {
+public class SquadContactListener implements ContactListener {
   private CondorAiPrototype context;
 
-  public PlatoonContactListener(CondorAiPrototype context) {
+  public SquadContactListener(CondorAiPrototype context) {
     this.context = context;
   }
 

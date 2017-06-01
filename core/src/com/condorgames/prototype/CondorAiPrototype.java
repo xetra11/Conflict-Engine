@@ -30,7 +30,7 @@ import com.condorgames.prototype.entities.platoon.Platoon;
 import com.condorgames.prototype.entities.squad.Squad;
 import com.condorgames.prototype.helper.Helper;
 import com.condorgames.prototype.helper.UILogger;
-import com.condorgames.prototype.listener.PlatoonContactListener;
+import com.condorgames.prototype.listener.SquadContactListener;
 
 public class CondorAiPrototype extends ApplicationAdapter implements InputProcessor {
   // AI & Physics
@@ -249,7 +249,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     debugRenderer = new Box2DDebugRenderer();
     world = new World(new Vector2(0f, 0f), false);
     camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    world.setContactListener(new PlatoonContactListener(this));
+    world.setContactListener(new SquadContactListener(this));
     debugMatrix = camera.combined.cpy().scale(Helper.FACTOR, Helper.FACTOR, 0f);
     battleResolver = new BattleResolver();
     createUILoggerTextArea();
