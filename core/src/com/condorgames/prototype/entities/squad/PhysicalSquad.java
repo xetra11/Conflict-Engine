@@ -2,18 +2,18 @@ package com.condorgames.prototype.entities.squad;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
-public abstract class PhysicSquadEntity extends SquadEntityBase {
+public abstract class PhysicalSquad extends SquadBase {
   private Body body;
 
-  public PhysicSquadEntity(Body body) {
+  public PhysicalSquad(Body body) {
     this(MoraleBase.NORMAL, Faction.ALLY, body);
   }
 
-  public PhysicSquadEntity(Body body, Faction faction) {
+  public PhysicalSquad(Body body, Faction faction) {
     this(MoraleBase.NORMAL, faction, body);
   }
 
-  public PhysicSquadEntity(MoraleBase morale, Faction faction, Body body) {
+  public PhysicalSquad(MoraleBase morale, Faction faction, Body body) {
     super(faction);
     body.setUserData(this);
     this.body = body;

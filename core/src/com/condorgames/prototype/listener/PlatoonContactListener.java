@@ -8,7 +8,7 @@ import com.condorgames.prototype.CondorAiPrototype;
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.battleresolver.ResolvableSituation;
 import com.condorgames.prototype.entities.squad.Squad;
-import com.condorgames.prototype.entities.squad.SteerableSquadEntity;
+import com.condorgames.prototype.entities.squad.SteerableSquad;
 import com.condorgames.prototype.battleresolver.BattleSituation;
 
 public class PlatoonContactListener implements ContactListener {
@@ -32,7 +32,7 @@ public class PlatoonContactListener implements ContactListener {
     triggerEnemyContact(activeContact, passiveContact);
   }
 
-  private void triggerEnemyContact(SteerableSquadEntity activeContact, SteerableSquadEntity passiveContact) {
+  private void triggerEnemyContact(SteerableSquad activeContact, SteerableSquad passiveContact) {
     // Stop Entity
     activeContact.setTagged(true);
     activeContact.getBody().setLinearVelocity(0f, 0f);

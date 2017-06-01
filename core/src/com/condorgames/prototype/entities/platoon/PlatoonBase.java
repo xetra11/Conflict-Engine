@@ -1,6 +1,6 @@
 package com.condorgames.prototype.entities.platoon;
 
-public class PlatoonBase implements PlatoonProperties {
+public abstract class PlatoonBase implements PlatoonProperties {
 
   private PlatoonHealth platoonHealth;
 

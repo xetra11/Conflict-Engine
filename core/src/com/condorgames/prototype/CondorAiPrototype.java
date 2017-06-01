@@ -25,7 +25,7 @@ import com.condorgames.prototype.entities.*;
 import com.condorgames.prototype.battleresolver.BattleResolver;
 import com.condorgames.prototype.entities.platoon.Platoon;
 import com.condorgames.prototype.entities.squad.Squad;
-import com.condorgames.prototype.entities.squad.SteerableSquadEntity;
+import com.condorgames.prototype.entities.squad.SteerableSquad;
 import com.condorgames.prototype.helper.Helper;
 import com.condorgames.prototype.helper.UILogger;
 import com.condorgames.prototype.listener.PlatoonContactListener;
@@ -39,8 +39,8 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private OrthographicCamera camera;
   private UILogger uiLogger;
 
-  private SteerableSquadEntity axisSquadOne, axisSquadTwo;
-  private SteerableSquadEntity enemyOne, enemyTwo, enemyThree;
+  private SteerableSquad axisSquadOne, axisSquadTwo;
+  private SteerableSquad enemyOne, enemyTwo, enemyThree;
   private Sensor moveTarget;
 
   //UI

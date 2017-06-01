@@ -2,7 +2,7 @@ package com.condorgames.prototype.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.entities.squad.Squad;
-import com.condorgames.prototype.entities.squad.SquadEntityBase;
+import com.condorgames.prototype.entities.squad.SquadBase;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -20,7 +20,7 @@ public class SquadTest {
 //    when(Gdx.graphics.getWidth()).thenReturn(200);
 //    when(Gdx.graphics.getHeight()).thenReturn(200);
 
-    UUT = new Squad(body, SquadEntityBase.Faction.AXIS);
+    UUT = new Squad(body, SquadBase.Faction.AXIS);
   }
 
   @Test

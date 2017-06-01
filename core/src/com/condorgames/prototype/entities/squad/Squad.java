@@ -11,10 +11,10 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class Squad extends SteerableSquadEntity {
+public class Squad extends SteerableSquad {
   private List<Soldier> soldiers = new ArrayList<>();
 
-  public Squad(Body body, SquadEntityBase.Faction faction) {
+  public Squad(Body body, SquadBase.Faction faction) {
     super(body, faction);
   }
 

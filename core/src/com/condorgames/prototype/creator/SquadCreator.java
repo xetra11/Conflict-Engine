@@ -4,18 +4,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.condorgames.prototype.helper.FilterCategories;
 import com.condorgames.prototype.entities.squad.Squad;
-import com.condorgames.prototype.entities.squad.SquadEntityBase;
-import com.condorgames.prototype.entities.squad.SteerableSquadEntity;
+import com.condorgames.prototype.entities.squad.SquadBase;
+import com.condorgames.prototype.entities.squad.SteerableSquad;
 
 public abstract class SquadCreator {
 
-  public static SteerableSquadEntity createSteerableSquadEntity(World world, Vector2 position) {
+  public static SteerableSquad createSteerableSquadEntity(World world, Vector2 position) {
     final Body rectangleBody = BodyCreator.createRectangleBody(0.5f, 0.25f, position, world,
             BodyDef.BodyType.DynamicBody,
             FilterCategories.ALLY,
             FilterCategories.COMMON_BODIES);
     addLOS(rectangleBody);
-    Squad squad = new Squad(rectangleBody, SquadEntityBase.Faction.AXIS);
+    Squad squad = new Squad(rectangleBody, SquadBase.Faction.AXIS);
     squad.getSoldiers().addAll(SquadSoldiersCreator.createAxisRifleSquad());
     return squad;
   }
