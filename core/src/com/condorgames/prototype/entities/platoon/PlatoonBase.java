@@ -9,6 +9,7 @@ public abstract class PlatoonBase extends SteerableEntity implements PlatoonProp
 
   public PlatoonBase(Body body) {
     super(body);
+    body.setUserData(this);
     platoonHealth = PlatoonHealth.COMBAT_READY;
   }
 

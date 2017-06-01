@@ -6,4 +6,5 @@ public interface FilterCategories {
   public static short ENEMY = 0x1 << 1;
   public static short ALLY = 0x1 << 2;
   public static short LOS = 0x1 << 3;
+  public static short NONE = 0x0;
 }

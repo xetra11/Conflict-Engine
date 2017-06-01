@@ -21,15 +21,19 @@ public abstract class BodyCreator {
   }
 
   public static Body createCircleBody(World world, BodyDef.BodyType type){
-    return BodyCreator.createCircleBody(0.5f, new Vector2(0f, 0f), world, type);
+    return BodyCreator.createCircleBody(0.5f, new Vector2(0f, 0f), world, type, COMMON_BODIES, COMMON_BODIES);
   }
 
   public static Body createCircleBody(Vector2 position, World world, BodyDef.BodyType type){
-    return BodyCreator.createCircleBody(0.5f, position, world, type);
+    return BodyCreator.createCircleBody(0.5f, position, world, type, COMMON_BODIES, COMMON_BODIES);
   }
 
   public static Body createCircleBody(float radius, World world, BodyDef.BodyType type){
-    return BodyCreator.createCircleBody(radius, new Vector2(0f, 0f), world, type);
+    return BodyCreator.createCircleBody(radius, new Vector2(0f, 0f), world, type, COMMON_BODIES, COMMON_BODIES);
+  }
+
+  public static Body createCircleBody(float radius, Vector2 position, World world, BodyDef.BodyType type){
+    return BodyCreator.createCircleBody(radius, position, world, type, COMMON_BODIES, COMMON_BODIES);
   }
 
   public static Body createRectangleBody(float width, float height, Vector2 position, World world, BodyDef.BodyType type, short filterCategory, short filterMask) {
@@ -40,10 +44,10 @@ public abstract class BodyCreator {
     return createBody(shape, position, world, type, filterCategory, filterMask);
   }
 
-  public static Body createCircleBody(float radius, Vector2 position, World world, BodyDef.BodyType type){
+  public static Body createCircleBody(float radius, Vector2 position, World world, BodyDef.BodyType type, short filterCategory, short filterMask){
     CircleShape shape = new CircleShape();
     shape.setRadius(radius);
-    return createBody(shape, position, world, type, COMMON_BODIES, COMMON_BODIES);
+    return createBody(shape, position, world, type, filterCategory, filterMask);
   }
 
   private static Body createBody(Shape shape, Vector2 position, World world, BodyDef.BodyType type, short filterCategory, short filterMask){

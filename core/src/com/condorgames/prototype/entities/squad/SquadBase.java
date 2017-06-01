@@ -18,6 +18,7 @@ public abstract class SquadBase extends SteerableEntity implements Fireable, Mor
 
   public SquadBase(Faction faction, Body body) {
     super(body);
+    body.setUserData(this);
     this.faction = faction;
     platoonID = ++platoonCount;
     Gdx.app.log("SquadBase", "created new SquadBase with ID: " + platoonID + ", Faction: " + faction.name());

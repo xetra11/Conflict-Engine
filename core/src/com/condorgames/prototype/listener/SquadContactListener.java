@@ -22,7 +22,8 @@ public class SquadContactListener implements ContactListener {
   public void beginContact(Contact contact) {
     Squad activeContact = null;
     Squad passiveContact = null;
-    if (contact.getFixtureA().getUserData().equals("LOS")) {
+    Object userDataA = contact.getFixtureA().getUserData();
+    if (userDataA != null && userDataA.equals("LOS")) {
       activeContact = (Squad) contact.getFixtureA().getBody().getUserData();
       passiveContact = (Squad) contact.getFixtureB().getBody().getUserData();
     } else {

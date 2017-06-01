@@ -1,6 +1,7 @@
 package com.condorgames.prototype.entities.platoon;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.condorgames.prototype.entities.Sensor;
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
 import com.condorgames.prototype.entities.squad.Squad;
 

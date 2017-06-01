@@ -21,10 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.battleresolver.BattleResolver;
-import com.condorgames.prototype.creator.BodyCreator;
-import com.condorgames.prototype.creator.EnemyCreator;
-import com.condorgames.prototype.creator.SensorCreator;
-import com.condorgames.prototype.creator.SquadCreator;
+import com.condorgames.prototype.creator.*;
 import com.condorgames.prototype.entities.Sensor;
 import com.condorgames.prototype.entities.platoon.Platoon;
 import com.condorgames.prototype.entities.squad.Squad;
@@ -228,7 +225,7 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void createEntities() {
-    platoon = new Platoon(BodyCreator.createCircleBody(0.1f,new Vector2(2f,2f), world, BodyDef.BodyType.DynamicBody));
+    platoon = PlatoonCreator.createPlatoon(world, new Vector2(2f,2f));
     axisSquadOne = SquadCreator.createSteerableSquadEntity(world, new Vector2(3f, 2f));
     axisSquadTwo = SquadCreator.createSteerableSquadEntity(world, new Vector2(4f, 2f));
     enemyOne = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(4f, 7f));

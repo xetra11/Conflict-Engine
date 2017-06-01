@@ -9,7 +9,6 @@ public abstract class PhysicalEntity{
   private Body body;
 
   public PhysicalEntity(Body body) {
-    body.setUserData(this);
     this.body = body;
   }
 
