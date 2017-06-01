@@ -1,5 +1,8 @@
 package com.condorgames.prototype.entities.squad;
 
+import com.badlogic.gdx.ai.fma.FormationMember;
+import com.badlogic.gdx.ai.utils.Location;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
 import com.condorgames.prototype.entities.soldier.Soldier;
@@ -11,8 +14,10 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class Squad extends SquadBase {
+public class Squad extends SquadBase implements FormationMember<Vector2> {
   private List<Soldier> soldiers = new ArrayList<>();
+
+  private Location<Vector2> targetLocation;
 
   public Squad(Body body, SquadBase.Faction faction) {
     super(faction, body);
@@ -172,5 +177,10 @@ public class Squad extends SquadBase {
 
   public void setSoldiers(List<Soldier> soldiers) {
     this.soldiers = soldiers;
+  }
+
+  @Override
+  public Location<Vector2> getTargetLocation() {
+    return targetLocation;
   }
 }

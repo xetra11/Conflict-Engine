@@ -4,7 +4,10 @@ package com.condorgames.prototype;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.ai.fma.Formation;
+import com.badlogic.gdx.ai.fma.FormationPattern;
 import com.badlogic.gdx.ai.steer.behaviors.Arrive;
+import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.condorgames.prototype.ai.TestFormationPattern;
 import com.condorgames.prototype.audio.AudioManager;
 import com.condorgames.prototype.battleresolver.BattleResolver;
 import com.condorgames.prototype.creator.*;
@@ -41,6 +45,9 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private Squad axisSquadOne, axisSquadTwo;
   private Squad enemyOne, enemyTwo, enemyThree;
   private Sensor moveTarget;
+
+  private Formation<Vector2> formation;
+
 
   //UI
   private Stage stage;
@@ -77,9 +84,11 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
     camera.update();
     world.step(1f / 60f, 6, 2);
     battleResolver.resolve(Gdx.graphics.getDeltaTime(), false);
-    axisSquadOne.update();
-    axisSquadTwo.update();
+//    axisSquadOne.update();
+//    axisSquadTwo.update();
     platoon.update();
+    formation.updateSlots();
+
     updateUI();
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -204,24 +213,28 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
 
   private void setupAI() {
 
+    formation = new Formation<Vector2>(platoon, new TestFormationPattern());
+    formation.addMember(axisSquadOne);
+    formation.addMember(axisSquadTwo);
+
     Arrive<Vector2> platoonFollowTarget = new Arrive<Vector2>(platoon, targetCrosshair);
     platoonFollowTarget.setArrivalTolerance(0.01f);
     platoonFollowTarget.setDecelerationRadius(0.5f);
     platoonFollowTarget.setTimeToTarget(0.1f);
 
-    Arrive<Vector2> oneFollowPlatoon = new Arrive<Vector2>(axisSquadOne, platoon);
-    oneFollowPlatoon.setArrivalTolerance(0.01f);
-    oneFollowPlatoon.setDecelerationRadius(0.5f);
-    oneFollowPlatoon.setTimeToTarget(0.1f);
-
-    Arrive<Vector2> twoFollowPlatoon = new Arrive<Vector2>(axisSquadTwo, platoon);
-    twoFollowPlatoon.setArrivalTolerance(0.01f);
-    twoFollowPlatoon.setDecelerationRadius(0.5f);
-    twoFollowPlatoon.setTimeToTarget(0.1f);
+//    Arrive<Vector2> oneFollowPlatoon = new Arrive<Vector2>(axisSquadOne, platoon);
+//    oneFollowPlatoon.setArrivalTolerance(0.01f);
+//    oneFollowPlatoon.setDecelerationRadius(0.5f);
+//    oneFollowPlatoon.setTimeToTarget(0.1f);
+//
+//    Arrive<Vector2> twoFollowPlatoon = new Arrive<Vector2>(axisSquadTwo, platoon);
+//    twoFollowPlatoon.setArrivalTolerance(0.01f);
+//    twoFollowPlatoon.setDecelerationRadius(0.5f);
+//    twoFollowPlatoon.setTimeToTarget(0.1f);
 
     platoon.setSteeringBehavior(platoonFollowTarget);
-    axisSquadOne.setSteeringBehavior(oneFollowPlatoon);
-    axisSquadTwo.setSteeringBehavior(twoFollowPlatoon);
+//    axisSquadOne.setSteeringBehavior(oneFollowPlatoon);
+//    axisSquadTwo.setSteeringBehavior(twoFollowPlatoon);
   }
 
   private void createEntities() {
