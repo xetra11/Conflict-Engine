@@ -12,20 +12,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.condorgames.prototype.audio.AudioManager;
-import com.condorgames.prototype.creator.EnemyCreator;
-import com.condorgames.prototype.creator.SquadCreator;
-import com.condorgames.prototype.creator.SensorCreator;
-import com.condorgames.prototype.entities.*;
 import com.condorgames.prototype.battleresolver.BattleResolver;
+import com.condorgames.prototype.creator.BodyCreator;
+import com.condorgames.prototype.creator.EnemyCreator;
+import com.condorgames.prototype.creator.SensorCreator;
+import com.condorgames.prototype.creator.SquadCreator;
+import com.condorgames.prototype.entities.Sensor;
 import com.condorgames.prototype.entities.platoon.Platoon;
 import com.condorgames.prototype.entities.squad.Squad;
-import com.condorgames.prototype.entities.squad.SteerableSquad;
 import com.condorgames.prototype.helper.Helper;
 import com.condorgames.prototype.helper.UILogger;
 import com.condorgames.prototype.listener.PlatoonContactListener;
@@ -39,8 +41,8 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   private OrthographicCamera camera;
   private UILogger uiLogger;
 
-  private SteerableSquad axisSquadOne, axisSquadTwo;
-  private SteerableSquad enemyOne, enemyTwo, enemyThree;
+  private Squad axisSquadOne, axisSquadTwo;
+  private Squad enemyOne, enemyTwo, enemyThree;
   private Sensor moveTarget;
 
   //UI
@@ -77,9 +79,10 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   public void render() {
     camera.update();
     world.step(1f / 60f, 6, 2);
-    battleResolver.resolve(Gdx.graphics.getDeltaTime(), false );
+    battleResolver.resolve(Gdx.graphics.getDeltaTime(), false);
     axisSquadOne.update();
     axisSquadTwo.update();
+    platoon.update();
     updateUI();
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -203,23 +206,29 @@ public class CondorAiPrototype extends ApplicationAdapter implements InputProces
   }
 
   private void setupAI() {
-    Arrive<Vector2> arriveAxisOne = new Arrive<Vector2>(axisSquadOne, targetCrosshair);
-    arriveAxisOne.setArrivalTolerance(0.01f);
-    arriveAxisOne.setDecelerationRadius(0.5f);
-    arriveAxisOne.setTimeToTarget(0.1f);
 
-    Arrive<Vector2> arriveAxisTwo = new Arrive<Vector2>(axisSquadTwo, axisSquadOne);
-    arriveAxisTwo.setArrivalTolerance(0.01f);
-    arriveAxisTwo.setDecelerationRadius(0.5f);
-    arriveAxisTwo.setTimeToTarget(0.1f);
+    Arrive<Vector2> platoonFollowTarget = new Arrive<Vector2>(platoon, targetCrosshair);
+    platoonFollowTarget.setArrivalTolerance(0.01f);
+    platoonFollowTarget.setDecelerationRadius(0.5f);
+    platoonFollowTarget.setTimeToTarget(0.1f);
 
+    Arrive<Vector2> oneFollowPlatoon = new Arrive<Vector2>(axisSquadOne, platoon);
+    oneFollowPlatoon.setArrivalTolerance(0.01f);
+    oneFollowPlatoon.setDecelerationRadius(0.5f);
+    oneFollowPlatoon.setTimeToTarget(0.1f);
 
-    axisSquadOne.setSteeringBehavior(arriveAxisOne);
-    axisSquadTwo.setSteeringBehavior(arriveAxisTwo);
+    Arrive<Vector2> twoFollowPlatoon = new Arrive<Vector2>(axisSquadTwo, platoon);
+    twoFollowPlatoon.setArrivalTolerance(0.01f);
+    twoFollowPlatoon.setDecelerationRadius(0.5f);
+    twoFollowPlatoon.setTimeToTarget(0.1f);
+
+    platoon.setSteeringBehavior(platoonFollowTarget);
+    axisSquadOne.setSteeringBehavior(oneFollowPlatoon);
+    axisSquadTwo.setSteeringBehavior(twoFollowPlatoon);
   }
 
   private void createEntities() {
-    platoon = new Platoon();
+    platoon = new Platoon(BodyCreator.createCircleBody(0.1f,new Vector2(2f,2f), world, BodyDef.BodyType.DynamicBody));
     axisSquadOne = SquadCreator.createSteerableSquadEntity(world, new Vector2(3f, 2f));
     axisSquadTwo = SquadCreator.createSteerableSquadEntity(world, new Vector2(4f, 2f));
     enemyOne = EnemyCreator.createSteerableEnemyEntity(world, new Vector2(4f, 7f));

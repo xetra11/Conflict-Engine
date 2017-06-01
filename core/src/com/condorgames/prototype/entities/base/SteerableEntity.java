@@ -1,4 +1,4 @@
-package com.condorgames.prototype.entities.squad;
+package com.condorgames.prototype.entities.base;
 
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.ai.steer.SteeringAcceleration;
@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.condorgames.prototype.helper.Helper;
 
-public abstract class SteerableSquad extends PhysicalSquad implements Steerable<Vector2> {
+public abstract class SteerableEntity extends PhysicalEntity implements Steerable<Vector2> {
   private SteeringBehavior steeringBehavior;
   private SteeringAcceleration<Vector2> steeringOutput;
 
@@ -20,8 +20,8 @@ public abstract class SteerableSquad extends PhysicalSquad implements Steerable<
 
   //TODO add speech library?
 
-  public SteerableSquad(Body body, Faction faction) {
-    super(body, faction);
+  public SteerableEntity(Body body) {
+    super(body);
     steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
   }
 
@@ -151,32 +151,32 @@ public abstract class SteerableSquad extends PhysicalSquad implements Steerable<
     return new Location<Vector2>() {
       @Override
       public Vector2 getPosition() {
-        return SteerableSquad.this.getPosition();
+        return SteerableEntity.this.getPosition();
       }
 
       @Override
       public float getOrientation() {
-        return SteerableSquad.this.getOrientation();
+        return SteerableEntity.this.getOrientation();
       }
 
       @Override
       public void setOrientation(float orientation) {
-        SteerableSquad.this.setOrientation(orientation);
+        SteerableEntity.this.setOrientation(orientation);
       }
 
       @Override
       public float vectorToAngle(Vector2 vector) {
-        return SteerableSquad.this.vectorToAngle(vector);
+        return SteerableEntity.this.vectorToAngle(vector);
       }
 
       @Override
       public Vector2 angleToVector(Vector2 outVector, float angle) {
-        return SteerableSquad.this.angleToVector(outVector, angle);
+        return SteerableEntity.this.angleToVector(outVector, angle);
       }
 
       @Override
       public Location<Vector2> newLocation() {
-        return SteerableSquad.this.newLocation();
+        return SteerableEntity.this.newLocation();
       }
     };
   }

@@ -6,10 +6,10 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.condorgames.prototype.CondorAiPrototype;
 import com.condorgames.prototype.audio.AudioManager;
-import com.condorgames.prototype.battleresolver.ResolvableSituation;
-import com.condorgames.prototype.entities.squad.Squad;
-import com.condorgames.prototype.entities.squad.SteerableSquad;
 import com.condorgames.prototype.battleresolver.BattleSituation;
+import com.condorgames.prototype.battleresolver.ResolvableSituation;
+import com.condorgames.prototype.entities.base.SteerableEntity;
+import com.condorgames.prototype.entities.squad.Squad;
 
 public class PlatoonContactListener implements ContactListener {
   private CondorAiPrototype context;
@@ -32,7 +32,7 @@ public class PlatoonContactListener implements ContactListener {
     triggerEnemyContact(activeContact, passiveContact);
   }
 
-  private void triggerEnemyContact(SteerableSquad activeContact, SteerableSquad passiveContact) {
+  private void triggerEnemyContact(Squad activeContact, Squad passiveContact) {
     // Stop Entity
     activeContact.setTagged(true);
     activeContact.getBody().setLinearVelocity(0f, 0f);

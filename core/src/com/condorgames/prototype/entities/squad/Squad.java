@@ -11,11 +11,11 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class Squad extends SteerableSquad {
+public class Squad extends SquadBase {
   private List<Soldier> soldiers = new ArrayList<>();
 
   public Squad(Body body, SquadBase.Faction faction) {
-    super(body, faction);
+    super(faction, body);
   }
 
   //TODO Create some more fine grained Platoon mechanics due the high amount of methods
