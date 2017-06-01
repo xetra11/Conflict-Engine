@@ -4,6 +4,7 @@ import com.badlogic.gdx.ai.fma.FormationMember;
 import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.condorgames.prototype.entities.base.Scene2dLocation;
 import com.condorgames.prototype.entities.equipment.weapons.interfaces.Fireable;
 import com.condorgames.prototype.entities.soldier.Soldier;
 import com.condorgames.prototype.entities.soldier.SoldierProperties.SoldierHealth;
@@ -17,10 +18,11 @@ import java.util.stream.Collectors;
 public class Squad extends SquadBase implements FormationMember<Vector2> {
   private List<Soldier> soldiers = new ArrayList<>();
 
-  private Location<Vector2> targetLocation;
+  private Scene2dLocation targetLocation;
 
   public Squad(Body body, SquadBase.Faction faction) {
     super(faction, body);
+    targetLocation = new Scene2dLocation();
   }
 
   //TODO Create some more fine grained Platoon mechanics due the high amount of methods

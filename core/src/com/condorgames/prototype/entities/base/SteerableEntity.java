@@ -148,37 +148,7 @@ public abstract class SteerableEntity extends PhysicalEntity implements Steerabl
 
   @Override
   public Location<Vector2> newLocation() {
-    return new Location<Vector2>() {
-      @Override
-      public Vector2 getPosition() {
-        return SteerableEntity.this.getPosition();
-      }
-
-      @Override
-      public float getOrientation() {
-        return SteerableEntity.this.getOrientation();
-      }
-
-      @Override
-      public void setOrientation(float orientation) {
-        SteerableEntity.this.setOrientation(orientation);
-      }
-
-      @Override
-      public float vectorToAngle(Vector2 vector) {
-        return SteerableEntity.this.vectorToAngle(vector);
-      }
-
-      @Override
-      public Vector2 angleToVector(Vector2 outVector, float angle) {
-        return SteerableEntity.this.angleToVector(outVector, angle);
-      }
-
-      @Override
-      public Location<Vector2> newLocation() {
-        return SteerableEntity.this.newLocation();
-      }
-    };
+    return new Scene2dLocation() ;
   }
   //</editor-fold>
 }
